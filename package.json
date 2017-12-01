@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.16.2",
+    "mongodb": "^2.2.33",
     "react": "^16.1.1",
     "react-dom": "^16.1.1"
   },
