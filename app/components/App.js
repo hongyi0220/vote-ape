@@ -1,13 +1,18 @@
-const React = require('react');
+import React, {Component} from 'react';
+// import Footer from './Footer';
+// import Nav from './Nav';
+import {Main} from './Main';
+import {User} from './User';
 
 class App extends React.Component {
     render() {
         return (
-            <div className='container'>
-                <h1>Vote Ape!!</h1>
+            <div>
+                <Main />
+                <User />
             </div>
         );
     }
 }
 
-module.exports = App;
+export default App;

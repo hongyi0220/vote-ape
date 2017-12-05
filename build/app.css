@@ -1,0 +1,12 @@
+h1 {
+  color: magenta; }
+
+footer {
+  border: 1px dashed gray; }
+
+.nav-container {
+  border: 1px dashed gray; }
+  .nav-container Link {
+    color: red;
+    cursor: hand;
+    cursor: pointer; }
