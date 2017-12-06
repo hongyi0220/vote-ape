@@ -2,7 +2,7 @@ import React from 'react';
 
 export const Form = props => {
     return (
-        <form action='/user/signup/submit' method='post'>
+        <form action='/user/signup' method='post'>
         <div>
             <label htmlFor='firstname'>First name</label>
             <input id='firstname' type='text' name='user_firstname'></input>
