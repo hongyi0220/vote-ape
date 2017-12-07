@@ -9,7 +9,7 @@ app.use(express.static('build'));
 
 app.use('/user', user);
 
-app.use((req, res) => {
+app.get('*', (req, res) => {
     res.sendFile(__dirname + '/build/index.html');
 })
 app.listen(8080);

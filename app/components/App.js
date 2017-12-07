@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-// import Footer from './Footer';
-// import Nav from './Nav';
+import { withRouter } from 'react-router-dom';
 import { Main } from './Main';
 import { User } from './User';
 import { Nav } from './Nav';
@@ -11,30 +10,54 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state ={
-            userInfo: null
+            userInfo: null,
+            authenticated: false,
+            login: null
         };
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.getUserInfo = this.getUserInfo.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+        // this.redirect = this.redirect.bind(this);
     }
 
-    handleSubmit() {
-        const url = 'http://localhost:8080/user/login';
+    // redirect(route) {
+    //     this.props.history.push(route);
+    // }
+    handleClick() {
+        this.setState({ login: true });
+    }
+    getUserInfo() {
+        console.log('handleSubmit worked')
+        const url = 'http://localhost:8080/user/api';
         const headers = new Headers();
         const init = { method: 'GET',
                        headers: headers };
+       fetch(url, init)
+       .then(res =>  res.json())
+       .then(resJson => {
+           // console.log('resJson: ',resJson);
 
-        fetch(url, init).then(response => this.setState({ userInfo: response }));
+           this.setState({ userInfo: resJson, authenticated: true }, () => console.log('userInfo: ',this.state.userInfo));
+           // this.props.history.push('/user');
+           // return resJson;
+       });
+
+    }
+
+    componentDidMount() {
+        // if (this.state.login)
+        this.getUserInfo();
     }
 
     render() {
         return (
             <div>
-                <Nav />
+                <Nav state={this.state}/>
                 <Main />
-                <User handleSubmit={this.handleSubmit} userInfo={this.state.userInfo}/>
+                <User handleClick={this.handleClick} state={this.state}/>
                 <Footer />
             </div>
         );
     }
 }
 
-export default App;
+export default withRouter(App);

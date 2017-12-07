@@ -12,11 +12,11 @@ import { UserContent } from './UserContent';
 export const User = props => {
     return (
         <div>
-            <UserContent userInfo={props.userInfo}/>
+            {console.log('yo!userInfo: ',props.userInfo)}
+            <UserContent state={props.state}/>
             <Switch>
                 <Route path='/user/signup' component={ Form } />
-                <Route path='/user/login'
-                render={ (props) => <FormLogin handleSubmit={props.handleSubmit} /> } />
+                <Route path='/user/login' render={ () => <FormLogin handleClick={props.handleClick} /> } />
             </Switch>
             <Route path='/user/signup/invalid' component={ InvalidUsername } />
             <Route path='/user/signup/invalid/email' component={ InvalidEmail } />
