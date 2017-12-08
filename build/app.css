@@ -26,5 +26,15 @@ footer {
 .user-content-container .login-details-box .col {
   display: inline-block; }
 
+.updates-container {
+  width: 300px;
+  height: 300px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.85);
+  z-index: 10;
+  border: 1px solid green; }
+
 a {
   text-decoration: none; }

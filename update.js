@@ -9,7 +9,7 @@ const url = process.env.MONGOLAB_URI;
 // app.use(bodyParser.urlencoded({ extended: true }));
 
 router
-    .post('/name', (req, res) => {
+    .post('/fullname', (req, res) => {
         mongo.connect(url, (err, db) => {
             if (err) console.error(err);
             const user_id = req.body.user_id;

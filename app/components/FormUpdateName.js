@@ -5,7 +5,7 @@ export const FormUpdateName = props => {
     const lastname = props.userInfo.lastname;
     const user_id = props.userInfo._id['$oid'];
     return (
-        <form action='/user/update/name' method='POST'>
+        <form action='/user/update/fullname' method='POST'>
             <Label htmlFor='firstname'>First name</Label>
             <input id='firstname' type='text' name='firstname' value={firstname}></input>
             <Label htmlFor='lastname'>Last name</Label>

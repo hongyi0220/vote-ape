@@ -10,7 +10,7 @@ export const Update = props => {
     return (
         <div className='update-box'>
             <Switch>
-                <Route path='/user/update/name' render={ () => <FormUpdateName userInfo={userInfo} /> } />
+                <Route path='/user/update/fullname' render={ () => <FormUpdateName userInfo={userInfo} /> } />
                 <Route path='/user/update/username' render={ () => <FormUpdateUsername userInfo={userInfo} /> } />
                 <Route path='/user/update/password' render={ () => <FormUpdatePassword userInfo={userInfo} /> } />
                 <Route path='/user/update/email' render={ () => <FormUpdateEmail userInfo={userInfo}/> } />

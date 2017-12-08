@@ -23649,7 +23649,7 @@ var User = exports.User = function User(props) {
                     return authenticated ? _react2.default.createElement(_UserContent.UserContent, { state: props.state }) : '';
                 } })
         ),
-        _react2.default.createElement(_reactRouterDom.Route, { path: 'user/update', render: function render() {
+        _react2.default.createElement(_reactRouterDom.Route, { path: '/user/update', render: function render() {
                 return authenticated ? _react2.default.createElement(_Updates.Updates, { state: props.state }) : '';
             } }),
         _react2.default.createElement(_reactRouterDom.Route, { path: '/user/signup/invalid/email', component: _InvalidEmail.InvalidEmail }),
@@ -23938,7 +23938,7 @@ var UserContent = exports.UserContent = function UserContent(props) {
                     '\xA0',
                     _react2.default.createElement(
                         _reactRouterDom.Link,
-                        { to: '/user/update/fullname' },
+                        { to: '/user/update' },
                         'Edit'
                     )
                 ),
@@ -23951,7 +23951,7 @@ var UserContent = exports.UserContent = function UserContent(props) {
                     '\xA0',
                     _react2.default.createElement(
                         _reactRouterDom.Link,
-                        { to: '/user/update/username' },
+                        { to: '/user/update' },
                         'Edit'
                     )
                 )
@@ -23968,7 +23968,7 @@ var UserContent = exports.UserContent = function UserContent(props) {
                     '\xA0',
                     _react2.default.createElement(
                         _reactRouterDom.Link,
-                        { to: '/user/update/password' },
+                        { to: '/user/update' },
                         'Edit'
                     )
                 ),
@@ -23981,7 +23981,7 @@ var UserContent = exports.UserContent = function UserContent(props) {
                     '\xA0',
                     _react2.default.createElement(
                         _reactRouterDom.Link,
-                        { to: '/user/update/email' },
+                        { to: '/user/update' },
                         'Edit'
                     )
                 )
@@ -24016,7 +24016,9 @@ var Updates = exports.Updates = function Updates(props) {
     return _react2.default.createElement(
         'div',
         { className: 'updates-container' },
-        _react2.default.createElement(_Update.Update, { state: props.state })
+        _react2.default.createElement(_Update.Update, { state: props.state }),
+        console.log('heya from <updates>'),
+        'im updates'
     );
 };
 
@@ -24056,7 +24058,7 @@ var Update = exports.Update = function Update(props) {
         _react2.default.createElement(
             _reactRouterDom.Switch,
             null,
-            _react2.default.createElement(_reactRouterDom.Route, { path: '/user/update/name', render: function render() {
+            _react2.default.createElement(_reactRouterDom.Route, { path: '/user/update/fullname', render: function render() {
                     return _react2.default.createElement(_FormUpdateName.FormUpdateName, { userInfo: userInfo });
                 } }),
             _react2.default.createElement(_reactRouterDom.Route, { path: '/user/update/username', render: function render() {
@@ -24096,7 +24098,7 @@ var FormUpdateName = exports.FormUpdateName = function FormUpdateName(props) {
     var user_id = props.userInfo._id['$oid'];
     return _react2.default.createElement(
         'form',
-        { action: '/user/update/name', method: 'POST' },
+        { action: '/user/update/fullname', method: 'POST' },
         _react2.default.createElement(
             Label,
             { htmlFor: 'firstname' },

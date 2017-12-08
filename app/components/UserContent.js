@@ -22,24 +22,24 @@ export const UserContent = props => {
                     <div className='col'>
                         Name<br/>
                         {`${userInfo ? userInfo.firstname : ''} ${userInfo ? userInfo.lastname : ''}`}&nbsp;
-                        <Link to='/user/update/fullname'>Edit</Link>
+                        <Link to='/user/update'>Edit</Link>
                     </div>
                     <div className='col'>
                         Username<br/>
                         {`${userInfo ? userInfo.username : ''}`}&nbsp;
-                        <Link to='/user/update/username'>Edit</Link>
+                        <Link to='/user/update'>Edit</Link>
                     </div>
                 </div>
                 <div className='row'>
                     <div className='col'>
                         Password<br/>
                         {`${userInfo ? maskPassword(userInfo.password) : ''}`}&nbsp;
-                        <Link to='/user/update/password'>Edit</Link>
+                        <Link to='/user/update'>Edit</Link>
                     </div>
                     <div className='col'>
                         Email<br/>
                         {`${userInfo ? userInfo.email : ''}`}&nbsp;
-                        <Link to='/user/update/email'>Edit</Link>
+                        <Link to='/user/update'>Edit</Link>
                     </div>
                 </div>
             </div>
