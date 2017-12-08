@@ -6,6 +6,7 @@ require('dotenv').config();
 const url = process.env.MONGOLAB_URI;
 const mongo = require('mongodb').MongoClient;
 const bodyParser = require('body-parser');
+const update = require('./update')
 
 app.use(bodyParser.json());
 
@@ -13,13 +14,16 @@ app.use(bodyParser.json());
 //         .get((req, res) => {
 //             res.send('ok')
 //         });
+
+router.use('/update', update);
+
 router.route('/login')
         .post((req, res) => {
             mongo.connect(url, (err, db) => {
                 if (err) console.error('There was a problem connecting to database ', err);
                 db.collection('users').find({
-                     user_username: req.body.user_username,
-                     user_password: req.body.user_password
+                     username: req.body.username,
+                     password: req.body.password
                  }).toArray((err, docs) => {
                      // Work with docs
                      if (err) console.error(err);
@@ -29,7 +33,10 @@ router.route('/login')
                          // console.log(app.get('docs'));
                          res.redirect('/user');
 
-                     } else res.redirect('/user/login/error');
+                     } else {
+                         // res.send('Oops, something went horribly wrong ;p')
+                         res.redirect('/user/login/error')
+                     };
                  });
                  db.close();
                  // res.send('login successful!');
@@ -52,27 +59,30 @@ router.route('/signup')
                 if (err) console.error('There was a problem connecting to database ', err);
                 // Look up db for username and email already taken
                 db.collection('users')
-                .find({ user_username: req.body.user_username })
+                .find({ username: req.body.username })
                 .toArray((err, docs) => {
                     // console.log(docs);
                     if (err) console.error(err);
                     if (docs.length) res.redirect('/user/signup/invalid');
                     else {
-                        db.collection('users').find({ user_email: req.body.user_email })
+                        db.collection('users').find({ email: req.body.email })
                         .toArray((err, docs) => {
                             if (err) console.error(err);
                             if (docs.length) res.redirect('/user/signup/invalid/email');
                             else {
+                                const schema = {
+                                    firstname: req.body.firstname,
+                                    lastname: req.body.lastname,
+                                    username: req.body.username,
+                                    password: req.body.password,
+                                    email: req.body.email
+                                };
                                 db.collection('users')
-                                .insert({
-                                    user_firstname: req.body.user_firstname,
-                                    user_lastname: req.body.user_lastname,
-                                    user_username: req.body.user_username,
-                                    user_password: req.body.user_password,
-                                    user_email: req.body.user_email
-                                });
+                                .insert(schema);
                                 db.close();
-                                res.send('signup successful!');
+                                app.set('docs', [schema]);
+                                // res.send('Sign-up successful!');
+                                res.redirect('/user')
                             }
                         });
                     }

@@ -6,7 +6,6 @@ import { Nav } from './Nav';
 import { Footer } from './Footer';
 
 class App extends React.Component {
-
     constructor(props) {
         super(props);
         this.state ={
@@ -25,6 +24,7 @@ class App extends React.Component {
     handleClick() {
         this.setState({ login: true });
     }
+
     getUserInfo() {
         console.log('handleSubmit worked')
         const url = 'http://localhost:8080/user/api';

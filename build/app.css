@@ -9,6 +9,22 @@ footer {
   .nav-container Link {
     cursor: hand;
     cursor: pointer; }
+  .nav-container .link-to-user {
+    display: inline-block; }
 
 .invalid {
   color: red; }
+
+.user-content-container .my-account {
+  border-bottom: 1px solid black; }
+
+.user-content-container .login-details-box a {
+  color: #127fa9; }
+  .user-content-container .login-details-box a:hover {
+    text-decoration: underline; }
+
+.user-content-container .login-details-box .col {
+  display: inline-block; }
+
+a {
+  text-decoration: none; }

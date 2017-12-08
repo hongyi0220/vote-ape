@@ -432,48 +432,6 @@ module.exports = invariant;
 
 /***/ }),
 /* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- * 
- */
-
-function makeEmptyFunction(arg) {
-  return function () {
-    return arg;
-  };
-}
-
-/**
- * This function accepts and discards inputs; it has no side effects. This is
- * primarily useful idiomatically for overridable function endpoints which
- * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
- */
-var emptyFunction = function emptyFunction() {};
-
-emptyFunction.thatReturns = makeEmptyFunction;
-emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
-emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
-emptyFunction.thatReturnsNull = makeEmptyFunction(null);
-emptyFunction.thatReturnsThis = function () {
-  return this;
-};
-emptyFunction.thatReturnsArgument = function (arg) {
-  return arg;
-};
-
-module.exports = emptyFunction;
-
-/***/ }),
-/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -530,6 +488,48 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * 
+ */
+
+function makeEmptyFunction(arg) {
+  return function () {
+    return arg;
+  };
+}
+
+/**
+ * This function accepts and discards inputs; it has no side effects. This is
+ * primarily useful idiomatically for overridable function endpoints which
+ * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
+ */
+var emptyFunction = function emptyFunction() {};
+
+emptyFunction.thatReturns = makeEmptyFunction;
+emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
+emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
+emptyFunction.thatReturnsNull = makeEmptyFunction(null);
+emptyFunction.thatReturnsThis = function () {
+  return this;
+};
+emptyFunction.thatReturnsArgument = function (arg) {
+  return arg;
+};
+
+module.exports = emptyFunction;
 
 /***/ }),
 /* 7 */
@@ -865,7 +865,7 @@ module.exports = emptyObject;
 
 
 
-var emptyFunction = __webpack_require__(5);
+var emptyFunction = __webpack_require__(6);
 
 /**
  * Similar to invariant but only logs a warning if the condition is not met.
@@ -1603,7 +1603,7 @@ module.exports = ExecutionEnvironment;
  * @typechecks
  */
 
-var emptyFunction = __webpack_require__(5);
+var emptyFunction = __webpack_require__(6);
 
 /**
  * Upstream version of event listener. Does not take into account specific
@@ -2389,12 +2389,13 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(6);
+var _reactRouterDom = __webpack_require__(5);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Nav = exports.Nav = function Nav(props) {
     var authenticated = props.state.authenticated;
+    var userInfo = props.state.userInfo;
     return _react2.default.createElement(
         'div',
         { className: 'nav-container' },
@@ -2410,7 +2411,17 @@ var Nav = exports.Nav = function Nav(props) {
             'SIGN IN'
         ),
         '\xA0\xA0',
-        _react2.default.createElement(
+        authenticated ? _react2.default.createElement(
+            'div',
+            { className: 'link-to-user' },
+            'Hello, ',
+            _react2.default.createElement(
+                _reactRouterDom.Link,
+                { to: '/user' },
+                userInfo[0].firstname,
+                '!'
+            )
+        ) : _react2.default.createElement(
             _reactRouterDom.Link,
             { to: '/user/signup' },
             'SIGN UP'
@@ -2451,7 +2462,7 @@ var Footer = exports.Footer = function Footer(props) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(38);
-module.exports = __webpack_require__(88);
+module.exports = __webpack_require__(94);
 
 
 /***/ }),
@@ -2469,7 +2480,7 @@ var _reactDom = __webpack_require__(41);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _reactRouterDom = __webpack_require__(6);
+var _reactRouterDom = __webpack_require__(5);
 
 var _App = __webpack_require__(78);
 
@@ -2496,7 +2507,7 @@ _reactDom2.default.render(_react2.default.createElement(
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-var m=__webpack_require__(7),n=__webpack_require__(11),p=__webpack_require__(5);
+var m=__webpack_require__(7),n=__webpack_require__(11),p=__webpack_require__(6);
 function q(a){for(var b=arguments.length-1,e="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,d=0;d<b;d++)e+="\x26args[]\x3d"+encodeURIComponent(arguments[d+1]);b=Error(e+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}
 var r={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}};function t(a,b,e){this.props=a;this.context=b;this.refs=n;this.updater=e||r}t.prototype.isReactComponent={};t.prototype.setState=function(a,b){"object"!==typeof a&&"function"!==typeof a&&null!=a?q("85"):void 0;this.updater.enqueueSetState(this,a,b,"setState")};t.prototype.forceUpdate=function(a){this.updater.enqueueForceUpdate(this,a,"forceUpdate")};
 function u(a,b,e){this.props=a;this.context=b;this.refs=n;this.updater=e||r}function v(){}v.prototype=t.prototype;var w=u.prototype=new v;w.constructor=u;m(w,t.prototype);w.isPureReactComponent=!0;function x(a,b,e){this.props=a;this.context=b;this.refs=n;this.updater=e||r}var y=x.prototype=new v;y.constructor=x;m(y,t.prototype);y.unstable_isAsyncReactComponent=!0;y.render=function(){return this.props.children};
@@ -2536,7 +2547,7 @@ var _assign = __webpack_require__(7);
 var invariant = __webpack_require__(8);
 var emptyObject = __webpack_require__(11);
 var warning = __webpack_require__(12);
-var emptyFunction = __webpack_require__(5);
+var emptyFunction = __webpack_require__(6);
 var checkPropTypes = __webpack_require__(14);
 
 // TODO: this is special because it gets imported during build.
@@ -3925,7 +3936,7 @@ if (process.env.NODE_ENV === 'production') {
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(0),m=__webpack_require__(22),A=__webpack_require__(7),B=__webpack_require__(5),ca=__webpack_require__(23),da=__webpack_require__(24),ea=__webpack_require__(25),ha=__webpack_require__(26),ia=__webpack_require__(27),C=__webpack_require__(11);
+var aa=__webpack_require__(0),m=__webpack_require__(22),A=__webpack_require__(7),B=__webpack_require__(6),ca=__webpack_require__(23),da=__webpack_require__(24),ea=__webpack_require__(25),ha=__webpack_require__(26),ia=__webpack_require__(27),C=__webpack_require__(11);
 function D(a){for(var b=arguments.length-1,c="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,d=0;d<b;d++)c+="\x26args[]\x3d"+encodeURIComponent(arguments[d+1]);b=Error(c+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}aa?void 0:D("227");
 var la={children:!0,dangerouslySetInnerHTML:!0,defaultValue:!0,defaultChecked:!0,innerHTML:!0,suppressContentEditableWarning:!0,suppressHydrationWarning:!0,style:!0};function qa(a,b){return(a&b)===b}
 var ra={MUST_USE_PROPERTY:1,HAS_BOOLEAN_VALUE:4,HAS_NUMERIC_VALUE:8,HAS_POSITIVE_NUMERIC_VALUE:24,HAS_OVERLOADED_BOOLEAN_VALUE:32,HAS_STRING_BOOLEAN_VALUE:64,injectDOMPropertyConfig:function(a){var b=ra,c=a.Properties||{},d=a.DOMAttributeNamespaces||{},e=a.DOMAttributeNames||{};a=a.DOMMutationMethods||{};for(var f in c){sa.hasOwnProperty(f)?D("48",f):void 0;var g=f.toLowerCase(),k=c[f];g={attributeName:g,attributeNamespace:null,propertyName:f,mutationMethod:null,mustUseProperty:qa(k,b.MUST_USE_PROPERTY),
@@ -4224,7 +4235,7 @@ var invariant = __webpack_require__(8);
 var warning = __webpack_require__(12);
 var ExecutionEnvironment = __webpack_require__(22);
 var _assign = __webpack_require__(7);
-var emptyFunction$1 = __webpack_require__(5);
+var emptyFunction$1 = __webpack_require__(6);
 var EventListener = __webpack_require__(23);
 var getActiveElement = __webpack_require__(24);
 var shallowEqual = __webpack_require__(25);
@@ -19844,7 +19855,7 @@ BrowserRouter.propTypes = {
 
 
 
-var emptyFunction = __webpack_require__(5);
+var emptyFunction = __webpack_require__(6);
 var invariant = __webpack_require__(8);
 var warning = __webpack_require__(12);
 var assign = __webpack_require__(7);
@@ -20394,7 +20405,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 
 
 
-var emptyFunction = __webpack_require__(5);
+var emptyFunction = __webpack_require__(6);
 var invariant = __webpack_require__(8);
 var ReactPropTypesSecret = __webpack_require__(15);
 
@@ -23426,7 +23437,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(6);
+var _reactRouterDom = __webpack_require__(5);
 
 var _Main = __webpack_require__(79);
 
@@ -23536,7 +23547,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(6);
+var _reactRouterDom = __webpack_require__(5);
 
 var _Landing = __webpack_require__(80);
 
@@ -23599,7 +23610,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(6);
+var _reactRouterDom = __webpack_require__(5);
 
 var _Form = __webpack_require__(82);
 
@@ -23617,24 +23628,32 @@ var _LoginError = __webpack_require__(86);
 
 var _UserContent = __webpack_require__(87);
 
+var _Updates = __webpack_require__(88);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var User = exports.User = function User(props) {
+    var authenticated = props.state.authenticated;
     return _react2.default.createElement(
         'div',
         null,
         console.log('yo!userInfo: ', props.userInfo),
-        _react2.default.createElement(_UserContent.UserContent, { state: props.state }),
         _react2.default.createElement(
             _reactRouterDom.Switch,
             null,
             _react2.default.createElement(_reactRouterDom.Route, { path: '/user/signup', component: _Form.Form }),
             _react2.default.createElement(_reactRouterDom.Route, { path: '/user/login', render: function render() {
                     return _react2.default.createElement(_FormLogin.FormLogin, { handleClick: props.handleClick });
+                } }),
+            _react2.default.createElement(_reactRouterDom.Route, { path: '/user', render: function render() {
+                    return authenticated ? _react2.default.createElement(_UserContent.UserContent, { state: props.state }) : '';
                 } })
         ),
-        _react2.default.createElement(_reactRouterDom.Route, { path: '/user/signup/invalid', component: _InvalidUsername.InvalidUsername }),
+        _react2.default.createElement(_reactRouterDom.Route, { path: 'user/update', render: function render() {
+                return authenticated ? _react2.default.createElement(_Updates.Updates, { state: props.state }) : '';
+            } }),
         _react2.default.createElement(_reactRouterDom.Route, { path: '/user/signup/invalid/email', component: _InvalidEmail.InvalidEmail }),
+        _react2.default.createElement(_reactRouterDom.Route, { path: '/user/signup/invalid', component: _InvalidUsername.InvalidUsername }),
         _react2.default.createElement(_reactRouterDom.Route, { path: '/user/login/error', component: _LoginError.LoginError })
     );
 };
@@ -23669,7 +23688,7 @@ var Form = exports.Form = function Form(props) {
                 { htmlFor: 'firstname' },
                 'First name'
             ),
-            _react2.default.createElement('input', { id: 'firstname', type: 'text', name: 'user_firstname' })
+            _react2.default.createElement('input', { id: 'firstname', type: 'text', name: 'firstname' })
         ),
         _react2.default.createElement(
             'div',
@@ -23679,7 +23698,7 @@ var Form = exports.Form = function Form(props) {
                 { htmlFor: 'lastname' },
                 'Last name'
             ),
-            _react2.default.createElement('input', { id: 'lastname', type: 'text', name: 'user_lastname' })
+            _react2.default.createElement('input', { id: 'lastname', type: 'text', name: 'lastname' })
         ),
         _react2.default.createElement(
             'div',
@@ -23689,7 +23708,7 @@ var Form = exports.Form = function Form(props) {
                 { htmlFor: 'username' },
                 'Choose a username'
             ),
-            _react2.default.createElement('input', { id: 'username', type: 'text', name: 'user_username' })
+            _react2.default.createElement('input', { id: 'username', type: 'text', name: 'username' })
         ),
         _react2.default.createElement(
             'div',
@@ -23699,7 +23718,7 @@ var Form = exports.Form = function Form(props) {
                 { htmlFor: 'password' },
                 'Choose a password'
             ),
-            _react2.default.createElement('input', { id: 'password', type: 'password', name: 'user_password' })
+            _react2.default.createElement('input', { id: 'password', type: 'password', name: 'password' })
         ),
         _react2.default.createElement(
             'div',
@@ -23709,7 +23728,7 @@ var Form = exports.Form = function Form(props) {
                 { htmlFor: 'email' },
                 'Enter your email'
             ),
-            _react2.default.createElement('input', { id: 'email', type: 'email', name: 'user_email' })
+            _react2.default.createElement('input', { id: 'email', type: 'email', name: 'email' })
         ),
         _react2.default.createElement(
             'button',
@@ -23749,7 +23768,7 @@ var FormLogin = exports.FormLogin = function FormLogin(props) {
                 { htmlFor: 'username' },
                 'Enter your username'
             ),
-            _react2.default.createElement('input', { id: 'username', type: 'text', name: 'user_username' })
+            _react2.default.createElement('input', { id: 'username', type: 'text', name: 'username' })
         ),
         _react2.default.createElement(
             'div',
@@ -23759,7 +23778,7 @@ var FormLogin = exports.FormLogin = function FormLogin(props) {
                 { htmlFor: 'password' },
                 'Enter your password'
             ),
-            _react2.default.createElement('input', { id: 'password', type: 'password', name: 'user_password' })
+            _react2.default.createElement('input', { id: 'password', type: 'password', name: 'password' })
         ),
         _react2.default.createElement(
             'button',
@@ -23811,7 +23830,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(6);
+var _reactRouterDom = __webpack_require__(5);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -23874,23 +23893,351 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRouterDom = __webpack_require__(5);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var UserContent = exports.UserContent = function UserContent(props) {
     // componentWillReceiveProps(nextProps) {
     //     this.setState({ userInfo: nextProps.userInfo });
     // }
-    var userInfo = props.state.userInfo;
+    var userInfo = props.state.userInfo[0];
+
+    var maskPassword = function maskPassword(password) {
+        var result = '';
+        for (var i = 0; i < password.length; i++) {
+            result += '*';
+        }return result;
+    };
 
     return _react2.default.createElement(
         'div',
-        null,
-        userInfo ? 'Hello, ' + userInfo[0].user_firstname + '!' : ''
+        { className: 'user-content-container' },
+        _react2.default.createElement(
+            'div',
+            { className: 'my-account' },
+            'My Account'
+        ),
+        _react2.default.createElement(
+            'h3',
+            null,
+            'Login Details'
+        ),
+        _react2.default.createElement(
+            'div',
+            { className: 'login-details-box' },
+            _react2.default.createElement(
+                'div',
+                { className: 'row' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'col' },
+                    'Name',
+                    _react2.default.createElement('br', null),
+                    (userInfo ? userInfo.firstname : '') + ' ' + (userInfo ? userInfo.lastname : ''),
+                    '\xA0',
+                    _react2.default.createElement(
+                        _reactRouterDom.Link,
+                        { to: '/user/update/fullname' },
+                        'Edit'
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'col' },
+                    'Username',
+                    _react2.default.createElement('br', null),
+                    '' + (userInfo ? userInfo.username : ''),
+                    '\xA0',
+                    _react2.default.createElement(
+                        _reactRouterDom.Link,
+                        { to: '/user/update/username' },
+                        'Edit'
+                    )
+                )
+            ),
+            _react2.default.createElement(
+                'div',
+                { className: 'row' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'col' },
+                    'Password',
+                    _react2.default.createElement('br', null),
+                    '' + (userInfo ? maskPassword(userInfo.password) : ''),
+                    '\xA0',
+                    _react2.default.createElement(
+                        _reactRouterDom.Link,
+                        { to: '/user/update/password' },
+                        'Edit'
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'col' },
+                    'Email',
+                    _react2.default.createElement('br', null),
+                    '' + (userInfo ? userInfo.email : ''),
+                    '\xA0',
+                    _react2.default.createElement(
+                        _reactRouterDom.Link,
+                        { to: '/user/update/email' },
+                        'Edit'
+                    )
+                )
+            )
+        )
     );
 };
 
 /***/ }),
 /* 88 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.Updates = undefined;
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(5);
+
+var _Update = __webpack_require__(89);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Updates = exports.Updates = function Updates(props) {
+    return _react2.default.createElement(
+        'div',
+        { className: 'updates-container' },
+        _react2.default.createElement(_Update.Update, { state: props.state })
+    );
+};
+
+/***/ }),
+/* 89 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.Update = undefined;
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(5);
+
+var _FormUpdateName = __webpack_require__(90);
+
+var _FormUpdateUsername = __webpack_require__(91);
+
+var _FormUpdatePassword = __webpack_require__(92);
+
+var _FormUpdateEmail = __webpack_require__(93);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Update = exports.Update = function Update(props) {
+    var userInfo = props.state.userInfo[0];
+    return _react2.default.createElement(
+        'div',
+        { className: 'update-box' },
+        _react2.default.createElement(
+            _reactRouterDom.Switch,
+            null,
+            _react2.default.createElement(_reactRouterDom.Route, { path: '/user/update/name', render: function render() {
+                    return _react2.default.createElement(_FormUpdateName.FormUpdateName, { userInfo: userInfo });
+                } }),
+            _react2.default.createElement(_reactRouterDom.Route, { path: '/user/update/username', render: function render() {
+                    return _react2.default.createElement(_FormUpdateUsername.FormUpdateUsername, { userInfo: userInfo });
+                } }),
+            _react2.default.createElement(_reactRouterDom.Route, { path: '/user/update/password', render: function render() {
+                    return _react2.default.createElement(_FormUpdatePassword.FormUpdatePassword, { userInfo: userInfo });
+                } }),
+            _react2.default.createElement(_reactRouterDom.Route, { path: '/user/update/email', render: function render() {
+                    return _react2.default.createElement(_FormUpdateEmail.FormUpdateEmail, { userInfo: userInfo });
+                } })
+        )
+    );
+};
+
+/***/ }),
+/* 90 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.FormUpdateName = undefined;
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var FormUpdateName = exports.FormUpdateName = function FormUpdateName(props) {
+    var firstname = props.userInfo.firstname;
+    var lastname = props.userInfo.lastname;
+    var user_id = props.userInfo._id['$oid'];
+    return _react2.default.createElement(
+        'form',
+        { action: '/user/update/name', method: 'POST' },
+        _react2.default.createElement(
+            Label,
+            { htmlFor: 'firstname' },
+            'First name'
+        ),
+        _react2.default.createElement('input', { id: 'firstname', type: 'text', name: 'firstname', value: firstname }),
+        _react2.default.createElement(
+            Label,
+            { htmlFor: 'lastname' },
+            'Last name'
+        ),
+        _react2.default.createElement('input', { id: 'lastname', type: 'text', name: 'lastname', value: lastname }),
+        _react2.default.createElement('input', { id: 'user_id', type: 'hidden', name: 'user_id', value: user_id }),
+        _react2.default.createElement('button', { type: 'submit' })
+    );
+};
+
+/***/ }),
+/* 91 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.FormUpdateUsername = undefined;
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var FormUpdateUsername = exports.FormUpdateUsername = function FormUpdateUsername(props) {
+    var username = props.userInfo.username;
+    var user_id = props.userInfo._id['$oid'];
+    return _react2.default.createElement(
+        'form',
+        { action: '/user/update/username', method: 'POST' },
+        _react2.default.createElement(
+            Label,
+            { htmlFor: 'username' },
+            'Username'
+        ),
+        _react2.default.createElement('input', { id: 'username', type: 'text', name: 'username', value: username }),
+        _react2.default.createElement(
+            Label,
+            { htmlFor: 'password' },
+            'Username'
+        ),
+        _react2.default.createElement('input', { id: 'password', type: 'password', name: 'password' }),
+        _react2.default.createElement('input', { id: 'user_id', type: 'hidden', name: 'user_id', value: user_id }),
+        _react2.default.createElement('button', { type: 'submit' })
+    );
+};
+
+/***/ }),
+/* 92 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.FormUpdatePassword = undefined;
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var FormUpdatePassword = exports.FormUpdatePassword = function FormUpdatePassword(props) {
+    var user_id = props.userInfo._id['$oid'];
+    return _react2.default.createElement(
+        'form',
+        { action: '/user/update/password', method: 'POST' },
+        _react2.default.createElement(
+            Label,
+            { htmlFor: 'password' },
+            'Current password'
+        ),
+        _react2.default.createElement('input', { id: 'password', type: 'password', name: 'password' }),
+        _react2.default.createElement(
+            Label,
+            { htmlFor: 'new-password' },
+            'New password'
+        ),
+        _react2.default.createElement('input', { id: 'new_password', type: 'password', name: 'new_password' }),
+        _react2.default.createElement('input', { id: 'user_id', type: 'hidden', name: 'user_id', value: user_id }),
+        _react2.default.createElement('button', { type: 'submit' })
+    );
+};
+
+/***/ }),
+/* 93 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.FormUpdateEmail = undefined;
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var FormUpdateEmail = exports.FormUpdateEmail = function FormUpdateEmail(props) {
+    var email = props.userInfo.email;
+    var user_id = props.userInfo._id['$oid'];
+    return _react2.default.createElement(
+        'form',
+        { action: '/user/update/email', method: 'POST' },
+        _react2.default.createElement(
+            Label,
+            { htmlFor: 'email' },
+            'Email'
+        ),
+        _react2.default.createElement('input', { id: 'email', type: 'text', name: 'email', value: email }),
+        _react2.default.createElement(
+            Label,
+            { htmlFor: 'password' },
+            'Current password'
+        ),
+        _react2.default.createElement('input', { id: 'password', type: 'password', name: 'password' }),
+        _react2.default.createElement('input', { id: 'user_id', type: 'hidden', name: 'user_id', value: user_id }),
+        _react2.default.createElement('button', { type: 'submit' })
+    );
+};
+
+/***/ }),
+/* 94 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

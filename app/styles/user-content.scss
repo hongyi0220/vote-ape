@@ -1,0 +1,16 @@
+.user-content-container {
+    .my-account {
+        border-bottom: 1px solid black;
+    }
+    .login-details-box {
+        a {
+            color: rgb(18,127,169);
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+        .col {
+            display: inline-block;
+        }
+    }
+}
