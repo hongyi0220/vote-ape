@@ -42,8 +42,18 @@ class App extends React.Component {
        .then(res =>  res.json())
        .then(resJson => {
            // console.log('resJson: ',resJson);
-
-           this.setState({ userInfo: resJson, authenticated: true });
+           const firstname = resJson[0].firstname;
+           const lastname = resJson[0].lastname;
+           this.setState({
+               userInfo: resJson,
+               authenticated: true,
+               memory:
+               {
+                   ...this.state.memory,
+                   firstname: firstname,
+                   lastname: lastname
+               }
+           });
            // this.props.history.push('/user');
            // return resJson;
        });

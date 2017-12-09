@@ -4,7 +4,9 @@ const app = express();
 const router = express.Router();
 require('dotenv').config();
 const url = process.env.MONGOLAB_URI;
-const mongo = require('mongodb').MongoClient;
+const mongo = require('mongodb')
+const MongoClient = mongo.MongoClient;
+
 const bodyParser = require('body-parser');
 // const update = require('./update')
 
@@ -17,12 +19,12 @@ app.use(bodyParser.json());
 
 // router.use('/update', update);
 router.post('/update/fullname', (req, res) => {
-    mongo.connect(url, (err, db) => {
+    MongoClient.connect(url, (err, db) => {
         if (err) console.error(err);
         const user_id = req.body.user_id;
 
         console.log('user_id from server:',user_id);
-        console.log('typeof fistname from server:', typeof req.body.firstname);
+        console.log(' fistname from server:',  req.body.firstname);
 
         // let updateNamePromise = new Promise((resolve, reject) => {
         //     db.collection('users').updateOne(
@@ -37,8 +39,8 @@ router.post('/update/fullname', (req, res) => {
         // .catch(e => console.error(e));
 
         db.collection('users').updateOne(
-            {firstname: req.body.firstname},
-            {$set: {firstname: req.body.value}}
+            {_id: mongo.ObjectId(user_id)},
+            {$set: {firstname: req.body.firstname}}
         );
         res.redirect('/user/update/fullname/successful');
         db.close();
@@ -59,7 +61,7 @@ router.post('/update/fullname', (req, res) => {
 
 router.route('/login')
         .post((req, res) => {
-            mongo.connect(url, (err, db) => {
+            MongoClient.connect(url, (err, db) => {
                 if (err) console.error('There was a problem connecting to database ', err);
                 db.collection('users').find({
                      username: req.body.username,
@@ -95,7 +97,7 @@ router.get('/api', (req, res) => {
 router.route('/signup')
         .post((req, res) => {
 
-            mongo.connect(url, (err, db) => {
+            MongoClient.connect(url, (err, db) => {
                 if (err) console.error('There was a problem connecting to database ', err);
                 // Look up db for username and email already taken
                 db.collection('users')
