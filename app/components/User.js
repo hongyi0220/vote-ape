@@ -9,6 +9,7 @@ import { InvalidEmail } from './InvalidEmail';
 import { LoginError } from './LoginError';
 import { UserContent } from './UserContent';
 import { Updates } from './Updates';
+import { UpdateSuccessful } from './UpdateSuccessful';
 
 export const User = props => {
     const authenticated = props.state.authenticated;
@@ -18,10 +19,14 @@ export const User = props => {
 
             <Switch>
                 <Route path='/user/signup' component={ Form } />
-                <Route path='/user/login' render={ () => <FormLogin handleClick={props.handleClick} /> } />
+                <Route path='/user/login' render={ () => <FormLogin /> } />
                 <Route path='/user' render={ () => authenticated ? <UserContent state={props.state} /> : ''} />
             </Switch>
-            <Route path='/user/update' render={ () => authenticated ? <Updates state={props.state} /> : ''} />
+            <Switch>
+                <Route path='/user/update/fullname/successful' component={ UpdateSuccessful } />
+                <Route path='/user/update/(fullname)?/'
+                render={ () => authenticated ? <Updates state={props.state} updateName={props.updateName}/> : ''} />
+            </Switch>
             <Route path='/user/signup/invalid/email' component={ InvalidEmail } />
             <Route path='/user/signup/invalid' component={ InvalidUsername } />
             <Route path='/user/login/error' component={ LoginError } />

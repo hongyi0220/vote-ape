@@ -22,7 +22,7 @@ export const UserContent = props => {
                     <div className='col'>
                         Name<br/>
                         {`${userInfo ? userInfo.firstname : ''} ${userInfo ? userInfo.lastname : ''}`}&nbsp;
-                        <Link to='/user/update'>Edit</Link>
+                        <Link to='/user/update/fullname'>Edit</Link>
                     </div>
                     <div className='col'>
                         Username<br/>

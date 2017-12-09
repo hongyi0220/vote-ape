@@ -6,7 +6,7 @@ require('dotenv').config();
 const url = process.env.MONGOLAB_URI;
 const mongo = require('mongodb').MongoClient;
 const bodyParser = require('body-parser');
-const update = require('./update')
+// const update = require('./update')
 
 app.use(bodyParser.json());
 
@@ -15,7 +15,47 @@ app.use(bodyParser.json());
 //             res.send('ok')
 //         });
 
-router.use('/update', update);
+// router.use('/update', update);
+router.post('/update/fullname', (req, res) => {
+    mongo.connect(url, (err, db) => {
+        if (err) console.error(err);
+        const user_id = req.body.user_id;
+
+        console.log('user_id from server:',user_id);
+        console.log('typeof fistname from server:', typeof req.body.firstname);
+
+        // let updateNamePromise = new Promise((resolve, reject) => {
+        //     db.collection('users').updateOne(
+        //         {firstname: req.body.firstname},
+        //         {$set: {firstname: req.body.firstname, lastname: req.body.lastname} },
+        //         function (err, object) {
+        //             err ? reject(err.message) : resolve();
+        //         });
+        // });
+        // updateNamePromise
+        // .then(() => res.redirect('/user/update/fullname/successful'))
+        // .catch(e => console.error(e));
+
+        db.collection('users').updateOne(
+            {firstname: req.body.firstname},
+            {$set: {firstname: req.body.value}}
+        );
+        res.redirect('/user/update/fullname/successful');
+        db.close();
+
+        console.log('name change successful! ');
+    });
+
+    // res.end();
+})
+// router.get('/update/fullname/successful', (req, res) => {
+//     // setTimeout(() => res.redirect('/user'), 2000)
+//     res.redirect('/user')
+//
+// })
+// .post('/username', (req, res) => {
+//
+// })
 
 router.route('/login')
         .post((req, res) => {
@@ -40,10 +80,10 @@ router.route('/login')
                  });
                  db.close();
                  // res.send('login successful!');
-            })
+            });
             // res.end()
 
-        })
+        });
         // .get((req, res) => {
         //     res.send(app.get('docs'));
         // })

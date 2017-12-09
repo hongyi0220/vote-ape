@@ -11,7 +11,7 @@ export const FormLogin = props => {
             <label htmlFor='password'>Enter your password</label>
             <input id='password' type='password' name='password'></input>
         </div>
-            <button type='submit' onClick={props.handleClick}>Login</button>
+            <button type='submit'>Login</button>
         </form>
     );
 }

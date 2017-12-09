@@ -11,22 +11,29 @@ class App extends React.Component {
         this.state ={
             userInfo: null,
             authenticated: false,
-            login: null
+            memory: {
+                firstname: null,
+                lastname: null
+            }
+
         };
         this.getUserInfo = this.getUserInfo.bind(this);
-        this.handleClick = this.handleClick.bind(this);
+        this.updateName = this.updateName.bind(this);
         // this.redirect = this.redirect.bind(this);
     }
 
     // redirect(route) {
     //     this.props.history.push(route);
     // }
-    handleClick() {
-        this.setState({ login: true });
+    updateName(e) {
+        let memory = {...this.state.memory};
+        if (e.target.name === 'firstname') memory.firstname = e.target.value;
+        else if (e.target.name === 'lastname') memory.lastname = e.target.value;
+        this.setState({ memory });
     }
 
     getUserInfo() {
-        console.log('handleSubmit worked')
+        // console.log('handleSubmit worked')
         const url = 'http://localhost:8080/user/api';
         const headers = new Headers();
         const init = { method: 'GET',
@@ -36,7 +43,7 @@ class App extends React.Component {
        .then(resJson => {
            // console.log('resJson: ',resJson);
 
-           this.setState({ userInfo: resJson, authenticated: true }, () => console.log('userInfo: ',this.state.userInfo));
+           this.setState({ userInfo: resJson, authenticated: true });
            // this.props.history.push('/user');
            // return resJson;
        });
@@ -53,7 +60,7 @@ class App extends React.Component {
             <div>
                 <Nav state={this.state}/>
                 <Main />
-                <User handleClick={this.handleClick} state={this.state}/>
+                <User updateName={this.updateName} state={this.state}/>
                 <Footer />
             </div>
         );
