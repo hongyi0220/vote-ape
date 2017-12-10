@@ -1,10 +1,18 @@
 .nav-container {
     border: 1px dashed gray;
-    Link {
-        cursor: hand;
-        cursor: pointer;
+    .auth {
+        display: inline-block;
     }
     .link-to-user {
         display: inline-block;
+    }
+    .username {
+        display: inline-block;
+        cursor: hand;
+        cursor: pointer;
+        color: rgb(18,127,169);
+        &:hover {
+            text-decoration: underline;
+        }
     }
 }

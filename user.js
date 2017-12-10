@@ -6,58 +6,31 @@ require('dotenv').config();
 const url = process.env.MONGOLAB_URI;
 const mongo = require('mongodb')
 const MongoClient = mongo.MongoClient;
-
+const session = require('express-session');
 const bodyParser = require('body-parser');
-// const update = require('./update')
+const update = require('./update')
 
 app.use(bodyParser.json());
 
-// router.route('/')
-//         .get((req, res) => {
-//             res.send('ok')
-//         });
-
-// router.use('/update', update);
-router.post('/update/fullname', (req, res) => {
-    MongoClient.connect(url, (err, db) => {
-        if (err) console.error(err);
-        const user_id = req.body.user_id;
-
-        console.log('user_id from server:',user_id);
-        console.log(' fistname from server:',  req.body.firstname);
-
-        // let updateNamePromise = new Promise((resolve, reject) => {
-        //     db.collection('users').updateOne(
-        //         {firstname: req.body.firstname},
-        //         {$set: {firstname: req.body.firstname, lastname: req.body.lastname} },
-        //         function (err, object) {
-        //             err ? reject(err.message) : resolve();
-        //         });
-        // });
-        // updateNamePromise
-        // .then(() => res.redirect('/user/update/fullname/successful'))
-        // .catch(e => console.error(e));
-
-        db.collection('users').updateOne(
-            {_id: mongo.ObjectId(user_id)},
-            {$set: {firstname: req.body.firstname}}
-        );
-        res.redirect('/user/update/fullname/successful');
-        db.close();
-
-        console.log('name change successful! ');
-    });
-
-    // res.end();
-})
-// router.get('/update/fullname/successful', (req, res) => {
-//     // setTimeout(() => res.redirect('/user'), 2000)
-//     res.redirect('/user')
+router.use('/update', update);
+// router.post('/update/fullname', (req, res) => {
+//     MongoClient.connect(url, (err, db) => {
+//         if (err) console.error(err);
+//         const user_id = req.body.user_id;
 //
-// })
-// .post('/username', (req, res) => {
+//         console.log('user_id from server:',user_id);
+//         console.log(' fistname from server:',  req.body.firstname);
 //
-// })
+//         db.collection('users').updateOne(
+//             {_id: mongo.ObjectId(user_id)},
+//             {$set: {firstname: req.body.firstname}}
+//         );
+//         res.redirect('/user/update/fullname/successful');
+//         db.close();
+//
+//         console.log('name change successful! ');
+//     });
+// });
 
 router.route('/login')
         .post((req, res) => {
@@ -71,7 +44,8 @@ router.route('/login')
                      if (err) console.error(err);
                      // console.log('docs.length:', docs.length);
                      if (docs.length) {
-                         app.set('docs', docs);
+                         // app.set('docs', docs);
+                         session.user = docs;
                          // console.log(app.get('docs'));
                          res.redirect('/user');
 
@@ -86,13 +60,11 @@ router.route('/login')
             // res.end()
 
         });
-        // .get((req, res) => {
-        //     res.send(app.get('docs'));
-        // })
 
-router.get('/api', (req, res) => {
-    res.send(app.get('docs'));
-});
+// router.get('/api', (req, res) => {
+//     // res.send(app.get('docs'));
+//     res.send(session.user);
+// });
 
 router.route('/signup')
         .post((req, res) => {
@@ -119,10 +91,10 @@ router.route('/signup')
                                     password: req.body.password,
                                     email: req.body.email
                                 };
-                                db.collection('users')
-                                .insert(schema);
+                                db.collection('users').insert(schema);
                                 db.close();
-                                app.set('docs', [schema]);
+                                session.user = [schema];
+                                // app.set('docs', [schema]);
                                 // res.send('Sign-up successful!');
                                 res.redirect('/user')
                             }
