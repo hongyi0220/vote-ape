@@ -16,9 +16,6 @@ router
             if (err) console.error(err);
             const user_id = req.body.user_id;
 
-            // console.log('user_id from server:',user_id);
-            // console.log(' fistname from server:',  req.body.firstname);
-
             const collection = db.collection('users');
             collection.updateOne(
                 {_id: mongo.ObjectId(user_id)},
@@ -30,7 +27,7 @@ router
             collection.find({_id: mongo.ObjectId(user_id)})
                 .toArray((err, docs) => {
                     if (err) console.error(err);
-                    session.user = docs;
+                    session.data.user = docs;
                     res.redirect('/user/update/fullname/successful')
                 });
             db.close();

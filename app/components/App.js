@@ -9,45 +9,71 @@ import { DropDownMenu } from './DropDownMenu';
 class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state ={
-            userInfo: null,
-            authenticated: false,
+        this.state = {
+            user: {
+                data: null,
+                authenticated: false,
+                mypolls: null
+            },
             memory: {
                 firstname: null,
                 lastname: null
             },
             ui: {
-                dropDownMenu: false
+                dropDownMenu: false,
+                numOfAddOptions: 0
             }
         };
-        this.getUserInfo = this.getUserInfo.bind(this);
+        // console.log('state in constructor',this.state);
+        this.getUserData = this.getUserData.bind(this);
         this.updateName = this.updateName.bind(this);
         this.handleCLickFromMenu= this.handleCLickFromMenu.bind(this);
         this.popMenu = this.popMenu.bind(this);
+        this.addOption = this.addOption.bind(this);
+    }
+
+    // getMyPolls() {
+    //
+    // }
+
+    addOption() {
+        this.setState(prevState => ({
+            ui: {
+                ...prevState.ui,
+                numOfAddOptions: prevState.ui.numOfAddOptions + 1
+            }
+        }));
     }
 
     handleCLickFromMenu(e) {
-        console.log(e.target.className,'triggered closeMenu()');
+        // console.log(e.target,'triggered closeMenu()');
         const url = 'http://localhost:8080/api/signout';
+
         const init = {
             mothod: 'GET',
             headers: new Headers(),
             // credentials: 'same-origin'
         }
+
         const closeMenu = () => {
-            this.setState({
+            this.setState(prevState => ({
                 ui: {
-                    ...this.state.ui,
+                    ...prevState.ui,
                     dropDownMenu: false
                 }
-            });
-            // if (e) e.stopPropagation();
+            }));
         };
+
         if (e.target.className === 'menu-signout')
             fetch(url, init)
             .then(() => {
                 closeMenu();
-                this.setState({ authenticated: false });
+                this.setState({
+                    user: {
+                        ...this.state.user,
+                        authenticated: false
+                    }
+                });
                 this.props.history.push('/');
             });
         // else if (e.target.className === 'menu-dashboard') closeMenu();
@@ -69,43 +95,49 @@ class App extends React.Component {
         this.setState({ memory });
     }
 
-    getUserInfo() {
-        const url = 'http://localhost:8080/api/getuserinfo';
+    getUserData() {
+        const url = 'http://localhost:8080/api/getuserdata';
         const headers = new Headers();
         const init = { method: 'GET',
                        headers: headers };
        fetch(url, init)
        .then(res => res.json())
        .then(resJson => {
-           const firstname = resJson[0].firstname;
-           const lastname = resJson[0].lastname;
+           const firstname = resJson.user.firstname;
+           const lastname = resJson.user.lastname;
+           const mypolls = resJson.mypolls;
            this.setState({
                ...this.state,
-               userInfo: resJson,
-               authenticated: true,
-               memory:
-               {
+               user: {
+                   data: resJson.user,
+                   authenticated: true,
+                   mypolls: mypolls
+               },
+               memory: {
                    ...this.state.memory,
                    firstname: firstname,
                    lastname: lastname
+
                }
            });
        });
     }
 
     componentDidMount() {
-        this.getUserInfo();
+        this.getUserData();
     }
 
     render() {
-        const auth = this.state.authenticated;
+        const auth = this.state.user.authenticated;
+
+        // const userprops ={}
         return (
             <div onClick={this.handleCLickFromMenu}>
             {/* // <div> */}
                 <Nav state={this.state} popMenu={this.popMenu}/>
                 {auth ? <DropDownMenu popped={this.state.ui.dropDownMenu} handleCLickFromMenu={this.handleCLickFromMenu}/> : ''}
                 <Main />
-                <User updateName={this.updateName} state={this.state}/>
+                <User updateName={this.updateName} addOption={this.addOption} state={this.state}/>
                 <Footer />
             </div>
         );

@@ -13,24 +13,19 @@ const update = require('./update')
 app.use(bodyParser.json());
 
 router.use('/update', update);
-// router.post('/update/fullname', (req, res) => {
-//     MongoClient.connect(url, (err, db) => {
-//         if (err) console.error(err);
-//         const user_id = req.body.user_id;
-//
-//         console.log('user_id from server:',user_id);
-//         console.log(' fistname from server:',  req.body.firstname);
-//
-//         db.collection('users').updateOne(
-//             {_id: mongo.ObjectId(user_id)},
-//             {$set: {firstname: req.body.firstname}}
-//         );
-//         res.redirect('/user/update/fullname/successful');
-//         db.close();
-//
-//         console.log('name change successful! ');
-//     });
-// });
+
+router.post('/create', (req, res) => {
+    MongoClient.connect(url, (err, db) => {
+        if (err) console.error(err);
+        let schema = req.body;
+        // console.log('schema', schema);
+        // console.log('session.data.user', session.data.user);
+        schema.user = session.data.user.username;
+        db.collection('polls').insert(schema);
+        db.close();
+    });
+    res.redirect('/user/create/successful');
+});
 
 router.route('/login')
         .post((req, res) => {
@@ -45,26 +40,25 @@ router.route('/login')
                      // console.log('docs.length:', docs.length);
                      if (docs.length) {
                          // app.set('docs', docs);
-                         session.user = docs;
+                         session.data = {};
+                         session.data.user = docs[0];
                          // console.log(app.get('docs'));
-                         res.redirect('/user');
-
+                         // res.redirect('/user');
                      } else {
                          // res.send('Oops, something went horribly wrong ;p')
                          res.redirect('/user/login/error')
                      };
                  });
+                 db.collection('polls').find({
+                     username: req.body.username
+                 }).toArray((err, docs) => {
+                     if (err) console.error(err);
+                     if (docs.length) session.data.mypolls = docs;
+                     res.redirect('/user');
+                 })
                  db.close();
-                 // res.send('login successful!');
             });
-            // res.end()
-
         });
-
-// router.get('/api', (req, res) => {
-//     // res.send(app.get('docs'));
-//     res.send(session.user);
-// });
 
 router.route('/signup')
         .post((req, res) => {
@@ -93,7 +87,8 @@ router.route('/signup')
                                 };
                                 db.collection('users').insert(schema);
                                 db.close();
-                                session.user = [schema];
+                                session.data = {};
+                                session.data.user = schema;
                                 // app.set('docs', [schema]);
                                 // res.send('Sign-up successful!');
                                 res.redirect('/user')

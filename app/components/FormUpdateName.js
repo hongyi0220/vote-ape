@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 export const FormUpdateName = props => {
     const firstname = props.formProps.userInfo.firstname;
     const lastname = props.formProps.userInfo.lastname;
-    // const user_id = props.userInfo._id['$oid'];
     const user_id = props.formProps.userInfo._id;
     const updateName = props.formProps.updateName;
     const memory = props.formProps.memory;

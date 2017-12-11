@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom';
 
 export const UserContent = props => {
     // componentWillReceiveProps(nextProps) {
-    //     this.setState({ userInfo: nextProps.userInfo });
+    //     this.setState({ userData: nextProps.userData });
     // }
-    const userInfo = props.state.userInfo[0];
+    const userData = props.state.user.data;
+    const mypolls = props.state.user.mypolls;
 
     const maskPassword = password => {
         let result = '';
@@ -15,33 +16,37 @@ export const UserContent = props => {
 
     return (
         <div className='user-content-container'>
-            <div className='my-account'>My Account</div>
+            <div className='my-account'>Dashboard</div>
             <h3>Login Details</h3>
             <div className='login-details-box'>
                 <div className='row'>
                     <div className='col'>
                         Name<br/>
-                        {`${userInfo ? userInfo.firstname : ''} ${userInfo ? userInfo.lastname : ''}`}&nbsp;
+                        {`${userData ? userData.firstname : ''} ${userData ? userData.lastname : ''}`}&nbsp;
                         <Link to='/user/update/fullname'>Edit</Link>
                     </div>
                     <div className='col'>
                         Username<br/>
-                        {`${userInfo ? userInfo.username : ''}`}&nbsp;
-                        <Link to='/user/update'>Edit</Link>
+                        {`${userData ? userData.username : ''}`}&nbsp;
+                        <Link to='/user/update/username'>Edit</Link>
                     </div>
                 </div>
                 <div className='row'>
                     <div className='col'>
                         Password<br/>
-                        {`${userInfo ? maskPassword(userInfo.password) : ''}`}&nbsp;
-                        <Link to='/user/update'>Edit</Link>
+                        {`${userData ? maskPassword(userData.password) : ''}`}&nbsp;
+                        <Link to='/user/update/password'>Edit</Link>
                     </div>
                     <div className='col'>
                         Email<br/>
-                        {`${userInfo ? userInfo.email : ''}`}&nbsp;
-                        <Link to='/user/update'>Edit</Link>
+                        {`${userData ? userData.email : ''}`}&nbsp;
+                        <Link to='/user/update/email'>Edit</Link>
                     </div>
                 </div>
+            </div>
+            <h3>My Polls</h3>
+            <div className='my-polls-box'>
+                {/* Create JSX elements from fetch API data*/}
             </div>
         </div>
     );

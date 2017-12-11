@@ -6,17 +6,17 @@ import { FormUpdatePassword } from './FormUpdatePassword';
 import { FormUpdateEmail } from './FormUpdateEmail';
 
 export const Update = props => {
-    const userInfo = props.state.userInfo[0];
+    const userData = props.state.user.data;
     const memory = props.state.memory;
     const updateName = props.updateName;
-    const formProps = {userInfo, memory, updateName};
+    const formProps = {userData, memory, updateName};
     return (
         <div className='update-box'>
             <Switch>
                 <Route path='/user/update/fullname' render={ () => <FormUpdateName formProps={formProps} /> } />
-                <Route path='/user/update/username' render={ () => <FormUpdateUsername userInfo={userInfo} /> } />
-                <Route path='/user/update/password' render={ () => <FormUpdatePassword userInfo={userInfo} /> } />
-                <Route path='/user/update/email' render={ () => <FormUpdateEmail userInfo={userInfo}/> } />
+                <Route path='/user/update/username' render={ () => <FormUpdateUsername userData={userData} /> } />
+                <Route path='/user/update/password' render={ () => <FormUpdatePassword userData={userData} /> } />
+                <Route path='/user/update/email' render={ () => <FormUpdateEmail userData={userData}/> } />
             </Switch>
         </div>
     );

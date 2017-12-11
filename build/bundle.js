@@ -2384,8 +2384,8 @@ var isExtraneousPopstateEvent = function isExtraneousPopstateEvent(event) {
 
 
 const Nav = props => {
-    const auth = props.state.authenticated;
-    const userInfo = props.state.userInfo;
+    const auth = props.state.user.authenticated;
+    const userData = props.state.user.data;
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { className: 'nav-container' },
@@ -2394,6 +2394,12 @@ const Nav = props => {
             { to: '/' },
             'Logo'
         ),
+        '\xA0\xA0',
+        auth ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+            { to: '/user/create' },
+            'CREATE'
+        ) : '',
         '\xA0\xA0',
         auth ? '' : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'div',
@@ -2417,7 +2423,7 @@ const Nav = props => {
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 { className: 'username', onClick: props.popMenu },
-                userInfo[0].firstname,
+                userData.firstname,
                 '!'
             )
         ) : ''
@@ -2451,7 +2457,7 @@ const Footer = props => {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(38);
-module.exports = __webpack_require__(96);
+module.exports = __webpack_require__(98);
 
 
 /***/ }),
@@ -23415,7 +23421,7 @@ module.exports = function hoistNonReactStatics(targetComponent, sourceComponent,
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__User__ = __webpack_require__(81);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Nav__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Footer__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__DropDownMenu__ = __webpack_require__(95);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__DropDownMenu__ = __webpack_require__(97);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 
@@ -23430,41 +23436,64 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     constructor(props) {
         super(props);
         this.state = {
-            userInfo: null,
-            authenticated: false,
+            user: {
+                data: null,
+                authenticated: false
+            },
             memory: {
                 firstname: null,
                 lastname: null
             },
             ui: {
-                dropDownMenu: false
+                dropDownMenu: false,
+                numOfAddOptions: 0
             }
         };
-        this.getUserInfo = this.getUserInfo.bind(this);
+        // console.log('state in constructor',this.state);
+        this.getUserData = this.getUserData.bind(this);
         this.updateName = this.updateName.bind(this);
         this.handleCLickFromMenu = this.handleCLickFromMenu.bind(this);
         this.popMenu = this.popMenu.bind(this);
+        this.addOption = this.addOption.bind(this);
+    }
+
+    // getMyPolls() {
+    //
+    // }
+
+    addOption() {
+        this.setState(prevState => ({
+            ui: _extends({}, prevState.ui, {
+                numOfAddOptions: prevState.ui.numOfAddOptions + 1
+            })
+        }));
     }
 
     handleCLickFromMenu(e) {
-        console.log(e.target.className, 'triggered closeMenu()');
+        // console.log(e.target,'triggered closeMenu()');
         const url = 'http://localhost:8080/api/signout';
+
         const init = {
             mothod: 'GET',
             headers: new Headers()
             // credentials: 'same-origin'
         };
+
         const closeMenu = () => {
-            this.setState({
-                ui: _extends({}, this.state.ui, {
+            this.setState(prevState => ({
+                ui: _extends({}, prevState.ui, {
                     dropDownMenu: false
                 })
-            });
-            // if (e) e.stopPropagation();
+            }));
         };
+
         if (e.target.className === 'menu-signout') fetch(url, init).then(() => {
             closeMenu();
-            this.setState({ authenticated: false });
+            this.setState({
+                user: _extends({}, this.state.user, {
+                    authenticated: false
+                })
+            });
             this.props.history.push('/');
         });
         // else if (e.target.className === 'menu-dashboard') closeMenu();
@@ -23485,17 +23514,19 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         this.setState({ memory });
     }
 
-    getUserInfo() {
-        const url = 'http://localhost:8080/api/getuserinfo';
+    getUserData() {
+        const url = 'http://localhost:8080/api/getuserdata';
         const headers = new Headers();
         const init = { method: 'GET',
             headers: headers };
         fetch(url, init).then(res => res.json()).then(resJson => {
-            const firstname = resJson[0].firstname;
-            const lastname = resJson[0].lastname;
+            const firstname = resJson.firstname;
+            const lastname = resJson.lastname;
             this.setState(_extends({}, this.state, {
-                userInfo: resJson,
-                authenticated: true,
+                user: {
+                    data: resJson,
+                    authenticated: true
+                },
                 memory: _extends({}, this.state.memory, {
                     firstname: firstname,
                     lastname: lastname
@@ -23505,18 +23536,20 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     }
 
     componentDidMount() {
-        this.getUserInfo();
+        this.getUserData();
     }
 
     render() {
-        const auth = this.state.authenticated;
+        const auth = this.state.user.authenticated;
+
+        // const userprops ={}
         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'div',
             { onClick: this.handleCLickFromMenu },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__Nav__["a" /* Nav */], { state: this.state, popMenu: this.popMenu }),
             auth ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__DropDownMenu__["a" /* DropDownMenu */], { popped: this.state.ui.dropDownMenu, handleCLickFromMenu: this.handleCLickFromMenu }) : '',
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__Main__["a" /* Main */], null),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__User__["a" /* User */], { updateName: this.updateName, state: this.state }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__User__["a" /* User */], { updateName: this.updateName, addOption: this.addOption, state: this.state }),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__Footer__["a" /* Footer */], null)
         );
     }
@@ -23566,7 +23599,7 @@ const Landing = props => {
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'h1',
         null,
-        'Welcome to Vote Ape!!!'
+        'Welcome to Vote Ape!'
     );
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = Landing;
@@ -23590,6 +23623,10 @@ const Landing = props => {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__UserContent__ = __webpack_require__(87);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Updates__ = __webpack_require__(88);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__UpdateSuccessful__ = __webpack_require__(94);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__FormCreate__ = __webpack_require__(95);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__CreateSuccessful__ = __webpack_require__(96);
+
+
 
 
 
@@ -23604,24 +23641,27 @@ const Landing = props => {
 
 
 const User = props => {
-    const auth = props.state.authenticated;
-    console.log('auth at User.js?', auth ? 'yes' : 'no');
+    const auth = props.state.user.authenticated;
+    const state = props.state;
+    // console.log('auth at User.js?', auth ? 'yes': 'no');
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         null,
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["d" /* Switch */],
             null,
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user/create', render: () => auth ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_12__FormCreate__["a" /* FormCreate */], { addOption: props.addOption, state: state }) : '' }),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user/signup', component: __WEBPACK_IMPORTED_MODULE_2__Form__["a" /* Form */] }),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user/login', render: () => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__FormLogin__["a" /* FormLogin */], null) }),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user', render: () => auth ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9__UserContent__["a" /* UserContent */], { state: props.state }) : '' })
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user', render: () => auth ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9__UserContent__["a" /* UserContent */], { state: state }) : '' })
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["d" /* Switch */],
             null,
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user/update/fullname/successful', component: __WEBPACK_IMPORTED_MODULE_11__UpdateSuccessful__["a" /* UpdateSuccessful */] }),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user/update/(fullname)?/',
-                render: () => auth ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_10__Updates__["a" /* Updates */], { state: props.state, updateName: props.updateName }) : '' })
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user/create/successful', component: __WEBPACK_IMPORTED_MODULE_13__CreateSuccessful__["a" /* CreateSuccessful */] }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user/update/(fullname | username | password | email)/successful', component: __WEBPACK_IMPORTED_MODULE_11__UpdateSuccessful__["a" /* UpdateSuccessful */] }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/(user\\/update\\/(fullname | username | password | email))',
+                render: () => auth ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_10__Updates__["a" /* Updates */], { state: state, updateName: props.updateName }) : '' })
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user/signup/invalid/email', component: __WEBPACK_IMPORTED_MODULE_7__InvalidEmail__["a" /* InvalidEmail */] }),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user/signup/invalid', component: __WEBPACK_IMPORTED_MODULE_6__InvalidUsername__["a" /* InvalidUsername */] }),
@@ -23828,9 +23868,9 @@ const LoginError = props => {
 
 const UserContent = props => {
     // componentWillReceiveProps(nextProps) {
-    //     this.setState({ userInfo: nextProps.userInfo });
+    //     this.setState({ userData: nextProps.userData });
     // }
-    const userInfo = props.state.userInfo[0];
+    const userData = props.state.user.data;
 
     const maskPassword = password => {
         let result = '';
@@ -23844,7 +23884,7 @@ const UserContent = props => {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'div',
             { className: 'my-account' },
-            'My Account'
+            'Dashboard'
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'h3',
@@ -23862,7 +23902,7 @@ const UserContent = props => {
                     { className: 'col' },
                     'Name',
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
-                    `${userInfo ? userInfo.firstname : ''} ${userInfo ? userInfo.lastname : ''}`,
+                    `${userData ? userData.firstname : ''} ${userData ? userData.lastname : ''}`,
                     '\xA0',
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
@@ -23875,11 +23915,11 @@ const UserContent = props => {
                     { className: 'col' },
                     'Username',
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
-                    `${userInfo ? userInfo.username : ''}`,
+                    `${userData ? userData.username : ''}`,
                     '\xA0',
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                        { to: '/user/update' },
+                        { to: '/user/update/username' },
                         'Edit'
                     )
                 )
@@ -23892,11 +23932,11 @@ const UserContent = props => {
                     { className: 'col' },
                     'Password',
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
-                    `${userInfo ? maskPassword(userInfo.password) : ''}`,
+                    `${userData ? maskPassword(userData.password) : ''}`,
                     '\xA0',
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                        { to: '/user/update' },
+                        { to: '/user/update/password' },
                         'Edit'
                     )
                 ),
@@ -23905,16 +23945,22 @@ const UserContent = props => {
                     { className: 'col' },
                     'Email',
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
-                    `${userInfo ? userInfo.email : ''}`,
+                    `${userData ? userData.email : ''}`,
                     '\xA0',
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                        { to: '/user/update' },
+                        { to: '/user/update/email' },
                         'Edit'
                     )
                 )
             )
-        )
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'h3',
+            null,
+            'My Polls'
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'my-polls-box' })
     );
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = UserContent;
@@ -23965,10 +24011,10 @@ const Updates = props => {
 
 
 const Update = props => {
-    const userInfo = props.state.userInfo[0];
+    const userData = props.state.user.data;
     const memory = props.state.memory;
     const updateName = props.updateName;
-    const formProps = { userInfo, memory, updateName };
+    const formProps = { userData, memory, updateName };
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { className: 'update-box' },
@@ -23976,9 +24022,9 @@ const Update = props => {
             __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["d" /* Switch */],
             null,
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user/update/fullname', render: () => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__FormUpdateName__["a" /* FormUpdateName */], { formProps: formProps }) }),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user/update/username', render: () => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__FormUpdateUsername__["a" /* FormUpdateUsername */], { userInfo: userInfo }) }),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user/update/password', render: () => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__FormUpdatePassword__["a" /* FormUpdatePassword */], { userInfo: userInfo }) }),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user/update/email', render: () => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__FormUpdateEmail__["a" /* FormUpdateEmail */], { userInfo: userInfo }) })
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user/update/username', render: () => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__FormUpdateUsername__["a" /* FormUpdateUsername */], { userData: userData }) }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user/update/password', render: () => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__FormUpdatePassword__["a" /* FormUpdatePassword */], { userData: userData }) }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user/update/email', render: () => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__FormUpdateEmail__["a" /* FormUpdateEmail */], { userData: userData }) })
         )
     );
 };
@@ -23999,7 +24045,6 @@ const Update = props => {
 const FormUpdateName = props => {
     const firstname = props.formProps.userInfo.firstname;
     const lastname = props.formProps.userInfo.lastname;
-    // const user_id = props.userInfo._id['$oid'];
     const user_id = props.formProps.userInfo._id;
     const updateName = props.formProps.updateName;
     const memory = props.formProps.memory;
@@ -24177,6 +24222,108 @@ const UpdateSuccessful = props => {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+
+// import { Switch, Route } from 'react-router-dom';
+const FormCreate = props => {
+    const numOfAddOptions = props.state.ui.numOfAddOptions;
+    // console.log('props.state from <FormCreate>',props.state);
+    // console.log('numOfAddOptions',numOfAddOptions);
+    const dummyArr = numOfAddOptions => {
+        let arr = [];
+        for (let i = 0; i < numOfAddOptions; i++) arr.push(null);
+        console.log('arr', arr);
+        return arr;
+    };
+    // console.log(dummyArr(numOfAddOptions));
+
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        null,
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'form',
+            { action: '/user/create', method: 'post' },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'option' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'label',
+                    { htmlFor: 'poll-name' },
+                    'Poll name'
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'poll-name', name: 'poll_name', type: 'text' })
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'option' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'label',
+                    { htmlFor: 'option1' },
+                    'Option 1'
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'option1', name: 'option1', type: 'text', placeholder: 'Bananas' })
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'option' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'label',
+                    { htmlFor: 'option2' },
+                    'Option 2'
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'option2', name: 'option2', type: 'text', placeholder: 'Grapes' })
+            ),
+            dummyArr(numOfAddOptions).map((el, i) => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'option' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'label',
+                    { htmlFor: `option${i + 3}` },
+                    `Option ${i + 3}`
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: `option${i + 3}`, name: `option${i + 3}`, type: 'text', placeholder: 'Fruit' })
+            )),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'button',
+                { type: 'button', onClick: props.addOption },
+                'Add more options'
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'button',
+                { type: 'submit' },
+                'CREATE POLL'
+            )
+        )
+    );
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = FormCreate;
+
+
+/***/ }),
+/* 96 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+
+
+const CreateSuccessful = props => {
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        null,
+        'Poll created!'
+    );
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = CreateSuccessful;
+
+
+/***/ }),
+/* 97 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom__ = __webpack_require__(4);
 
 
@@ -24207,7 +24354,7 @@ const DropDownMenu = props => {
 
 
 /***/ }),
-/* 96 */
+/* 98 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
