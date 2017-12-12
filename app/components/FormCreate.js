@@ -13,27 +13,28 @@ export const FormCreate = props => {
     // console.log(dummyArr(numOfAddOptions));
 
     return (
-        <div>
+        <div className='form-create-container'>
+            <h3>Create a New Poll</h3>
             <form action='/user/create' method='post'>
-                <div className='option'>
-                    <label htmlFor='poll-name'>Poll name</label>
-                    <input id='poll-name' name='poll_name' type='text'></input>
+                <div className='poll-name'>
+                    {/* <label htmlFor='poll-name'>Poll name</label> */}
+                    <input id='poll-name' name='poll_name' type='text' placeholder='Enter your question'></input>
                 </div>
-                <div className='option'>
-                    <label htmlFor='option1'>Option 1</label>
-                    <input id='option1' name='option1' type='text' placeholder='Bananas'></input>
+                <div className='choice'>
+                    {/* <label htmlFor='choice1'>Option 1</label> */}
+                    <input id='choice1' name='choices[]' type='text' placeholder='Enter an answer choice'></input>
                 </div>
-                <div className='option'>
-                    <label htmlFor='option2'>Option 2</label>
-                    <input id='option2' name='option2' type='text' placeholder='Grapes'></input>
+                <div className='choice'>
+                    {/* <label htmlFor='choice2'>Option 2</label> */}
+                    <input id='choice2' name='choices[]' type='text' placeholder='Enter an answer choice'></input>
                 </div>
                 {dummyArr(numOfAddOptions).map((el, i) =>
-                    <div className='option'>
-                        <label htmlFor={`option${i + 3}`}>{`Option ${i + 3}`}</label>
-                        <input id={`option${i + 3}`} name={`option${i + 3}`} type='text' placeholder='Fruit'></input>
+                    <div className='choice'>
+                        {/* <label htmlFor={`choice${i + 3}`}>{`Option ${i + 3}`}</label> */}
+                        <input id={`choice${i + 3}`} name='choices[]' type='text' placeholder='Enter an answer choice'></input>
                     </div>
                 )}
-                <button type='button' onClick={props.addOption}>Add more options</button>
+                <button type='button' onClick={props.addOption}>Add more choices</button>
                 <button type='submit'>CREATE POLL</button>
             </form>
         </div>

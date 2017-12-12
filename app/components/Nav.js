@@ -12,7 +12,7 @@ export const Nav = props => {
             <Link to='/polls' >Polls</Link>&nbsp;&nbsp;
             {auth ? <Link to='/user/create'>CREATE</Link> : ''}&nbsp;&nbsp;
             {auth ? '' : <div className='auth'><Link to='/user/login'>SIGN IN</Link>&nbsp;&nbsp;<Link to='/user/signup'>SIGN UP</Link></div>}
-            {auth ? (<div className='link-to-user'>Hello, <div className='username' onClick={props.popMenu}>{userData.firstname}!</div></div>) : ''}
+            {auth ? (<div className='link-to-user'>Hello, <div className='username' onClick={props.toggleMenu}>{userData.firstname}!</div></div>) : ''}
         </div>
     );
 }

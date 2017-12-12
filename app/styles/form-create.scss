@@ -1,0 +1,18 @@
+.form-create-container {
+    text-align: center;
+    form {
+
+        border: 1px solid gray;
+        .poll-name {
+            border-bottom: 1px solid gray;
+            margin: 0.5em;
+        }
+        .choice {
+            margin: 0.5em;
+        }
+        button {
+            margin-bottom: 0.5em;
+        }
+    }
+    margin-bottom: 1em;
+}

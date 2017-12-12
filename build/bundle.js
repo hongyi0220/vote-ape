@@ -2429,7 +2429,7 @@ const Nav = props => {
             'Hello, ',
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                { className: 'username', onClick: props.popMenu },
+                { className: 'username', onClick: props.toggleMenu },
                 userData.firstname,
                 '!'
             )
@@ -23452,27 +23452,55 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
             },
             memory: {
                 firstname: null,
-                lastname: null
+                lastname: null,
+                poll: null
             },
             ui: {
                 dropDownMenu: false,
-                numOfAddOptions: 0
+                numOfAddOptions: 0,
+                poll: false
             },
             polls: null
         };
         // console.log('state in constructor',this.state);
         this.getUserData = this.getUserData.bind(this);
         this.updateName = this.updateName.bind(this);
-        this.handleCLickFromMenu = this.handleCLickFromMenu.bind(this);
-        this.popMenu = this.popMenu.bind(this);
+        this.handleClickFromMenu = this.handleClickFromMenu.bind(this);
+        this.toggleMenu = this.toggleMenu.bind(this);
         this.addOption = this.addOption.bind(this);
-        // this.topLevelNav = this.topLevelNav.bind(this);
+        this.handleClickFromPoll = this.handleClickFromPoll.bind(this);
+        this.closePopUps = this.closePopUps.bind(this);
+        this.popPoll = this.popPoll.bind(this);
     }
 
-    // topLevelNav(href) {
-    //     location.assign(href);
-    //     return false;
-    // }
+    popPoll(e) {
+        // console.log('popPoll triggered by: ', e.target);
+        this.setState({
+            ui: _extends({}, this.state.ui, {
+                poll: true
+            })
+        });
+        e.stopPropagation();
+    }
+
+    handleClickFromPoll(e) {
+        // console.log('handleClickFrompoll triggered');
+        // console.log(this.state);
+        const state = _extends({}, this.state);
+        const polls = state.polls;
+        // console.log('polls inside handleClickFromPoll:', state.polls);
+        const id = e.target.id;
+        for (let i = 0; i < polls.length; i++) {
+            const poll = polls[i];
+            // console.log('poll found inside forloop: ', poll);
+            if (poll._id === id) this.setState({
+                memory: _extends({}, this.state.memory, {
+                    poll: poll
+                })
+            });
+            break;
+        }
+    }
 
     addOption() {
         this.setState(prevState => ({
@@ -23482,39 +23510,51 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         }));
     }
 
-    handleCLickFromMenu(e) {
-        // console.log(e.target,'triggered closeMenu()');
+    closePopUps(e) {
+        if (e) console.log(e.target, 'triggered closePopUps');
+        this.setState(prevState => ({
+            ui: _extends({}, prevState.ui, {
+                dropDownMenu: false,
+                poll: false
+            })
+        }));
+        if (e) e.stopPropagation();
+    }
+
+    handleClickFromMenu(e) {
+        console.log(e.target, 'triggered handleClickFromMenu');
         const url = 'http://localhost:8080/api/signout';
 
         const init = {
             mothod: 'GET',
             headers: new Headers()
             // credentials: 'same-origin'
-        };
 
-        const closeMenu = () => {
-            this.setState(prevState => ({
-                ui: _extends({}, prevState.ui, {
-                    dropDownMenu: false
-                })
-            }));
-        };
 
-        if (e.target.className === 'menu-signout') fetch(url, init).then(() => {
-            closeMenu();
+            // const closeMenu = () => {
+            //     this.setState(prevState => ({
+            //         ui: {
+            //             ...prevState.ui,
+            //             dropDownMenu: false
+            //         }
+            //     }));
+            // };
+
+        };if (e.target.className === 'menu-signout') fetch(url, init).then(() => {
+            // closeMenu();
+            this.closePopUps();
             this.setState({
                 user: _extends({}, this.state.user, {
                     authenticated: false
                 })
             });
             this.props.history.push('/');
-        });
-        // else if (e.target.className === 'menu-dashboard') closeMenu();
-        else closeMenu();
+        });else if (e.target.className === 'menu-dashboard') closePopUps();
+        // else closePopUps();
         e.stopPropagation();
     }
 
-    popMenu(e) {
+    toggleMenu(e) {
         let ui = _extends({}, this.state.ui);
         ui.dropDownMenu = this.state.ui.dropDownMenu ? false : true;
         this.setState({ ui });
@@ -23547,33 +23587,32 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
                 memory: _extends({}, this.state.memory, {
                     firstname: firstname,
                     lastname: lastname
-                }),
-                polls: polls
-            }), () => console.log(`setState after getuserdata api: ${this.state}`));
+                    // polls: polls
+                }) }), () => console.log(`setState after getuserdata api: ${this.state}`));
         });
     }
 
     componentWillMount() {
         const url = 'http://localhost:8080/api/polls';
         fetch(url).then(res => res.json()).then(resJson => this.setState({ polls: resJson }));
+        this.getUserData();
     }
 
     componentDidMount() {
-        this.getUserData();
+        // this.getUserData();
     }
 
     render() {
         const auth = this.state.user.authenticated;
-
         // const userprops ={}
         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'div',
-            { onClick: this.handleCLickFromMenu },
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__Nav__["a" /* Nav */], { state: this.state, popMenu: this.popMenu }),
-            auth ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__DropDownMenu__["a" /* DropDownMenu */], { popped: this.state.ui.dropDownMenu, handleCLickFromMenu: this.handleCLickFromMenu }) : '',
+            { onClick: this.closePopUps },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__Nav__["a" /* Nav */], { state: this.state, toggleMenu: this.toggleMenu }),
+            auth ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__DropDownMenu__["a" /* DropDownMenu */], { popped: this.state.ui.dropDownMenu, handleClickFromMenu: this.handleClickFromMenu }) : '',
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__Main__["a" /* Main */], null),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__User__["a" /* User */], { updateName: this.updateName, addOption: this.addOption, state: this.state }),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/polls', render: () => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__Polls__["a" /* Polls */], { state: this.state }) }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/polls', render: () => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__Polls__["a" /* Polls */], { popPoll: this.popPoll, history: this.props.history, handleClickFromPoll: this.handleClickFromPoll, state: this.state }) }),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__Footer__["a" /* Footer */], null)
         );
     }
@@ -23990,8 +24029,8 @@ const UserContent = props => {
             { className: 'my-polls-box' },
             mypolls ? mypolls.map((poll, i) => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                { className: 'poll' },
-                `Title: ${poll.poll_name}  Created: ${poll.created}`
+                { className: 'poll', id: poll._id },
+                `Title: ${poll.poll_name}  Created: ${poll.created} by ${poll.username}`
             )) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 null,
@@ -24272,54 +24311,39 @@ const FormCreate = props => {
 
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
-        null,
+        { className: 'form-create-container' },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'h3',
+            null,
+            'Create a New Poll'
+        ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'form',
             { action: '/user/create', method: 'post' },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                { className: 'option' },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'label',
-                    { htmlFor: 'poll-name' },
-                    'Poll name'
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'poll-name', name: 'poll_name', type: 'text' })
+                { className: 'poll-name' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'poll-name', name: 'poll_name', type: 'text', placeholder: 'Enter your question' })
             ),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                { className: 'option' },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'label',
-                    { htmlFor: 'option1' },
-                    'Option 1'
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'option1', name: 'option1', type: 'text', placeholder: 'Bananas' })
+                { className: 'choice' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'choice1', name: 'choices[]', type: 'text', placeholder: 'Enter an answer choice' })
             ),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                { className: 'option' },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'label',
-                    { htmlFor: 'option2' },
-                    'Option 2'
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'option2', name: 'option2', type: 'text', placeholder: 'Grapes' })
+                { className: 'choice' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'choice2', name: 'choices[]', type: 'text', placeholder: 'Enter an answer choice' })
             ),
             dummyArr(numOfAddOptions).map((el, i) => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                { className: 'option' },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'label',
-                    { htmlFor: `option${i + 3}` },
-                    `Option ${i + 3}`
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: `option${i + 3}`, name: `option${i + 3}`, type: 'text', placeholder: 'Fruit' })
+                { className: 'choice' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: `choice${i + 3}`, name: 'choices[]', type: 'text', placeholder: 'Enter an answer choice' })
             )),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'button',
                 { type: 'button', onClick: props.addOption },
-                'Add more options'
+                'Add more choices'
             ),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'button',
@@ -24364,7 +24388,7 @@ const CreateSuccessful = props => {
 
 const DropDownMenu = props => {
     const popped = props.popped;
-    const handleCLickFromMenu = props.handleCLickFromMenu;
+    const handleClickFromMenu = props.handleClickFromMenu;
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         null,
@@ -24373,12 +24397,12 @@ const DropDownMenu = props => {
             { className: 'drop-down-menu' },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                { className: 'menu-dashboard', to: '/user', onClick: handleCLickFromMenu },
+                { className: 'menu-dashboard', to: '/user', onClick: handleClickFromMenu },
                 'Dashboard'
             ),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'button',
-                { className: 'menu-signout', type: 'button', onClick: handleCLickFromMenu },
+                { className: 'menu-signout', type: 'button', onClick: handleClickFromMenu },
                 'Sign Out'
             )
         ) : ''
@@ -24401,16 +24425,24 @@ const DropDownMenu = props => {
 
 
 const Polls = props => {
-    let polls = props.state.polls;
+    const polls = props.state.polls;
+    const handleClickFromPoll = props.handleClickFromPoll;
+    const history = props.history;
+    const popped = props.state.ui.poll;
+    const popPoll = props.popPoll;
+    console.log('poll popped: ', popped);
+    // console.log('popPoll:', popPoll);
     console.log('state inside <Polls>:', props.state);
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { className: 'polls-container' },
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { path: 'polls/poll', render: () => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Poll__["a" /* Poll */], null) }),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { path: '/polls/poll', render: () => popped ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Poll__["a" /* Poll */], { state: props.state }) : '' }),
         polls ? polls.map((poll, i) => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'div',
-            { className: 'poll' },
-            `Title: ${poll.poll_name} Created: ${poll.created}`
+            { className: 'poll', id: poll._id, onClick: e => {
+                    popPoll(e);handleClickFromPoll(e);history.push('/polls/poll');
+                } },
+            `Title: ${poll.poll_name} Created: ${poll.created} by ${poll.username}`
         )) : ''
     );
 };
@@ -24428,7 +24460,35 @@ const Polls = props => {
 // import { }
 
 const Poll = props => {
-    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { 'poll-container': true });
+    const poll = props.state.memory.poll;
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        { className: 'poll-container', onClick: e => e.stopPropagation() },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'form',
+            null,
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'legend',
+                null,
+                poll.poll_name
+            ),
+            poll.choices.map((choice, i) => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { onClick: e => e.stopPropagation(), id: `choice${i}`, type: 'radio', name: 'choice', value: poll.choices[i] }),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'label',
+                    { onClick: e => e.stopPropagation(), 'for': `choice${i}` },
+                    poll.choices[i]
+                )
+            )),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'button',
+                { type: 'submit' },
+                'Submit'
+            )
+        )
+    );
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = Poll;
 

@@ -18,27 +18,58 @@ class App extends React.Component {
             },
             memory: {
                 firstname: null,
-                lastname: null
+                lastname: null,
+                poll: null
             },
             ui: {
                 dropDownMenu: false,
-                numOfAddOptions: 0
+                numOfAddOptions: 0,
+                poll: false
             },
             polls: null
         };
         // console.log('state in constructor',this.state);
         this.getUserData = this.getUserData.bind(this);
         this.updateName = this.updateName.bind(this);
-        this.handleCLickFromMenu= this.handleCLickFromMenu.bind(this);
-        this.popMenu = this.popMenu.bind(this);
+        this.handleClickFromMenu= this.handleClickFromMenu.bind(this);
+        this.toggleMenu = this.toggleMenu.bind(this);
         this.addOption = this.addOption.bind(this);
-        // this.topLevelNav = this.topLevelNav.bind(this);
+        this.handleClickFromPoll = this.handleClickFromPoll.bind(this);
+        this.closePopUps = this.closePopUps.bind(this);
+        this.popPoll = this.popPoll.bind(this);
     }
 
-    // topLevelNav(href) {
-    //     location.assign(href);
-    //     return false;
-    // }
+    popPoll(e) {
+        // console.log('popPoll triggered by: ', e.target);
+        this.setState({
+            ui: {
+                ...this.state.ui,
+                poll: true
+            }
+        });
+        e.stopPropagation();
+    }
+
+    handleClickFromPoll(e) {
+        // console.log('handleClickFrompoll triggered');
+        // console.log(this.state);
+        const state = {...this.state};
+        const polls = state.polls
+        // console.log('polls inside handleClickFromPoll:', state.polls);
+        const id = e.target.id;
+        for (let i = 0; i < polls.length; i++) {
+            const poll = polls[i];
+            // console.log('poll found inside forloop: ', poll);
+            if (poll._id === id)
+                this.setState({
+                    memory: {
+                        ...this.state.memory,
+                        poll : poll
+                    }
+                });
+            break;
+        }
+    }
 
     addOption() {
         this.setState(prevState => ({
@@ -49,8 +80,21 @@ class App extends React.Component {
         }));
     }
 
-    handleCLickFromMenu(e) {
-        // console.log(e.target,'triggered closeMenu()');
+    closePopUps(e) {
+        if(e)
+        console.log(e.target,'triggered closePopUps');
+        this.setState(prevState => ({
+            ui: {
+                ...prevState.ui,
+                dropDownMenu: false,
+                poll: false
+            }
+        }));
+        if (e) e.stopPropagation();
+    }
+
+    handleClickFromMenu(e) {
+        console.log(e.target,'triggered handleClickFromMenu');
         const url = 'http://localhost:8080/api/signout';
 
         const init = {
@@ -59,19 +103,20 @@ class App extends React.Component {
             // credentials: 'same-origin'
         }
 
-        const closeMenu = () => {
-            this.setState(prevState => ({
-                ui: {
-                    ...prevState.ui,
-                    dropDownMenu: false
-                }
-            }));
-        };
+        // const closeMenu = () => {
+        //     this.setState(prevState => ({
+        //         ui: {
+        //             ...prevState.ui,
+        //             dropDownMenu: false
+        //         }
+        //     }));
+        // };
 
         if (e.target.className === 'menu-signout')
             fetch(url, init)
             .then(() => {
-                closeMenu();
+                // closeMenu();
+                this.closePopUps();
                 this.setState({
                     user: {
                         ...this.state.user,
@@ -80,12 +125,12 @@ class App extends React.Component {
                 });
                 this.props.history.push('/');
             });
-        // else if (e.target.className === 'menu-dashboard') closeMenu();
-        else closeMenu();
+        else if (e.target.className === 'menu-dashboard') closePopUps();
+        // else closePopUps();
         e.stopPropagation();
     }
 
-    popMenu(e) {
+    toggleMenu(e) {
         let ui = {...this.state.ui};
         ui.dropDownMenu = this.state.ui.dropDownMenu ? false : true;
         this.setState({ ui });
@@ -123,8 +168,8 @@ class App extends React.Component {
                    ...this.state.memory,
                    firstname: firstname,
                    lastname: lastname
-               },
-               polls: polls
+               }
+               // polls: polls
            }, () => console.log(`setState after getuserdata api: ${this.state}`));
        });
     }
@@ -132,24 +177,25 @@ class App extends React.Component {
     componentWillMount() {
         const url = 'http://localhost:8080/api/polls';
         fetch(url).then(res => res.json()).then(resJson => this.setState({ polls: resJson }));
+        this.getUserData();
     }
 
     componentDidMount() {
-        this.getUserData();
+        // this.getUserData();
     }
 
     render() {
         const auth = this.state.user.authenticated;
-
         // const userprops ={}
         return (
-            <div onClick={this.handleCLickFromMenu}>
+            <div onClick={this.closePopUps}>
             {/* // <div> */}
-                <Nav state={this.state} popMenu={this.popMenu}/>
-                {auth ? <DropDownMenu popped={this.state.ui.dropDownMenu} handleCLickFromMenu={this.handleCLickFromMenu}/> : ''}
+                <Nav state={this.state} toggleMenu={this.toggleMenu}/>
+                {auth ? <DropDownMenu popped={this.state.ui.dropDownMenu} handleClickFromMenu={this.handleClickFromMenu}/> : ''}
                 <Main />
                 <User updateName={this.updateName} addOption={this.addOption} state={this.state}/>
-                <Route path='/polls' render={ () => <Polls state={this.state}/>} />
+                <Route path='/polls' render={ () =>
+                    <Polls popPoll={this.popPoll} history={this.props.history} handleClickFromPoll={this.handleClickFromPoll} state={this.state}/>} />
                 <Footer />
             </div>
         );

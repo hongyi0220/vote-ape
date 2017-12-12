@@ -74,6 +74,19 @@ footer {
     cursor: hand;
     cursor: pointer; }
 
+.form-create-container {
+  text-align: center;
+  margin-bottom: 1em; }
+  .form-create-container form {
+    border: 1px solid gray; }
+    .form-create-container form .poll-name {
+      border-bottom: 1px solid gray;
+      margin: 0.5em; }
+    .form-create-container form .choice {
+      margin: 0.5em; }
+    .form-create-container form button {
+      margin-bottom: 0.5em; }
+
 a {
   text-decoration: none; }
 
