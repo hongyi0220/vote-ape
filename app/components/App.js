@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Route } from 'react-router-dom';
 import { Main } from './Main';
 import { User } from './User';
 import { Nav } from './Nav';
 import { Footer } from './Footer';
 import { DropDownMenu } from './DropDownMenu';
+import { Polls } from './Polls';
 
 class App extends React.Component {
     constructor(props) {
@@ -22,7 +23,8 @@ class App extends React.Component {
             ui: {
                 dropDownMenu: false,
                 numOfAddOptions: 0
-            }
+            },
+            polls: null
         };
         // console.log('state in constructor',this.state);
         this.getUserData = this.getUserData.bind(this);
@@ -30,10 +32,12 @@ class App extends React.Component {
         this.handleCLickFromMenu= this.handleCLickFromMenu.bind(this);
         this.popMenu = this.popMenu.bind(this);
         this.addOption = this.addOption.bind(this);
+        // this.topLevelNav = this.topLevelNav.bind(this);
     }
 
-    // getMyPolls() {
-    //
+    // topLevelNav(href) {
+    //     location.assign(href);
+    //     return false;
     // }
 
     addOption() {
@@ -106,21 +110,28 @@ class App extends React.Component {
            const firstname = resJson.user.firstname;
            const lastname = resJson.user.lastname;
            const mypolls = resJson.mypolls;
+           const polls = resJson.polls;
            this.setState({
                ...this.state,
                user: {
                    data: resJson.user,
                    authenticated: true,
                    mypolls: mypolls
+
                },
                memory: {
                    ...this.state.memory,
                    firstname: firstname,
                    lastname: lastname
-
-               }
-           });
+               },
+               polls: polls
+           }, () => console.log(`setState after getuserdata api: ${this.state}`));
        });
+    }
+
+    componentWillMount() {
+        const url = 'http://localhost:8080/api/polls';
+        fetch(url).then(res => res.json()).then(resJson => this.setState({ polls: resJson }));
     }
 
     componentDidMount() {
@@ -138,6 +149,7 @@ class App extends React.Component {
                 {auth ? <DropDownMenu popped={this.state.ui.dropDownMenu} handleCLickFromMenu={this.handleCLickFromMenu}/> : ''}
                 <Main />
                 <User updateName={this.updateName} addOption={this.addOption} state={this.state}/>
+                <Route path='/polls' render={ () => <Polls state={this.state}/>} />
                 <Footer />
             </div>
         );

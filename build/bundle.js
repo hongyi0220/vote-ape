@@ -2386,6 +2386,7 @@ var isExtraneousPopstateEvent = function isExtraneousPopstateEvent(event) {
 const Nav = props => {
     const auth = props.state.user.authenticated;
     const userData = props.state.user.data;
+    // const topLevelNav = props.topLevelNav;
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { className: 'nav-container' },
@@ -2393,6 +2394,12 @@ const Nav = props => {
             __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
             { to: '/' },
             'Logo'
+        ),
+        '\xA0\xA0',
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+            { to: '/polls' },
+            'Polls'
         ),
         '\xA0\xA0',
         auth ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -2457,7 +2464,7 @@ const Footer = props => {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(38);
-module.exports = __webpack_require__(98);
+module.exports = __webpack_require__(100);
 
 
 /***/ }),
@@ -23422,7 +23429,9 @@ module.exports = function hoistNonReactStatics(targetComponent, sourceComponent,
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Nav__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Footer__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__DropDownMenu__ = __webpack_require__(97);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Polls__ = __webpack_require__(98);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 
 
 
@@ -23438,7 +23447,8 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         this.state = {
             user: {
                 data: null,
-                authenticated: false
+                authenticated: false,
+                mypolls: null
             },
             memory: {
                 firstname: null,
@@ -23447,7 +23457,8 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
             ui: {
                 dropDownMenu: false,
                 numOfAddOptions: 0
-            }
+            },
+            polls: null
         };
         // console.log('state in constructor',this.state);
         this.getUserData = this.getUserData.bind(this);
@@ -23455,10 +23466,12 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         this.handleCLickFromMenu = this.handleCLickFromMenu.bind(this);
         this.popMenu = this.popMenu.bind(this);
         this.addOption = this.addOption.bind(this);
+        // this.topLevelNav = this.topLevelNav.bind(this);
     }
 
-    // getMyPolls() {
-    //
+    // topLevelNav(href) {
+    //     location.assign(href);
+    //     return false;
     // }
 
     addOption() {
@@ -23520,19 +23533,29 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         const init = { method: 'GET',
             headers: headers };
         fetch(url, init).then(res => res.json()).then(resJson => {
-            const firstname = resJson.firstname;
-            const lastname = resJson.lastname;
+            const firstname = resJson.user.firstname;
+            const lastname = resJson.user.lastname;
+            const mypolls = resJson.mypolls;
+            const polls = resJson.polls;
             this.setState(_extends({}, this.state, {
                 user: {
-                    data: resJson,
-                    authenticated: true
+                    data: resJson.user,
+                    authenticated: true,
+                    mypolls: mypolls
+
                 },
                 memory: _extends({}, this.state.memory, {
                     firstname: firstname,
                     lastname: lastname
-                })
-            }));
+                }),
+                polls: polls
+            }), () => console.log(`setState after getuserdata api: ${this.state}`));
         });
+    }
+
+    componentWillMount() {
+        const url = 'http://localhost:8080/api/polls';
+        fetch(url).then(res => res.json()).then(resJson => this.setState({ polls: resJson }));
     }
 
     componentDidMount() {
@@ -23550,6 +23573,7 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
             auth ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__DropDownMenu__["a" /* DropDownMenu */], { popped: this.state.ui.dropDownMenu, handleCLickFromMenu: this.handleCLickFromMenu }) : '',
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__Main__["a" /* Main */], null),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__User__["a" /* User */], { updateName: this.updateName, addOption: this.addOption, state: this.state }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/polls', render: () => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__Polls__["a" /* Polls */], { state: this.state }) }),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__Footer__["a" /* Footer */], null)
         );
     }
@@ -23871,6 +23895,7 @@ const UserContent = props => {
     //     this.setState({ userData: nextProps.userData });
     // }
     const userData = props.state.user.data;
+    const mypolls = props.state.user.mypolls;
 
     const maskPassword = password => {
         let result = '';
@@ -23960,7 +23985,19 @@ const UserContent = props => {
             null,
             'My Polls'
         ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'my-polls-box' })
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
+            { className: 'my-polls-box' },
+            mypolls ? mypolls.map((poll, i) => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'poll' },
+                `Title: ${poll.poll_name}  Created: ${poll.created}`
+            )) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                null,
+                'You have no polls'
+            )
+        )
     );
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = UserContent;
@@ -23973,19 +24010,16 @@ const UserContent = props => {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Update__ = __webpack_require__(89);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Update__ = __webpack_require__(89);
 
-
+// import { Route } from 'react-router-dom';
 
 
 const Updates = props => {
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { className: 'updates-container' },
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__Update__["a" /* Update */], { updateName: props.updateName, state: props.state }),
-        console.log('heya from <updates>'),
-        'im updates'
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Update__["a" /* Update */], { updateName: props.updateName, state: props.state })
     );
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = Updates;
@@ -24355,6 +24389,52 @@ const DropDownMenu = props => {
 
 /***/ }),
 /* 98 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Poll__ = __webpack_require__(99);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router_dom__ = __webpack_require__(4);
+
+
+
+
+const Polls = props => {
+    let polls = props.state.polls;
+    console.log('state inside <Polls>:', props.state);
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        { className: 'polls-container' },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { path: 'polls/poll', render: () => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Poll__["a" /* Poll */], null) }),
+        polls ? polls.map((poll, i) => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
+            { className: 'poll' },
+            `Title: ${poll.poll_name} Created: ${poll.created}`
+        )) : ''
+    );
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = Polls;
+
+
+/***/ }),
+/* 99 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+
+// import { }
+
+const Poll = props => {
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { 'poll-container': true });
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = Poll;
+
+
+/***/ }),
+/* 100 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

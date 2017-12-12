@@ -3,6 +3,7 @@
         border-bottom: 1px solid black;
     }
     .login-details-box {
+        border: 1px solid gray;
         a {
             color: rgb(18,127,169);
             &:hover {
@@ -12,5 +13,8 @@
         .col {
             display: inline-block;
         }
+    }
+    .my-polls-box {
+        margin-bottom: 1em;
     }
 }

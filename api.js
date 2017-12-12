@@ -8,10 +8,6 @@ const router = express.Router();
 const session = require('express-session');
 // const bodyParser = require('body-parser');
 
-// router.get('/getmypolls', (req, res) => {
-//     res.send(session.data.mypolls);
-// });
-
 router.get('/getuserdata', (req, res) => {
     // res.send(app.get('docs'));
     console.log('api asked for: getuserdata: session.data:', session.data);
@@ -26,5 +22,9 @@ router.get('/signout', (req, res) => {
     res.end();
     // console.log('session.data.user AFTER session is destroyed:', session.data.user);
 });
+
+router.get('/polls', (req, res) => {
+    res.send(session.data.polls);
+})
 
 module.exports = router;

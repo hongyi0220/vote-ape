@@ -46,7 +46,11 @@ export const UserContent = props => {
             </div>
             <h3>My Polls</h3>
             <div className='my-polls-box'>
-                {/* Create JSX elements from fetch API data*/}
+                {mypolls ? mypolls.map((poll, i) =>
+                    <div className='poll'>
+                        {`Title: ${poll.poll_name}  Created: ${poll.created}`}
+                    </div>
+                )  : <div>You have no polls</div>}
             </div>
         </div>
     );

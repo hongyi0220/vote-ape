@@ -20,8 +20,17 @@ router.post('/create', (req, res) => {
         let schema = req.body;
         // console.log('schema', schema);
         // console.log('session.data.user', session.data.user);
-        schema.user = session.data.user.username;
-        db.collection('polls').insert(schema);
+        schema.username = session.data.user.username;
+        const created = new Date();
+        const date = created.getDate();
+        const month = created.getMonth() + 1;
+        const year = created.getFullYear();
+        schema.created = `${month}/${date}/${year}`;
+        const collection = db.collection('polls');
+        collection.insert(schema);
+        collection.find({ username: session.data.username }).toArray((err, docs) => {
+            session.data.mypolls = docs;
+        })
         db.close();
     });
     res.redirect('/user/create/successful');
