@@ -21,6 +21,14 @@ router.post('/create', (req, res) => {
         // console.log('schema', schema);
         // console.log('session.data.user', session.data.user);
         schema.username = session.data.user.username;
+        schema.views = 0;
+        schema.voted = 0;
+        schema.upvote = 0;
+        schema.comments = [];
+        const choices = req.body.choices.map(choice => [choice, 0]);
+        schema.choices = choices;
+        // schema.counts = [];
+        // for (let i = 0; i < req.body.choices.length; i++) schema.counts.push(0);
         const created = new Date();
         const date = created.getDate();
         const month = created.getMonth() + 1;

@@ -64,6 +64,13 @@ footer {
   background: rgba(255, 255, 255, 0.85);
   z-index: 10;
   border: 1px solid green; }
+  .polls-container .poll-container .choices-container {
+    border: 1px solid gray; }
+
+.polls-container .chart-container {
+  height: 200px;
+  width: 200px;
+  border: 1px solid gray; }
 
 .polls-container .poll {
   border: 1px solid gray;

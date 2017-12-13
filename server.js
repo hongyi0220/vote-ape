@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const user = require('./user');
 const api = require('./api');
-// const polls = require('./polls');
+const polls = require('./polls');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const mongo = require('mongodb');
@@ -42,6 +42,8 @@ app.use('/', (req, res, next) => {
 });
 
 app.use(express.static('build'));
+
+app.use('/polls', polls);
 
 app.use('/api', api);
 

@@ -6,6 +6,7 @@ import { Nav } from './Nav';
 import { Footer } from './Footer';
 import { DropDownMenu } from './DropDownMenu';
 import { Polls } from './Polls';
+import * as d3 from 'd3';
 
 class App extends React.Component {
     constructor(props) {
@@ -37,6 +38,46 @@ class App extends React.Component {
         this.handleClickFromPoll = this.handleClickFromPoll.bind(this);
         this.closePopUps = this.closePopUps.bind(this);
         this.popPoll = this.popPoll.bind(this);
+        this.buildChart = this.buildChart.bind(this);
+    }
+
+    buildChart() {
+        const height = 200;
+        const width = 200;
+        const padding = 5;
+        const dataset = {...this.state.memory.poll};
+        const svg = d3.select('.chart-container')
+                      .append('svg')
+                      .attr('height', height)
+                      .attr('width', width);
+
+        const yScale = d3.scaleLinear()
+                         .domain([0, d3.max(dataset.choices, d => d[1])])
+                         .range([0, height - padding]);
+
+        const xScale = d3.scaleBand()
+                         .domain(dataset.choices.map(d => d[0]))
+                         .range([padding, width - padding])
+                         .padding(0.1);
+
+        svg.selectAll('rect')
+           .data(dataset.choices)
+           .enter()
+           .append('rect')
+           .attr('height', d => (height - padding - yScale(d[1])))
+           .attr('width', xScale.bandwidth())
+           .attr('x', d => xScale(d[0]))
+           .attr('y', d => yScale(d[1]));
+
+        const yAxis = d3.axisLeft(yScale);
+        svg.append('g')
+           .attr('transform', 'translate(' + padding + ',0)')
+           .call(yAxis);
+
+        const xAxis = d3.axisBottom(xScale);
+        svg.append('g')
+           .attr('transform', 'translate(0,' + (height - padding) + ')')
+           .call(xAxis);
     }
 
     popPoll(e) {
@@ -59,15 +100,17 @@ class App extends React.Component {
         const id = e.target.id;
         for (let i = 0; i < polls.length; i++) {
             const poll = polls[i];
-            // console.log('poll found inside forloop: ', poll);
-            if (poll._id === id)
+
+            if (poll._id === id) {
+                // console.log('poll found inside forloop: ', poll);
                 this.setState({
                     memory: {
                         ...this.state.memory,
                         poll : poll
                     }
                 });
-            break;
+                break;
+            }
         }
     }
 
@@ -88,6 +131,10 @@ class App extends React.Component {
                 ...prevState.ui,
                 dropDownMenu: false,
                 poll: false
+            },
+            memory: {
+                ...prevState.memory,
+                poll: null
             }
         }));
         if (e) e.stopPropagation();
@@ -102,15 +149,6 @@ class App extends React.Component {
             headers: new Headers(),
             // credentials: 'same-origin'
         }
-
-        // const closeMenu = () => {
-        //     this.setState(prevState => ({
-        //         ui: {
-        //             ...prevState.ui,
-        //             dropDownMenu: false
-        //         }
-        //     }));
-        // };
 
         if (e.target.className === 'menu-signout')
             fetch(url, init)
@@ -181,7 +219,7 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        // this.getUserData();
+        // this.buildChart();
     }
 
     render() {
@@ -195,7 +233,8 @@ class App extends React.Component {
                 <Main />
                 <User updateName={this.updateName} addOption={this.addOption} state={this.state}/>
                 <Route path='/polls' render={ () =>
-                    <Polls popPoll={this.popPoll} history={this.props.history} handleClickFromPoll={this.handleClickFromPoll} state={this.state}/>} />
+                    <Polls popPoll={this.popPoll} history={this.props.history} handleClickFromPoll={this.handleClickFromPoll}
+                        state={this.state} buildChart={this.buildChart}/>} />
                 <Footer />
             </div>
         );

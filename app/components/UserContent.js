@@ -48,7 +48,8 @@ export const UserContent = props => {
             <div className='my-polls-box'>
                 {mypolls ? mypolls.map((poll, i) =>
                     <div className='poll' id={poll._id}>
-                        {`Title: ${poll.poll_name}  Created: ${poll.created} by ${poll.username}`}
+                        {`Title: ${poll.poll_name}  Created: ${poll.created} By Me
+                          Views: ${poll.views} Voted: ${poll.voted} Upvote: ${poll.upvote}`}
                     </div>
                 )  : <div>You have no polls</div>}
             </div>
