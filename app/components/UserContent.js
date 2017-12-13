@@ -7,6 +7,10 @@ export const UserContent = props => {
     // }
     const userData = props.state.user.data;
     const mypolls = props.state.user.mypolls;
+    const viewPoll = props.viewPoll;
+    const handleClickFromPoll = viewPoll.handleClickFromPoll;
+    const history = viewPoll.history;
+    const popPoll = viewPoll.popPoll;
 
     const maskPassword = password => {
         let result = '';
@@ -47,7 +51,8 @@ export const UserContent = props => {
             <h3>My Polls</h3>
             <div className='my-polls-box'>
                 {mypolls ? mypolls.map((poll, i) =>
-                    <div className='poll' id={poll._id}>
+                    <div className='poll' id={poll._id}
+                        onClick={e => {popPoll(e); handleClickFromPoll(e); history.push('/polls/poll')}}>
                         {`Title: ${poll.poll_name}  Created: ${poll.created} By Me
                           Views: ${poll.views} Voted: ${poll.voted} Upvote: ${poll.upvote}`}
                     </div>

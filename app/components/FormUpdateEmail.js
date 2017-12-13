@@ -9,7 +9,7 @@ export const FormUpdateEmail = props => {
     return (
         <form action='/user/update/email' method='POST'>
             <label htmlFor='email'>Email</label>
-            <input id='email' type='text' name='email'
+            <input id='email' type='email' name='email'
                 onChange={updateUserData} value={memory.email}>
             </input>
             <label htmlFor='password'>Password</label>

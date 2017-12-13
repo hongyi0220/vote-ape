@@ -22,6 +22,8 @@ router.post('/poll/vote', (req, res) => {
             {$inc: update}
         );
         db.close();
+        // Save poll id for the purpose of keeping the client on the poll page after voting
+        session.data.poll_id = id;
         res.redirect('/polls/poll');
         // res.end();
         // res.redirect('/polls/poll/successful');

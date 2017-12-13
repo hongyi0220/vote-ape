@@ -23,15 +23,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Get polls when a client arrives at homepage
 app.use('/', (req, res, next) => {
-    console.log('route: / REACHED');
+    console.log('route: / REACHED polls saved to session');
     MongoClient.connect(url, (err, db) => {
         if (err) console.error(err);
-        const collection = db.collection('polls');
-        collection.find({}).toArray((err, docs) => {
+        db.collection('polls').find({}).toArray((err, docs) => {
             if (err) console.error(err);
             // If user is already signed-in, no need to define session
             if (session.data) session.data.polls = docs;
-            else { // Or else
+            else { // Or else define session
                 session.data = {};
                 session.data.polls = docs;
             }

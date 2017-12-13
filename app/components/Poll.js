@@ -7,6 +7,9 @@ export class Poll extends React.Component {
     }
     render() {
         const poll = this.props.state.memory.poll;
+        // const polls = state.polls;
+        // const popPoll = this.props.popPoll;
+        console.log('poll in memory:', poll);
         return (
             <div className='poll-container' onClick={e => e.stopPropagation()}>
                 <div className='choices-container'>
@@ -20,7 +23,7 @@ export class Poll extends React.Component {
                                 <label onClick={e => e.stopPropagation()} htmlFor={`choice${i}`}>{poll.choices[i][0]}</label>
                             </div>
                         )}
-                        <button type='submit' onClick={e => e.stopPropagation()}>Submit</button>
+                        <button type='submit' onClick={e => {e.stopPropagation()}}>Submit</button>
                     </form>
                 </div>
                 {/* <Route path='/polls/poll/successful' render={() => <div>Monkey: 'Oo oo oo!'('Voted!')</div>} /> */}

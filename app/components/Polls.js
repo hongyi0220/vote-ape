@@ -3,14 +3,15 @@ import { Poll } from './Poll';
 import { Route } from 'react-router-dom';
 
 export const Polls = props => {
+    const viewPoll = props.viewPoll;
     const state = props.state;
     const polls = state.polls;
-    const handleClickFromPoll = props.handleClickFromPoll;
-    const history = props.history;
+    const handleClickFromPoll = viewPoll.handleClickFromPoll;
+    const history = viewPoll.history;
     const popped = props.state.ui.poll;
-    const popPoll = props.popPoll;
+    const popPoll = viewPoll.popPoll;
     const buildChart = props.buildChart;
-    console.log('poll popped: ', popped);
+    // console.log('poll popped: ', popped);
     // console.log('popPoll:', popPoll);
     console.log('state inside <Polls>:', props.state);
     return (

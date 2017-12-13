@@ -27,12 +27,6 @@ router
                 }}
             );
             db.close();
-            // collection.find({_id: mongo.ObjectId(user_id)})
-            //     .toArray((err, docs) => {
-            //         if (err) console.error(err);
-            //         session.data.user = docs;
-            //         res.redirect('/user/update/successful');
-            //     });
             sessUser.firstname = firstname;
             sessUser.lastname = lastname;
             res.redirect('/user/update/successful');
@@ -47,24 +41,79 @@ router
         const username = req.body.username;
 
         // console.log(password);
-        MongoClient.connect(url, (err, db) => {
-            if (err) console.error(err);
-            if (password === sessUser.password) {
+        if (password === sessUser.password) {
+            MongoClient.connect(url, (err, db) => {
+                if (err) console.error(err);
+
+                    db.collection('users').updateOne(
+                        {_id: mongo.ObjectId(user_id)},
+                        {
+                            $set: {
+                                username: username
+                            }
+                        }
+                    );
+                    db.close();
+                    sessUser.username = username;
+                    res.redirect('/user/update/successful');
+            });
+        } else {
+            res.redirect('/user/update/error');
+        }
+
+    })
+    .post('/email', (req, res) => {
+        const password = req.body.password;
+        const sessUser = session.data.user;
+        const user_id = sessUser._id;
+        const email = req.body.email;
+
+        if (password === sessUser.password) {
+            MongoClient.connect(url, (err, db) => {
+                if (err) console.error(err);
                 db.collection('users').updateOne(
                     {_id: mongo.ObjectId(user_id)},
                     {
                         $set: {
-                            username: username
+                            email: email
                         }
                     }
                 );
                 db.close();
-                sessUser.username = username;
+                sessUser.email = email;
                 res.redirect('/user/update/successful');
-            } else {
-                res.redirect('/user/update/error')
-            }
-        });
+            });
+        } else {
+            res.redirect('/user/update/error');
+        }
     })
+    .post('/password', (req, res) => {
+        const sessUser = session.data.user;
+        const user_id = sessUser._id;
+        const newPassword = req.body.new_password;
+        const password = req.body.password;
+        // console.log('post: password reached!');
+        if (password === sessUser.password) {
+            // console.log('password Match!');
+            // console.log(`sessPassword: ${sessUser.password}, password: ${password}, newpswrd: ${newPassword}`);
+            MongoClient.connect(url, (err, db) => {
+                if (err) console.error(err);
+                // console.log('mongodb connected');
+                db.collection('users').updateOne(
+                    {_id: mongo.ObjectId(user_id)},
+                    {
+                        $set: {
+                            password: newPassword
+                        }
+                    }
+                );
+                db.close();
+                sessUser.password = newPassword;
+                res.redirect('/user/update/successful');
+            });
+        } else {
+            res.redirect('/user/update/error');
+        }
+    });
 
 module.exports = router;

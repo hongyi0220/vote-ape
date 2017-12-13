@@ -17,6 +17,8 @@ import { UpdateError } from './UpdateError';
 export const User = props => {
     const auth = props.state.user.authenticated;
     const state = props.state;
+    const closePopUps = props.closePopUps;
+    const viewPoll = props.viewPoll;
     // console.log('auth at User.js?', auth ? 'yes': 'no');
     return (
         <div>
@@ -25,12 +27,13 @@ export const User = props => {
                 <Route path='/user/create' render={() => auth ? <FormCreate addOption={props.addOption} state={state} /> : ''} />
                 <Route path='/user/signup' component={ Form } />
                 <Route path='/user/login' render={() => <FormLogin /> } />
-                <Route path='/user' render={() => auth ? <UserContent state={state} /> : ''} />
+                <Route path='/user' render={() => auth ? <UserContent viewPoll={viewPoll} state={state} /> : ''} />
             </Switch>
             <Switch>
                 <Route path='/user/create/successful' component={ CreateSuccessful } />
                 <Route path='/user/create/successful' component={ CreateSuccessful } />
                 <Route path='/user/update/error' component={ UpdateError } />
+                <Route path='/user/update/successful' component={ UpdateSuccessful } />
                 <Route path='/user/update/(fullname|username|password|email)'
                 render={() => auth ? <Updates state={state} updateUserData={props.updateUserData}/> : ''} />
             </Switch>

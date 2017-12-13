@@ -23,8 +23,8 @@ router.get('/signout', (req, res) => {
     // console.log('session.data.user AFTER session is destroyed:', session.data.user);
 });
 
-router.get('/polls', (req, res) => {
-    res.send(session.data.polls);
-})
+// router.get('/polls', (req, res) => {
+//     res.send(session.data.polls);
+// })
 
 module.exports = router;

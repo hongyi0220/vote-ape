@@ -93,16 +93,20 @@ class App extends React.Component {
                 poll: true
             }
         });
-        e.stopPropagation();
+        if (e) e.stopPropagation();
     }
 
     handleClickFromPoll(e) {
         // console.log('handleClickFrompoll triggered');
-        // console.log(this.state);
+        // console.log('this.state.polls from handleClickfromPoll: ',this.state);
         const state = {...this.state};
         const polls = state.polls
+        const poll_id = state.memory.poll_id;
         // console.log('polls inside handleClickFromPoll:', state.polls);
-        const id = e.target.id;
+        // Get poll id when click on poll || getting poll id after voting
+        let id;
+        if (e) id = e.target.id;
+        else id = poll_id;
         for (let i = 0; i < polls.length; i++) {
             const poll = polls[i];
 
@@ -117,6 +121,7 @@ class App extends React.Component {
                 break;
             }
         }
+        this.popPoll();
     }
 
     addOption() {
@@ -136,17 +141,18 @@ class App extends React.Component {
                 ...prevState.ui,
                 dropDownMenu: false,
                 poll: false
-            },
-            memory: {
-                ...prevState.memory,
-                poll: null
+                // popUps: false
             }
+            // memory: {
+            //     ...prevState.memory,
+            //     poll: null
+            // }
         }));
         if (e) e.stopPropagation();
     }
 
     handleClickFromMenu(e) {
-        console.log(e.target,'triggered handleClickFromMenu');
+        // console.log(e.target,'triggered handleClickFromMenu');
         const url = 'http://localhost:8080/api/signout';
 
         const init = {
@@ -192,6 +198,7 @@ class App extends React.Component {
     }
 
     getUserData() {
+        // console.log('getUserData triggered!');
         const url = 'http://localhost:8080/api/getuserdata';
         const headers = new Headers();
         const init = { method: 'GET',
@@ -199,36 +206,50 @@ class App extends React.Component {
        fetch(url, init)
        .then(res => res.json())
        .then(resJson => {
-           const firstname = resJson.user.firstname;
-           const lastname = resJson.user.lastname;
-           const username = resJson.user.username;
-           const email = resJson.user.email;
-           const mypolls = resJson.mypolls;
+           let firstname, lastname, username, mypolls, email;
            const polls = resJson.polls;
-           this.setState({
-               ...this.state,
-               user: {
-                   data: resJson.user,
-                   authenticated: true,
-                   mypolls: mypolls
+           const poll_id = resJson.poll_id;
+           if (resJson.user) {
+               const user = resJson.user;
+               firstname = user.firstname;
+               lastname = user.lastname;
+               username = user.username;
+               email = user.email;
+               mypolls = resJson.mypolls;
+               this.setState({
+                   ...this.state,
+                   user: {
+                       data: resJson.user,
+                       authenticated: true,
+                       mypolls: mypolls
 
-               },
+                   },
+                   memory: {
+                       ...this.state.memory,
+                       firstname: firstname,
+                       lastname: lastname,
+                       username: username,
+                       email: email,
+                       poll_id: poll_id
+                   },
+                   polls: polls
+               }, () => this.handleClickFromPoll());
+           } else this.setState({
+               ...this.state,
                memory: {
                    ...this.state.memory,
-                   firstname: firstname,
-                   lastname: lastname,
-                   username: username,
-                   email: email
-               }
-               // polls: polls
-           }, () => console.log(`setState after getuserdata api: ${this.state}`));
+                   poll_id: poll_id
+               },
+               polls: polls
+           }, () => this.handleClickFromPoll());
        });
     }
 
     componentWillMount() {
-        const url = 'http://localhost:8080/api/polls';
-        fetch(url).then(res => res.json()).then(resJson => this.setState({ polls: resJson }));
+        // const url = 'http://localhost:8080/api/polls';
+        // fetch(url).then(res => res.json()).then(resJson => this.setState({ polls: resJson }));
         this.getUserData();
+        // this.handleClickFromPoll();
     }
 
     componentDidMount() {
@@ -237,17 +258,18 @@ class App extends React.Component {
 
     render() {
         const auth = this.state.user.authenticated;
-        // const userprops ={}
+        const popPoll= this.popPoll;
+        const history = this.props.history, handleClickFromPoll = this.handleClickFromPoll;
+        const viewPoll ={ popPoll, history, handleClickFromPoll };
         return (
             <div onClick={this.closePopUps}>
             {/* // <div> */}
                 <Nav unmountCreate={this.unmountCreate} state={this.state} toggleMenu={this.toggleMenu}/>
                 {auth ? <DropDownMenu popped={this.state.ui.dropDownMenu} handleClickFromMenu={this.handleClickFromMenu}/> : ''}
                 <Main />
-                <User updateUserData={this.updateUserData} addOption={this.addOption} state={this.state}/>
+                <User viewPoll={viewPoll} closePopUps={this.closePopUps} updateUserData={this.updateUserData} addOption={this.addOption} state={this.state}/>
                 <Route path='/polls' render={ () =>
-                    <Polls popPoll={this.popPoll} history={this.props.history} handleClickFromPoll={this.handleClickFromPoll}
-                        state={this.state} buildChart={this.buildChart}/>} />
+                    <Polls viewPoll={viewPoll} state={this.state} buildChart={this.buildChart}/>} />
                 <Footer />
             </div>
         );

@@ -32882,16 +32882,19 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
                 poll: true
             })
         });
-        e.stopPropagation();
+        if (e) e.stopPropagation();
     }
 
     handleClickFromPoll(e) {
         // console.log('handleClickFrompoll triggered');
-        // console.log(this.state);
+        // console.log('this.state.polls from handleClickfromPoll: ',this.state);
         const state = _extends({}, this.state);
         const polls = state.polls;
+        const poll_id = state.memory.poll_id;
         // console.log('polls inside handleClickFromPoll:', state.polls);
-        const id = e.target.id;
+        // Get poll id when click on poll || getting poll id after voting
+        let id;
+        if (e) id = e.target.id;else id = poll_id;
         for (let i = 0; i < polls.length; i++) {
             const poll = polls[i];
 
@@ -32905,6 +32908,7 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
                 break;
             }
         }
+        this.popPoll();
     }
 
     addOption() {
@@ -32921,16 +32925,18 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
             ui: _extends({}, prevState.ui, {
                 dropDownMenu: false,
                 poll: false
-            }),
-            memory: _extends({}, prevState.memory, {
-                poll: null
-            })
-        }));
+                // popUps: false
+
+                // memory: {
+                //     ...prevState.memory,
+                //     poll: null
+                // }
+            }) }));
         if (e) e.stopPropagation();
     }
 
     handleClickFromMenu(e) {
-        console.log(e.target, 'triggered handleClickFromMenu');
+        // console.log(e.target,'triggered handleClickFromMenu');
         const url = 'http://localhost:8080/api/signout';
 
         const init = {
@@ -32967,38 +32973,52 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     }
 
     getUserData() {
+        // console.log('getUserData triggered!');
         const url = 'http://localhost:8080/api/getuserdata';
         const headers = new Headers();
         const init = { method: 'GET',
             headers: headers };
         fetch(url, init).then(res => res.json()).then(resJson => {
-            const firstname = resJson.user.firstname;
-            const lastname = resJson.user.lastname;
-            const username = resJson.user.username;
-            const email = resJson.user.email;
-            const mypolls = resJson.mypolls;
+            let firstname, lastname, username, mypolls, email;
             const polls = resJson.polls;
-            this.setState(_extends({}, this.state, {
-                user: {
-                    data: resJson.user,
-                    authenticated: true,
-                    mypolls: mypolls
+            const poll_id = resJson.poll_id;
+            if (resJson.user) {
+                const user = resJson.user;
+                firstname = user.firstname;
+                lastname = user.lastname;
+                username = user.username;
+                email = user.email;
+                mypolls = resJson.mypolls;
+                this.setState(_extends({}, this.state, {
+                    user: {
+                        data: resJson.user,
+                        authenticated: true,
+                        mypolls: mypolls
 
-                },
+                    },
+                    memory: _extends({}, this.state.memory, {
+                        firstname: firstname,
+                        lastname: lastname,
+                        username: username,
+                        email: email,
+                        poll_id: poll_id
+                    }),
+                    polls: polls
+                }), () => this.handleClickFromPoll());
+            } else this.setState(_extends({}, this.state, {
                 memory: _extends({}, this.state.memory, {
-                    firstname: firstname,
-                    lastname: lastname,
-                    username: username,
-                    email: email
-                    // polls: polls
-                }) }), () => console.log(`setState after getuserdata api: ${this.state}`));
+                    poll_id: poll_id
+                }),
+                polls: polls
+            }), () => this.handleClickFromPoll());
         });
     }
 
     componentWillMount() {
-        const url = 'http://localhost:8080/api/polls';
-        fetch(url).then(res => res.json()).then(resJson => this.setState({ polls: resJson }));
+        // const url = 'http://localhost:8080/api/polls';
+        // fetch(url).then(res => res.json()).then(resJson => this.setState({ polls: resJson }));
         this.getUserData();
+        // this.handleClickFromPoll();
     }
 
     componentDidMount() {
@@ -33007,16 +33027,18 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 
     render() {
         const auth = this.state.user.authenticated;
-        // const userprops ={}
+        const popPoll = this.popPoll;
+        const history = this.props.history,
+              handleClickFromPoll = this.handleClickFromPoll;
+        const viewPoll = { popPoll, history, handleClickFromPoll };
         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'div',
             { onClick: this.closePopUps },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__Nav__["a" /* Nav */], { unmountCreate: this.unmountCreate, state: this.state, toggleMenu: this.toggleMenu }),
             auth ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__DropDownMenu__["a" /* DropDownMenu */], { popped: this.state.ui.dropDownMenu, handleClickFromMenu: this.handleClickFromMenu }) : '',
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__Main__["a" /* Main */], null),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__User__["a" /* User */], { updateUserData: this.updateUserData, addOption: this.addOption, state: this.state }),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/polls', render: () => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__Polls__["a" /* Polls */], { popPoll: this.popPoll, history: this.props.history, handleClickFromPoll: this.handleClickFromPoll,
-                    state: this.state, buildChart: this.buildChart }) }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__User__["a" /* User */], { viewPoll: viewPoll, closePopUps: this.closePopUps, updateUserData: this.updateUserData, addOption: this.addOption, state: this.state }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/polls', render: () => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__Polls__["a" /* Polls */], { viewPoll: viewPoll, state: this.state, buildChart: this.buildChart }) }),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__Footer__["a" /* Footer */], null)
         );
     }
@@ -33112,6 +33134,8 @@ const Landing = props => {
 const User = props => {
     const auth = props.state.user.authenticated;
     const state = props.state;
+    const closePopUps = props.closePopUps;
+    const viewPoll = props.viewPoll;
     // console.log('auth at User.js?', auth ? 'yes': 'no');
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
@@ -33122,7 +33146,7 @@ const User = props => {
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user/create', render: () => auth ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_12__FormCreate__["a" /* FormCreate */], { addOption: props.addOption, state: state }) : '' }),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user/signup', component: __WEBPACK_IMPORTED_MODULE_2__Form__["a" /* Form */] }),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user/login', render: () => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__FormLogin__["a" /* FormLogin */], null) }),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user', render: () => auth ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9__UserContent__["a" /* UserContent */], { state: state }) : '' })
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user', render: () => auth ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9__UserContent__["a" /* UserContent */], { viewPoll: viewPoll, state: state }) : '' })
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["d" /* Switch */],
@@ -33130,6 +33154,7 @@ const User = props => {
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user/create/successful', component: __WEBPACK_IMPORTED_MODULE_13__CreateSuccessful__["a" /* CreateSuccessful */] }),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user/create/successful', component: __WEBPACK_IMPORTED_MODULE_13__CreateSuccessful__["a" /* CreateSuccessful */] }),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user/update/error', component: __WEBPACK_IMPORTED_MODULE_14__UpdateError__["a" /* UpdateError */] }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user/update/successful', component: __WEBPACK_IMPORTED_MODULE_11__UpdateSuccessful__["a" /* UpdateSuccessful */] }),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user/update/(fullname|username|password|email)',
                 render: () => auth ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_10__Updates__["a" /* Updates */], { state: state, updateUserData: props.updateUserData }) : '' })
         ),
@@ -33342,6 +33367,10 @@ const UserContent = props => {
     // }
     const userData = props.state.user.data;
     const mypolls = props.state.user.mypolls;
+    const viewPoll = props.viewPoll;
+    const handleClickFromPoll = viewPoll.handleClickFromPoll;
+    const history = viewPoll.history;
+    const popPoll = viewPoll.popPoll;
 
     const maskPassword = password => {
         let result = '';
@@ -33436,7 +33465,10 @@ const UserContent = props => {
             { className: 'my-polls-box' },
             mypolls ? mypolls.map((poll, i) => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                { className: 'poll', id: poll._id },
+                { className: 'poll', id: poll._id,
+                    onClick: e => {
+                        popPoll(e);handleClickFromPoll(e);history.push('/polls/poll');
+                    } },
                 `Title: ${poll.poll_name}  Created: ${poll.created} By Me
                           Views: ${poll.views} Voted: ${poll.voted} Upvote: ${poll.upvote}`
             )) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -33704,7 +33736,7 @@ const FormUpdateEmail = props => {
             { htmlFor: 'email' },
             'Email'
         ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'email', type: 'text', name: 'email',
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'email', type: 'email', name: 'email',
             onChange: updateUserData, value: memory.email }),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'label',
@@ -33749,7 +33781,7 @@ const UpdateSuccessful = props => {
         'Update successful!'
     );
 };
-/* unused harmony export UpdateSuccessful */
+/* harmony export (immutable) */ __webpack_exports__["a"] = UpdateSuccessful;
 
 
 /***/ }),
@@ -33908,14 +33940,15 @@ const DropDownMenu = props => {
 
 
 const Polls = props => {
+    const viewPoll = props.viewPoll;
     const state = props.state;
     const polls = state.polls;
-    const handleClickFromPoll = props.handleClickFromPoll;
-    const history = props.history;
+    const handleClickFromPoll = viewPoll.handleClickFromPoll;
+    const history = viewPoll.history;
     const popped = props.state.ui.poll;
-    const popPoll = props.popPoll;
+    const popPoll = viewPoll.popPoll;
     const buildChart = props.buildChart;
-    console.log('poll popped: ', popped);
+    // console.log('poll popped: ', popped);
     // console.log('popPoll:', popPoll);
     console.log('state inside <Polls>:', props.state);
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -33952,6 +33985,9 @@ class Poll extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     }
     render() {
         const poll = this.props.state.memory.poll;
+        // const polls = state.polls;
+        // const popPoll = this.props.popPoll;
+        console.log('poll in memory:', poll);
         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'div',
             { className: 'poll-container', onClick: e => e.stopPropagation() },
@@ -33979,7 +34015,9 @@ class Poll extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
                     )),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'button',
-                        { type: 'submit', onClick: e => e.stopPropagation() },
+                        { type: 'submit', onClick: e => {
+                                e.stopPropagation();
+                            } },
                         'Submit'
                     )
                 )
