@@ -23,24 +23,24 @@ export const UserContent = props => {
                     <div className='col'>
                         Name<br/>
                         {`${userData ? userData.firstname : ''} ${userData ? userData.lastname : ''}`}&nbsp;
-                        <Link to='/user/update/fullname'>Edit</Link>
+                        <Link to='/user/update/fullname' onClick={e => e.stopPropagation()}>Edit</Link>
                     </div>
                     <div className='col'>
                         Username<br/>
                         {`${userData ? userData.username : ''}`}&nbsp;
-                        <Link to='/user/update/username'>Edit</Link>
+                        <Link to='/user/update/username' onClick={e => e.stopPropagation()}>Edit</Link>
                     </div>
                 </div>
                 <div className='row'>
                     <div className='col'>
                         Password<br/>
                         {`${userData ? maskPassword(userData.password) : ''}`}&nbsp;
-                        <Link to='/user/update/password'>Edit</Link>
+                        <Link to='/user/update/password' onClick={e => e.stopPropagation()}>Edit</Link>
                     </div>
                     <div className='col'>
                         Email<br/>
                         {`${userData ? userData.email : ''}`}&nbsp;
-                        <Link to='/user/update/email'>Edit</Link>
+                        <Link to='/user/update/email' onClick={e => e.stopPropagation()}>Edit</Link>
                     </div>
                 </div>
             </div>

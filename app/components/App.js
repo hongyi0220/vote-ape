@@ -20,18 +20,23 @@ class App extends React.Component {
             memory: {
                 firstname: null,
                 lastname: null,
+                username: null,
+                email: null,
+                password: null,
+                newPassword: null,
                 poll: null
             },
             ui: {
                 dropDownMenu: false,
                 numOfAddOptions: 0,
                 poll: false
+                // inCreatePage: false
             },
             polls: null
         };
         // console.log('state in constructor',this.state);
         this.getUserData = this.getUserData.bind(this);
-        this.updateName = this.updateName.bind(this);
+        this.updateUserData = this.updateUserData.bind(this);
         this.handleClickFromMenu= this.handleClickFromMenu.bind(this);
         this.toggleMenu = this.toggleMenu.bind(this);
         this.addOption = this.addOption.bind(this);
@@ -43,8 +48,8 @@ class App extends React.Component {
 
     buildChart() {
         const height = 200;
-        const width = 200;
-        const padding = 5;
+        const width = 300;
+        const padding = 25;
         const dataset = {...this.state.memory.poll};
         const svg = d3.select('.chart-container')
                       .append('svg')
@@ -53,7 +58,7 @@ class App extends React.Component {
 
         const yScale = d3.scaleLinear()
                          .domain([0, d3.max(dataset.choices, d => d[1])])
-                         .range([0, height - padding]);
+                         .range([(height - padding), 0]);
 
         const xScale = d3.scaleBand()
                          .domain(dataset.choices.map(d => d[0]))
@@ -175,10 +180,14 @@ class App extends React.Component {
         e.stopPropagation();
     }
 
-    updateName(e) {
+    updateUserData(e) {
         let memory = {...this.state.memory};
         if (e.target.name === 'firstname') memory.firstname = e.target.value;
         else if (e.target.name === 'lastname') memory.lastname = e.target.value;
+        else if (e.target.name === 'username') memory.username = e.target.value;
+        else if (e.target.name === 'email') memory.email = e.target.value;
+        else if (e.target.name === 'password') memory.password = e.target.value;
+        else if (e.target.name === 'new_password') memory.newPassword = e.target.value;
         this.setState({ memory });
     }
 
@@ -192,6 +201,8 @@ class App extends React.Component {
        .then(resJson => {
            const firstname = resJson.user.firstname;
            const lastname = resJson.user.lastname;
+           const username = resJson.user.username;
+           const email = resJson.user.email;
            const mypolls = resJson.mypolls;
            const polls = resJson.polls;
            this.setState({
@@ -205,7 +216,9 @@ class App extends React.Component {
                memory: {
                    ...this.state.memory,
                    firstname: firstname,
-                   lastname: lastname
+                   lastname: lastname,
+                   username: username,
+                   email: email
                }
                // polls: polls
            }, () => console.log(`setState after getuserdata api: ${this.state}`));
@@ -228,10 +241,10 @@ class App extends React.Component {
         return (
             <div onClick={this.closePopUps}>
             {/* // <div> */}
-                <Nav state={this.state} toggleMenu={this.toggleMenu}/>
+                <Nav unmountCreate={this.unmountCreate} state={this.state} toggleMenu={this.toggleMenu}/>
                 {auth ? <DropDownMenu popped={this.state.ui.dropDownMenu} handleClickFromMenu={this.handleClickFromMenu}/> : ''}
                 <Main />
-                <User updateName={this.updateName} addOption={this.addOption} state={this.state}/>
+                <User updateUserData={this.updateUserData} addOption={this.addOption} state={this.state}/>
                 <Route path='/polls' render={ () =>
                     <Polls popPoll={this.popPoll} history={this.props.history} handleClickFromPoll={this.handleClickFromPoll}
                         state={this.state} buildChart={this.buildChart}/>} />

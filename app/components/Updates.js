@@ -5,7 +5,7 @@ import { Update } from './Update';
 export const Updates = props => {
     return (
         <div className='updates-container'>
-            <Update updateName={props.updateName} state={props.state} />
+            <Update updateUserData={props.updateUserData} state={props.state} />
             {/* {console.log('heya from <updates>')} */}
         </div>
     );

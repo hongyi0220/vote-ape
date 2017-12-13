@@ -21,8 +21,9 @@ app.use(session({
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Get polls when a client arrives at homepage
 app.use('/', (req, res, next) => {
-    console.log('route: /polls REACHED');
+    console.log('route: / REACHED');
     MongoClient.connect(url, (err, db) => {
         if (err) console.error(err);
         const collection = db.collection('polls');

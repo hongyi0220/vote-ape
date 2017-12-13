@@ -14,24 +14,57 @@ router
     .post('/fullname', (req, res) => {
         MongoClient.connect(url, (err, db) => {
             if (err) console.error(err);
-            const user_id = req.body.user_id;
-
-            const collection = db.collection('users');
-            collection.updateOne(
+            // const user_id = req.body.user_id;
+            const sessUser = session.data.user;
+            const user_id = sessUser._id;
+            const firstname = req.body.firstname;
+            const lastname = req.body.lastname;
+            db.collection('users').updateOne(
                 {_id: mongo.ObjectId(user_id)},
                 {$set: {
-                    firstname: req.body.firstname,
-                    lastname: req.body.lastname
+                    firstname: firstname,
+                    lastname: lastname
                 }}
             );
-            collection.find({_id: mongo.ObjectId(user_id)})
-                .toArray((err, docs) => {
-                    if (err) console.error(err);
-                    session.data.user = docs;
-                    res.redirect('/user/update/fullname/successful')
-                });
             db.close();
+            // collection.find({_id: mongo.ObjectId(user_id)})
+            //     .toArray((err, docs) => {
+            //         if (err) console.error(err);
+            //         session.data.user = docs;
+            //         res.redirect('/user/update/successful');
+            //     });
+            sessUser.firstname = firstname;
+            sessUser.lastname = lastname;
+            res.redirect('/user/update/successful');
         });
-    });
+    })
+    .post('/username', (req, res) => {
+        // console.log('req.body: ',req.body.password);
+        const password = req.body.password;
+
+        const sessUser = session.data.user;
+        const user_id = sessUser._id;
+        const username = req.body.username;
+
+        // console.log(password);
+        MongoClient.connect(url, (err, db) => {
+            if (err) console.error(err);
+            if (password === sessUser.password) {
+                db.collection('users').updateOne(
+                    {_id: mongo.ObjectId(user_id)},
+                    {
+                        $set: {
+                            username: username
+                        }
+                    }
+                );
+                db.close();
+                sessUser.username = username;
+                res.redirect('/user/update/successful');
+            } else {
+                res.redirect('/user/update/error')
+            }
+        });
+    })
 
 module.exports = router;

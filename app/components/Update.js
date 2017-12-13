@@ -8,15 +8,15 @@ import { FormUpdateEmail } from './FormUpdateEmail';
 export const Update = props => {
     const userData = props.state.user.data;
     const memory = props.state.memory;
-    const updateName = props.updateName;
-    const formProps = {userData, memory, updateName};
+    const updateUserData = props.updateUserData;
+    const formProps = {userData, memory, updateUserData};
     return (
         <div className='update-box'>
             <Switch>
-                <Route path='/user/update/fullname' render={ () => <FormUpdateName formProps={formProps} /> } />
-                <Route path='/user/update/username' render={ () => <FormUpdateUsername userData={userData} /> } />
-                <Route path='/user/update/password' render={ () => <FormUpdatePassword userData={userData} /> } />
-                <Route path='/user/update/email' render={ () => <FormUpdateEmail userData={userData}/> } />
+                <Route path='/user/update/fullname' render={() => <FormUpdateName formProps={formProps}/> } />
+                <Route path='/user/update/username' render={() => <FormUpdateUsername formProps={formProps}/> } />
+                <Route path='/user/update/password' render={() => <FormUpdatePassword formProps={formProps}/> } />
+                <Route path='/user/update/email' render={() => <FormUpdateEmail formProps={formProps}/>} />
             </Switch>
         </div>
     );

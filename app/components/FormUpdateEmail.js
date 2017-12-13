@@ -1,16 +1,24 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export const FormUpdateEmail = props => {
-    const email = props.userInfo.email;
-    const user_id = props.userInfo._id;
+    const email = props.formProps.userData.email;
+    // const user_id = props.formProps.userData._id;
+    const updateUserData = props.formProps.updateUserData;
+    const memory = props.formProps.memory;
     return (
         <form action='/user/update/email' method='POST'>
             <label htmlFor='email'>Email</label>
-            <input id='email' type='text' name='email' defaultValue={email}></input>
-            <label htmlFor='password'>Current password</label>
-            <input id='password' type='password' name='password'></input>
-            <input id='user_id' type='hidden' name='user_id' value={user_id}></input>
-            <button type='submit'></button>
+            <input id='email' type='text' name='email'
+                onChange={updateUserData} value={memory.email}>
+            </input>
+            <label htmlFor='password'>Password</label>
+            <input id='password' type='password' name='password'
+                onChange={updateUserData} value={memory.password || ''}>
+            </input>
+            {/* <input id='user_id' type='hidden' name='user_id' value={user_id}></input> */}
+            <button type='button'><Link to='/user'>Cancel</Link>&nbsp;</button>
+            <button type='submit'>Change email</button>
         </form>
     );
 }
