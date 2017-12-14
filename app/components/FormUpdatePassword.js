@@ -8,7 +8,7 @@ export const FormUpdatePassword = props => {
     return (
         <form action='/user/update/password' method='POST'>
             <label htmlFor='password'>Current password</label>
-            <input id='password' type='password' name='password'
+            <input id='password' type='password' name='password' autoComplete='new_password'
                 onChange={updateUserData} value={memory.password || ''}>
             </input>
             <label htmlFor='new-password'>New password</label>

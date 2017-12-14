@@ -13,7 +13,7 @@ export const FormUpdateUsername = props => {
                 onChange={updateUserData} value={memory.username}>
             </input>
             <label htmlFor='password'>Password</label>
-            <input id='password' type='password' name='password'
+            <input id='password' type='password' name='password' autoComplete='new_password'
                 onChange={updateUserData} value={memory.password || ''}>
             </input>
             {/* <input id='user_id' type='hidden' name='user_id' value={user_id}></input> */}

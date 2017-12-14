@@ -1,14 +1,14 @@
 const express = require('express');
 const app = express();
 const router = express.Router();
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 const mongo = require('mongodb');
 const MongoClient = mongo.MongoClient;
 require('dotenv').config();
 const url = process.env.MONGOLAB_URI;
 const session = require('express-session');
 
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.urlencoded({ extended: true }));
 
 router
     .post('/fullname', (req, res) => {

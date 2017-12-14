@@ -8,6 +8,7 @@ export class Poll extends React.Component {
     }
     render() {
         const poll = this.props.state.memory.poll;
+        const upVote = this.props.upVote;
         // const polls = state.polls;
         // const popPoll = this.props.popPoll;
         console.log('poll in memory:', poll);
@@ -15,7 +16,9 @@ export class Poll extends React.Component {
             <div className='poll-container' onClick={e => e.stopPropagation()}>
                 <div className='choices-container'>
                     <form action='/polls/poll/vote' method='post'>
-                        <h3>{poll.poll_name}</h3>
+                        <h3>{poll.poll_name}</h3>&nbsp;&nbsp;
+                        <i id={poll._id} onClick={e => {e.stopPropagation(); upVote(e)}} className="fa fa-thumbs-o-up" aria-hidden="true">
+                        </i>&nbsp;{poll.upvote}
                         {poll.choices.map((choice, i) =>
                             <div>
                                 {/* This input sends a "choice=_id,i" key-value pair */}
@@ -30,9 +33,8 @@ export class Poll extends React.Component {
                     <Route path='/polls/poll/done' render={() => <div>Hooray!</div>}/>
                 </div>
                 {/* <Route path='/polls/poll/successful' render={() => <div>Monkey: 'Oo oo oo!'('Voted!')</div>} /> */}
-                <div className='chart-container'>
-
-                </div>
+                <div className='chart-container'></div>
+                {/* <div classN></div> */}
             </div>
         );
     }

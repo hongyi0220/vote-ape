@@ -24,7 +24,8 @@ class App extends React.Component {
                 email: null,
                 password: null,
                 newPassword: null,
-                poll: null
+                poll: null,
+                poll_id: null
             },
             ui: {
                 dropDownMenu: false,
@@ -44,6 +45,33 @@ class App extends React.Component {
         this.closePopUps = this.closePopUps.bind(this);
         this.popPoll = this.popPoll.bind(this);
         this.buildChart = this.buildChart.bind(this);
+        this.upVote = this.upVote.bind(this);
+    }
+
+    upVote(e) {
+        // console.log('upVote triggered');
+        // console.log(`targetid: ${e.target.id}`);
+        const url = 'http://localhost:8080/api/upvote';
+        fetch(url,
+            {
+                method: 'post',
+                headers: {
+
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({_id: e.target.id})
+            }
+        );
+        this.setState(prevState => ({
+            memory: {
+                ...prevState.memory,
+                poll: {
+                    ...prevState.memory.poll,
+                    upvote: prevState.memory.poll.upvote + 1
+                }
+            }
+        }));
     }
 
     buildChart() { // Build d3 chart
@@ -98,11 +126,11 @@ class App extends React.Component {
 
     handleClickFromPoll(e) { // This finds the exact poll that is clicked stored in state
         // console.log('handleClickFrompoll triggered');
-        // console.log('this.state.polls from handleClickfromPoll: ',this.state);
+        console.log('this.state.polls from handleClickfromPoll: ',this.state);
         const state = {...this.state};
         const polls = state.polls
         const poll_id = state.memory.poll_id;
-        // console.log('polls inside handleClickFromPoll:', state.polls);
+        console.log('polls inside handleClickFromPoll:', state.polls);
         // Get poll id when click on poll || getting poll id after voting
         let id;
         if (e) id = e.target.id;
@@ -142,11 +170,11 @@ class App extends React.Component {
                 dropDownMenu: false,
                 poll: false
                 // popUps: false
+            },
+            memory: {
+                ...prevState.memory,
+                poll: null
             }
-            // memory: {
-            //     ...prevState.memory,
-            //     poll: null
-            // }
         }));
         if (e) e.stopPropagation();
     }
@@ -198,7 +226,7 @@ class App extends React.Component {
     }
 
     getUserData() {
-        // console.log('getUserData triggered!');
+        console.log('getUserData triggered!');
         const url = 'http://localhost:8080/api/getuserdata';
         const headers = new Headers();
         const init = { method: 'GET',
@@ -211,6 +239,7 @@ class App extends React.Component {
            const polls = resJson.polls;
            const poll_id = resJson.poll_id;
            if (resJson.user) {
+               // console.log('resJson11111');
                const user = resJson.user;
                firstname = user.firstname;
                lastname = user.lastname;
@@ -235,21 +264,26 @@ class App extends React.Component {
                    },
                    polls: polls
                }, () => this.handleClickFromPoll());
-           } else this.setState({
-               ...this.state,
-               memory: {
-                   ...this.state.memory,
-                   poll_id: poll_id
-               },
-               polls: polls
-           }, () => this.handleClickFromPoll());
+           } else {
+               // console.log('resJson2222');
+               // console.log(polls);
+               this.setState({
+                   ...this.state,
+                   memory: {
+                       ...this.state.memory,
+                       poll_id: poll_id
+                   },
+                   polls: polls
+               }, () => this.handleClickFromPoll());
+               // console.log('resJson2222 StateSet!');
+           }
        });
     }
 
     componentWillMount() {
         // This gets data such as polls when unsigned-in, polls and user data when signed-in
         this.getUserData();
-        // this.handleClickFromPoll();
+        // console.log('componentWillMount');
     }
 
     render() {
@@ -265,7 +299,7 @@ class App extends React.Component {
                 <Main />
                 <User viewPoll={viewPoll} closePopUps={this.closePopUps} updateUserData={this.updateUserData} addOption={this.addOption} state={this.state}/>
                 <Route path='/polls' render={ () =>
-                    <Polls viewPoll={viewPoll} state={this.state} buildChart={this.buildChart}/>} />
+                    <Polls upVote={this.upVote} viewPoll={viewPoll} state={this.state} buildChart={this.buildChart}/>} />
                 <Footer />
             </div>
         );

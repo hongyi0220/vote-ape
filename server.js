@@ -21,6 +21,7 @@ app.use(session({
 }));
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // Get polls when a client arrives at homepage
 app.use('/', (req, res, next) => {

@@ -7,10 +7,10 @@ const url = process.env.MONGOLAB_URI;
 const mongo = require('mongodb')
 const MongoClient = mongo.MongoClient;
 const session = require('express-session');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 const update = require('./update')
 
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 
 router.use('/update', update);
 

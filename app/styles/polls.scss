@@ -1,4 +1,5 @@
 .polls-container {
+    border: 1px dotted gray;
     .poll-container {
         position: absolute;
         height: 400px;
@@ -11,20 +12,14 @@
         .choices-container {
             border: 1px solid gray;
         }
+        .fa {
+            cursor: hand;
+            cursor: pointer;
+        }
     }
     .chart-container {
         height: 200px;
         width: 300px;
         border: 1px solid gray;
-    }
-    .poll {
-        border: 1px solid gray;
-        margin: 1em 0 1em 0;
-        padding: 1em 0 1em 0;
-        &:hover {
-            border-color: green;
-            cursor: hand;
-            cursor: pointer;
-        }
     }
 }

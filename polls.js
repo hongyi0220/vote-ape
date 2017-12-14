@@ -31,12 +31,12 @@ router.post('/poll/vote', (req, res) => {
             }
         ).toArray((err, docs) => {
             if (err) console.error(err);
-            console.log('docs:', docs);
+            // console.log('docs:', docs);
             if (docs.length) session.data.duplicate = true;
             else session.data.duplicate = false;
 
             const duplicate = session.data.duplicate;
-            console.log(`duplicate?: ${duplicate}`);
+            // console.log(`duplicate?: ${duplicate}`);
             // db.close();
             if (duplicate) {
 
@@ -51,7 +51,7 @@ router.post('/poll/vote', (req, res) => {
                      $push: {ips: ip}
                     }
                 );
-                console.log('ip written to database');
+                // console.log('ip written to database');
                 // Save poll id for the purpose of keeping the client on the poll page after voting
                 session.data.poll_id = id;
                 res.redirect('/polls/poll/done');
