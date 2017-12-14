@@ -27,6 +27,8 @@ router.post('/create', (req, res) => {
         schema.comments = [];
         const choices = req.body.choices.map(choice => [choice, 0]);
         schema.choices = choices;
+        schema.ips = [];
+        schema.date = Date.now();
         // schema.counts = [];
         // for (let i = 0; i < req.body.choices.length; i++) schema.counts.push(0);
         const created = new Date();

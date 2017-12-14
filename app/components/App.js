@@ -17,7 +17,7 @@ class App extends React.Component {
                 authenticated: false,
                 mypolls: null
             },
-            memory: {
+            memory: { // This temporary storage enables live-updating of form values
                 firstname: null,
                 lastname: null,
                 username: null,
@@ -46,7 +46,7 @@ class App extends React.Component {
         this.buildChart = this.buildChart.bind(this);
     }
 
-    buildChart() {
+    buildChart() { // Build d3 chart
         const height = 200;
         const width = 300;
         const padding = 25;
@@ -85,7 +85,7 @@ class App extends React.Component {
            .call(xAxis);
     }
 
-    popPoll(e) {
+    popPoll(e) { // This opnes a poll
         // console.log('popPoll triggered by: ', e.target);
         this.setState({
             ui: {
@@ -96,7 +96,7 @@ class App extends React.Component {
         if (e) e.stopPropagation();
     }
 
-    handleClickFromPoll(e) {
+    handleClickFromPoll(e) { // This finds the exact poll that is clicked stored in state
         // console.log('handleClickFrompoll triggered');
         // console.log('this.state.polls from handleClickfromPoll: ',this.state);
         const state = {...this.state};
@@ -124,7 +124,7 @@ class App extends React.Component {
         this.popPoll();
     }
 
-    addOption() {
+    addOption() { // This adds more choices when creating a poll
         this.setState(prevState => ({
             ui: {
                 ...prevState.ui,
@@ -133,7 +133,7 @@ class App extends React.Component {
         }));
     }
 
-    closePopUps(e) {
+    closePopUps(e) { // This closes all pop-ups such as the drop-down-menu and a poll page
         if(e)
         console.log(e.target,'triggered closePopUps');
         this.setState(prevState => ({
@@ -151,7 +151,7 @@ class App extends React.Component {
         if (e) e.stopPropagation();
     }
 
-    handleClickFromMenu(e) {
+    handleClickFromMenu(e) { // This handles clicks from the drop-down-menu
         // console.log(e.target,'triggered handleClickFromMenu');
         const url = 'http://localhost:8080/api/signout';
 
@@ -179,14 +179,14 @@ class App extends React.Component {
         e.stopPropagation();
     }
 
-    toggleMenu(e) {
+    toggleMenu(e) { // This toggles the drop-down-menu when username is clicked
         let ui = {...this.state.ui};
         ui.dropDownMenu = this.state.ui.dropDownMenu ? false : true;
         this.setState({ ui });
         e.stopPropagation();
     }
 
-    updateUserData(e) {
+    updateUserData(e) { // This handles edits of user data
         let memory = {...this.state.memory};
         if (e.target.name === 'firstname') memory.firstname = e.target.value;
         else if (e.target.name === 'lastname') memory.lastname = e.target.value;
@@ -203,6 +203,7 @@ class App extends React.Component {
         const headers = new Headers();
         const init = { method: 'GET',
                        headers: headers };
+        // Fetch data from an API on the server
        fetch(url, init)
        .then(res => res.json())
        .then(resJson => {
@@ -246,14 +247,9 @@ class App extends React.Component {
     }
 
     componentWillMount() {
-        // const url = 'http://localhost:8080/api/polls';
-        // fetch(url).then(res => res.json()).then(resJson => this.setState({ polls: resJson }));
+        // This gets data such as polls when unsigned-in, polls and user data when signed-in
         this.getUserData();
         // this.handleClickFromPoll();
-    }
-
-    componentDidMount() {
-        // this.buildChart();
     }
 
     render() {

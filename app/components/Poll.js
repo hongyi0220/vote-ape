@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 
 export class Poll extends React.Component {
     componentDidMount() {
+        // Build graph with d3.js after DOM elements are mounted
         this.props.buildChart();
     }
     render() {
@@ -17,7 +18,7 @@ export class Poll extends React.Component {
                         <h3>{poll.poll_name}</h3>
                         {poll.choices.map((choice, i) =>
                             <div>
-                                {/* This sends a "choice=_id,i" */}
+                                {/* This input sends a "choice=_id,i" key-value pair */}
                                 <input onClick={e => e.stopPropagation()} id={`choice${i}`} type='radio' name='choice'
                                     value={`${poll._id},${i}`}></input>
                                 <label onClick={e => e.stopPropagation()} htmlFor={`choice${i}`}>{poll.choices[i][0]}</label>
@@ -25,6 +26,8 @@ export class Poll extends React.Component {
                         )}
                         <button type='submit' onClick={e => {e.stopPropagation()}}>Submit</button>
                     </form>
+                    <Route path='/polls/poll/voted' render={() => <div>You've already voted</div>}/>
+                    <Route path='/polls/poll/done' render={() => <div>Hooray!</div>}/>
                 </div>
                 {/* <Route path='/polls/poll/successful' render={() => <div>Monkey: 'Oo oo oo!'('Voted!')</div>} /> */}
                 <div className='chart-container'>
