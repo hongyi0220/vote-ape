@@ -32834,7 +32834,8 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
                 password: null,
                 newPassword: null,
                 poll: null,
-                poll_id: null
+                poll_id: null,
+                comment: null
             },
             ui: {
                 dropDownMenu: false,
@@ -32855,6 +32856,36 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         this.popPoll = this.popPoll.bind(this);
         this.buildChart = this.buildChart.bind(this);
         this.upVote = this.upVote.bind(this);
+        this.storeCommentInMemory = this.storeCommentInMemory.bind(this);
+        this.handleSubmitComment = this.handleSubmitComment.bind(this);
+    }
+
+    handleSubmitComment() {
+        const memory = _extends({}, this.state.memory);
+        const comment = memory.comment;
+        const username = memory.username;
+        const poll_id = memory.poll._id;
+        const url = 'http://localhost:8080/api/comment';
+        fetch(url, {
+            method: 'post',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username: username, comment: comment, poll_id: poll_id })
+        });
+        memory.poll.comments.push([username, comment]);
+        memory.comment = null;
+        // this.refs.comment.value = '';
+        this.setState({ memory });
+    }
+
+    storeCommentInMemory(e) {
+        this.setState({
+            memory: _extends({}, this.state.memory, {
+                comment: e.target.value
+            })
+        });
     }
 
     upVote(e) {
@@ -32864,7 +32895,6 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         fetch(url, {
             method: 'post',
             headers: {
-
                 'Accept': 'application/json, text/plain, */*',
                 'Content-Type': 'application/json'
             },
@@ -33071,7 +33101,8 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
             auth ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__DropDownMenu__["a" /* DropDownMenu */], { popped: this.state.ui.dropDownMenu, handleClickFromMenu: this.handleClickFromMenu }) : '',
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__Main__["a" /* Main */], null),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__User__["a" /* User */], { viewPoll: viewPoll, closePopUps: this.closePopUps, updateUserData: this.updateUserData, addOption: this.addOption, state: this.state }),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/polls', render: () => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__Polls__["a" /* Polls */], { upVote: this.upVote, viewPoll: viewPoll, state: this.state, buildChart: this.buildChart }) }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/polls', render: () => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__Polls__["a" /* Polls */], { handleSubmitComment: this.handleSubmitComment, storeCommentInMemory: this.storeCommentInMemory,
+                    upVote: this.upVote, viewPoll: viewPoll, state: this.state, buildChart: this.buildChart }) }),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__Footer__["a" /* Footer */], null)
         );
     }
@@ -33976,16 +34007,18 @@ const Polls = props => {
     const viewPoll = props.viewPoll;
     const state = props.state;
     const polls = state.polls;
-    console.log('polls inside <Polls>:', polls);
+    // console.log('polls inside <Polls>:', polls);
     const handleClickFromPoll = viewPoll.handleClickFromPoll;
     const history = viewPoll.history;
     const popped = props.state.ui.poll;
     const popPoll = viewPoll.popPoll;
     const buildChart = props.buildChart;
+    const storeCommentInMemory = props.storeCommentInMemory;
     // const recent10 = polls.sort((a, b) => a.date - b.date).reverse();
     let featured10;
     if (polls) featured10 = polls.sort((a, b) => a.voted - b.voted).reverse();
     const upVote = props.upVote;
+    const handleSubmitComment = props.handleSubmitComment;
     // console.log('poll popped: ', popped);
     // console.log('popPoll:', popPoll);
     console.log('state inside <Polls>:', props.state);
@@ -34000,7 +34033,8 @@ const Polls = props => {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'div',
             { className: 'featured-polls-container' },
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { path: '/polls/poll', render: () => popped ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Poll__["a" /* Poll */], { upVote: upVote, buildChart: buildChart, state: state }) : '' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { path: '/polls/poll', render: () => popped ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Poll__["a" /* Poll */], { handleSubmitComment: handleSubmitComment, storeCommentInMemory: storeCommentInMemory,
+                    upVote: upVote, buildChart: buildChart, state: state }) : '' }),
             polls ? featured10.map(poll => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 { className: 'poll', id: poll._id, onClick: e => {
@@ -34044,14 +34078,27 @@ const Polls = props => {
 
 
 class Poll extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
+    constructor() {
+        super();
+        this.clearTextarea = this.clearTextarea.bind(this);
+    }
+    clearTextarea() {
+        this.refs.comment.value = '';
+    }
     componentDidMount() {
+        const poll = this.props.state.memory.poll;
         // Build graph with d3.js after DOM elements are mounted
-        this.props.buildChart();
+        if (poll) this.props.buildChart();
     }
     render() {
-        const poll = this.props.state.memory.poll;
+        const memory = this.props.state.memory;
+        const poll = memory.poll;
+        const username = memory.username;
         const upVote = this.props.upVote;
-        // const polls = state.polls;
+        const auth = this.props.state.user.authenticated;
+        const storeCommentInMemory = this.props.storeCommentInMemory;
+        const comment = memory.comment;
+        const handleSubmitComment = this.props.handleSubmitComment;
         // const popPoll = this.props.popPoll;
         console.log('poll in memory:', poll);
         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -34066,25 +34113,25 @@ class Poll extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'h3',
                         null,
-                        poll.poll_name
+                        poll ? poll.poll_name : ''
                     ),
                     '\xA0\xA0',
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { id: poll._id, onClick: e => {
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { id: poll ? poll._id : '', onClick: e => {
                             e.stopPropagation();upVote(e);
                         }, className: 'fa fa-thumbs-o-up', 'aria-hidden': 'true' }),
                     '\xA0',
-                    poll.upvote,
-                    poll.choices.map((choice, i) => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    poll ? poll.upvote : '',
+                    poll ? poll.choices.map((choice, i) => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         null,
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { onClick: e => e.stopPropagation(), id: `choice${i}`, type: 'radio', name: 'choice',
-                            value: `${poll._id},${i}` }),
+                            value: `${poll ? poll._id : ''},${i}` }),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'label',
                             { onClick: e => e.stopPropagation(), htmlFor: `choice${i}` },
-                            poll.choices[i][0]
+                            poll ? poll.choices[i][0] : ''
                         )
-                    )),
+                    )) : '',
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'button',
                         { type: 'submit', onClick: e => {
@@ -34104,7 +34151,47 @@ class Poll extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
                         'Hooray!'
                     ) })
             ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'chart-container' })
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'chart-container' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'comments-container' },
+                poll ? poll.comments.map(comment => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'comment' },
+                    `${comment[0]}: ${comment[1]}`,
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: 'polls/poll/comment/posted', render: () => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null) })
+                )) : '',
+                auth ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'comment-form' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'label',
+                        { htmlFor: 'comment' },
+                        'Comment:'
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'textarea',
+                        { ref: 'comment', id: 'comment', name: 'comment', onChange: storeCommentInMemory },
+                        comment
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'button',
+                        { type: 'button', onClick: () => {
+                                handleSubmitComment();this.clearTextarea();
+                            } },
+                        'Post'
+                    )
+                ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    null,
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+                        { to: '/user/login' },
+                        'Sign-in'
+                    ),
+                    ' to post comment'
+                )
+            )
         );
     }
 }

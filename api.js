@@ -11,6 +11,30 @@ const session = require('express-session');
 // app.use(bodyParser.urlencoded({extended: true}));
 // app.use(bodyParser.json());
 
+router.post('/comment', (req, res, next) => {
+    const comment = req.body.comment;
+    const username = req.body.username;
+    const id = req.body.poll_id;
+    console.log('comment:',comment,'username:',username,'poll_id:',id);
+    MongoClient.connect(url, (err, db) => {
+        if (err) console.error(err);
+        db.collection('polls').updateOne(
+            {_id: mongo.ObjectId(id)},
+            {
+                $push: {
+                    comments: [username, comment]
+                }
+            }
+        );
+        db.close();
+        // next();
+        // res.redirect('/polls/poll/comment');
+        // res.redirect('/polls/poll/comment/posted');
+        // res.send('hooray');
+        res.end();
+    });
+});
+
 router.get('/getuserdata', (req, res) => {
     // res.send(app.get('docs'));
     // console.log('api asked for: getuserdata: session.data:', session.data);

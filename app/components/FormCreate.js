@@ -18,20 +18,20 @@ export const FormCreate = props => {
             <form action='/user/create' method='post'>
                 <div className='poll-name'>
                     {/* <label htmlFor='poll-name'>Poll name</label> */}
-                    <input id='poll-name' name='poll_name' type='text' placeholder='Enter your question'></input>
+                    <input id='poll-name' name='poll_name' type='text' placeholder='Enter your question'/>
                 </div>
                 <div className='choice'>
                     {/* <label htmlFor='choice1'>Option 1</label> */}
-                    <input id='choice1' name='choices[]' type='text' placeholder='Enter an answer choice'></input>
+                    <input id='choice1' name='choices[]' type='text' placeholder='Enter an answer choice'/>
                 </div>
                 <div className='choice'>
                     {/* <label htmlFor='choice2'>Option 2</label> */}
-                    <input id='choice2' name='choices[]' type='text' placeholder='Enter an answer choice'></input>
+                    <input id='choice2' name='choices[]' type='text' placeholder='Enter an answer choice'/>
                 </div>
                 {dummyArr(numOfAddOptions).map((el, i) =>
                     <div className='choice'>
                         {/* <label htmlFor={`choice${i + 3}`}>{`Option ${i + 3}`}</label> */}
-                        <input id={`choice${i + 3}`} name='choices[]' type='text' placeholder='Enter an answer choice'></input>
+                        <input id={`choice${i + 3}`} name='choices[]' type='text' placeholder='Enter an answer choice'/>
                     </div>
                 )}
                 <button type='button' onClick={props.addOption}>Add more choices</button>

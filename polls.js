@@ -10,6 +10,28 @@ require('dotenv').config();
 
 // app.use('trust proxy', true);
 
+// router.post('/poll/comment', (req, res, next) => {
+//     const comment = req.body.comment;
+//     const username = req.body.username;
+//     const id = req.body.poll_id;
+//     MongoClient.connect(url, (err, db) => {
+//         if (err) console.error(err);
+//         db.collection('polls').updateOne(
+//             {_id: mongo.ObjectId(id)},
+//             {
+//                 $push: {
+//                     comments: [username, comment]
+//                 }
+//             }
+//         );
+//         db.close();
+//         // next();
+//         // res.redirect('/polls/poll/comment');
+//         // res.redirect('/polls/poll/comment/posted');
+//         res.send('hooray');
+//     });
+// });
+
 router.post('/poll/vote', (req, res) => {
     const choiceData = req.body.choice.split(',');
     const id = choiceData[0];

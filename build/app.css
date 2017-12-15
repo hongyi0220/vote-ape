@@ -60,7 +60,7 @@ footer {
   border: 1px dotted gray; }
   .polls-container .poll-container {
     position: absolute;
-    height: 400px;
+    height: 600px;
     width: 400px;
     top: 0;
     left: 0;

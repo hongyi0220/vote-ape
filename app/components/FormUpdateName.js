@@ -13,14 +13,12 @@ export const FormUpdateName = props => {
             <div>
                 <label htmlFor='firstname'>First name</label>
                 <input id='firstname' type='text' name='firstname'
-                    onChange={updateUserData} value={memory.firstname}>
-                </input>
+                    onChange={updateUserData} value={memory.firstname}/>
             </div>
             <div>
                 <label htmlFor='lastname'>Last name</label>
                 <input id='lastname' type='text' name='lastname'
-                    onChange={updateUserData} value={memory.lastname}>
-                </input>
+                    onChange={updateUserData} value={memory.lastname}/>
             </div>
             {/* <input id='user_id' type='hidden' name='user_id' value={user_id}></input> */}
             <button type='button'><Link to='/user'>Cancel</Link>&nbsp;</button>

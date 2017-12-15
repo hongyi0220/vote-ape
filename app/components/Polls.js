@@ -6,16 +6,18 @@ export const Polls = props => {
     const viewPoll = props.viewPoll;
     const state = props.state;
     const polls = state.polls;
-    console.log('polls inside <Polls>:', polls);
+    // console.log('polls inside <Polls>:', polls);
     const handleClickFromPoll = viewPoll.handleClickFromPoll;
     const history = viewPoll.history;
     const popped = props.state.ui.poll;
     const popPoll = viewPoll.popPoll;
     const buildChart = props.buildChart;
+    const storeCommentInMemory = props.storeCommentInMemory;
     // const recent10 = polls.sort((a, b) => a.date - b.date).reverse();
     let featured10;
     if (polls) featured10 = polls.sort((a, b) => a.voted - b.voted).reverse();
     const upVote = props.upVote;
+    const handleSubmitComment = props.handleSubmitComment;
     // console.log('poll popped: ', popped);
     // console.log('popPoll:', popPoll);
     console.log('state inside <Polls>:', props.state);
@@ -33,7 +35,9 @@ export const Polls = props => {
             </div> */}
             <h3>Featured Polls</h3>
             <div className='featured-polls-container'>
-                <Route path='/polls/poll' render={() => popped ? <Poll upVote={upVote} buildChart={buildChart} state={state}/> : ''}/>
+                <Route path='/polls/poll' render={() =>
+                    popped ? <Poll handleSubmitComment={handleSubmitComment} storeCommentInMemory={storeCommentInMemory}
+                        upVote={upVote} buildChart={buildChart} state={state}/> : ''}/>
                 {polls ? featured10.map(poll =>
                     <div className='poll' id={poll._id} onClick={e => {popPoll(e); handleClickFromPoll(e); history.push('/polls/poll')}}>
                         {`Title: ${poll.poll_name} Created: ${poll.created} By ${poll.username}

@@ -25,7 +25,8 @@ class App extends React.Component {
                 password: null,
                 newPassword: null,
                 poll: null,
-                poll_id: null
+                poll_id: null,
+                comment: null
             },
             ui: {
                 dropDownMenu: false,
@@ -46,6 +47,40 @@ class App extends React.Component {
         this.popPoll = this.popPoll.bind(this);
         this.buildChart = this.buildChart.bind(this);
         this.upVote = this.upVote.bind(this);
+        this.storeCommentInMemory = this.storeCommentInMemory.bind(this);
+        this.handleSubmitComment = this.handleSubmitComment.bind(this);
+    }
+
+    handleSubmitComment() {
+        const memory = {...this.state.memory};
+        const comment = memory.comment;
+        const username = memory.username;
+        const poll_id = memory.poll._id;
+        const url = 'http://localhost:8080/api/comment';
+        fetch(url,
+            {
+                method: 'post',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({username: username, comment: comment, poll_id: poll_id})
+            }
+
+        );
+        memory.poll.comments.push([username, comment]);
+        memory.comment = null;
+        // this.refs.comment.value = '';
+        this.setState({ memory });
+    }
+
+    storeCommentInMemory(e) {
+        this.setState({
+            memory: {
+                ...this.state.memory,
+                comment: e.target.value
+            }
+        });
     }
 
     upVote(e) {
@@ -56,7 +91,6 @@ class App extends React.Component {
             {
                 method: 'post',
                 headers: {
-
                     'Accept': 'application/json, text/plain, */*',
                     'Content-Type': 'application/json'
                 },
@@ -298,8 +332,9 @@ class App extends React.Component {
                 {auth ? <DropDownMenu popped={this.state.ui.dropDownMenu} handleClickFromMenu={this.handleClickFromMenu}/> : ''}
                 <Main />
                 <User viewPoll={viewPoll} closePopUps={this.closePopUps} updateUserData={this.updateUserData} addOption={this.addOption} state={this.state}/>
-                <Route path='/polls' render={ () =>
-                    <Polls upVote={this.upVote} viewPoll={viewPoll} state={this.state} buildChart={this.buildChart}/>} />
+                <Route path='/polls' render={() =>
+                    <Polls handleSubmitComment={this.handleSubmitComment} storeCommentInMemory={this.storeCommentInMemory}
+                        upVote={this.upVote} viewPoll={viewPoll} state={this.state} buildChart={this.buildChart}/>} />
                 <Footer />
             </div>
         );
