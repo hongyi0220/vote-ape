@@ -20,43 +20,53 @@ export const UserContent = props => {
 
     return (
         <div className='user-content-container'>
-            <div className='my-account'>Dashboard</div>
-            <h3>Login Details</h3>
-            <div className='login-details-box'>
-                <div className='row'>
-                    <div className='col'>
-                        Name<br/>
-                        {`${userData ? userData.firstname : ''} ${userData ? userData.lastname : ''}`}&nbsp;
-                        <Link to='/user/update/fullname' onClick={e => e.stopPropagation()}>Edit</Link>
+            <div className='title-dashboard'>Dashboard</div>
+            <div className='login-details-container'>
+                <h3>Login Details</h3>
+                <div className='login-details-box'>
+                    <div className='row'>
+                        <div className='col'>
+                            Name<br/>
+                            {`${userData ? userData.firstname : ''} ${userData ? userData.lastname : ''}`}&nbsp;
+                            <Link to='/user/update/fullname' onClick={e => e.stopPropagation()}>Edit</Link>
+                        </div>
+                        <div className='col'>
+                            Username<br/>
+                            {userData ? userData.username : ''}&nbsp;
+                            <Link to='/user/update/username' onClick={e => e.stopPropagation()}>Edit</Link>
+                        </div>
                     </div>
-                    <div className='col'>
-                        Username<br/>
-                        {`${userData ? userData.username : ''}`}&nbsp;
-                        <Link to='/user/update/username' onClick={e => e.stopPropagation()}>Edit</Link>
+                    <div className='row'>
+                        <div className='col'>
+                            Password<br/>
+                            {userData ? maskPassword(userData.password) : ''}&nbsp;
+                            <Link to='/user/update/password' onClick={e => e.stopPropagation()}>Edit</Link>
+                        </div>
+                        <div className='col'>
+                            Email<br/>
+                            {userData ? userData.email : ''}&nbsp;
+                            <Link to='/user/update/email' onClick={e => e.stopPropagation()}>Edit</Link>
+                        </div>
                     </div>
                 </div>
-                <div className='row'>
-                    <div className='col'>
-                        Password<br/>
-                        {`${userData ? maskPassword(userData.password) : ''}`}&nbsp;
-                        <Link to='/user/update/password' onClick={e => e.stopPropagation()}>Edit</Link>
-                    </div>
-                    <div className='col'>
-                        Email<br/>
-                        {`${userData ? userData.email : ''}`}&nbsp;
-                        <Link to='/user/update/email' onClick={e => e.stopPropagation()}>Edit</Link>
-                    </div>
+                <div className='my-polls-box'>
+                    <h3>My Polls</h3>
+                    {mypolls ? mypolls.map((poll, i) =>
+                        <div className='poll' id={poll._id}
+                            onClick={e => {popPoll(e); handleClickFromPoll(e); history.push('/polls/poll')}}>
+                            <div className='title-created-container'>
+                                <div className='title-box'><b>{poll.poll_name}</b></div>
+                                <div className='created-box'>{poll.created}</div>
+                            </div>
+                            <div className='poll-detail-container'>By Me <div className='seperator'></div>&nbsp;
+                               Voted: {poll.voted}&nbsp;<div className='seperator'></div>&nbsp;<i className="fa fa-thumbs-o-up" aria-hidden="true">
+                              </i>&nbsp;{poll.upvote}
+                            </div>
+                            {/* {`Title: ${poll.poll_name}  Created: ${poll.created} By Me
+                              Views: ${poll.views} Voted: ${poll.voted} Upvote: ${poll.upvote}`} */}
+                        </div>
+                    ) : <div>You have no polls</div>}
                 </div>
-            </div>
-            <h3>My Polls</h3>
-            <div className='my-polls-box'>
-                {mypolls ? mypolls.map((poll, i) =>
-                    <div className='poll' id={poll._id}
-                        onClick={e => {popPoll(e); handleClickFromPoll(e); history.push('/polls/poll')}}>
-                        {`Title: ${poll.poll_name}  Created: ${poll.created} By Me
-                          Views: ${poll.views} Voted: ${poll.voted} Upvote: ${poll.upvote}`}
-                    </div>
-                )  : <div>You have no polls</div>}
             </div>
         </div>
     );

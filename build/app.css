@@ -17,21 +17,39 @@ footer {
   border-bottom: 1px solid gray;
   padding: 1em;
   color: #666666;
-  margin: 1em 0 0.5em 0; }
+  margin: 0 0 0.5em 0; }
 
 .nav-container {
   background: #1dbe71;
-  padding: 1em; }
-  .nav-container .logo {
+  padding: 0.5em;
+  height: 50px; }
+  .nav-container .logo-box, .nav-container .link-polls-box, .nav-container .create-button-box, .nav-container .link-user, .nav-container .auth {
     display: inline-block; }
-    .nav-container .logo img {
-      height: 50px;
-      color: white; }
-  .nav-container .link-polls {
+  .nav-container .logo-box {
+    display: inline-block;
+    line-height: 50px; }
+    .nav-container .logo-box .logo img {
+      height: 40px; }
+  .nav-container .link-user {
+    position: absolute;
+    right: 0;
+    line-height: 50px;
+    z-index: 10;
+    margin-right: 1em;
     color: white; }
+    .nav-container .link-user:hover {
+      border-bottom: 3px solid white; }
+  .nav-container .link-polls-box {
+    display: inline-block;
+    margin-left: 1em; }
+    .nav-container .link-polls-box .link-polls {
+      color: white;
+      font-size: 2em; }
+      .nav-container .link-polls-box .link-polls:hover {
+        border-bottom: 3px solid white; }
   .nav-container .auth {
     float: right;
-    display: inline-block; }
+    line-height: 50px; }
     .nav-container .auth .login {
       border: 1px solid white;
       padding: .5em;
@@ -40,8 +58,6 @@ footer {
       .nav-container .auth .login:hover {
         background: white;
         color: #1dbe71; }
-  .nav-container .link-user {
-    display: inline-block; }
   .nav-container .username {
     display: inline-block;
     cursor: hand;
@@ -49,24 +65,45 @@ footer {
     color: #127fa9; }
     .nav-container .username:hover {
       text-decoration: underline; }
+  .nav-container .create-button-box .create-button {
+    color: white; }
+    .nav-container .create-button-box .create-button:hover {
+      border-bottom: 3px solid white; }
 
 .invalid {
   color: red; }
 
-.user-content-container .my-account {
+.user-content-container .title-dashboard {
+  padding-top: 1em;
   border-bottom: 1px solid black; }
 
-.user-content-container .login-details-box {
-  border: 1px solid gray; }
-  .user-content-container .login-details-box a {
-    color: #127fa9; }
-    .user-content-container .login-details-box a:hover {
-      text-decoration: underline; }
-  .user-content-container .login-details-box .col {
-    display: inline-block; }
-
-.user-content-container .my-polls-box {
-  margin-bottom: 1em; }
+.user-content-container .login-details-container {
+  border: 1px dashed green;
+  background-color: #f6f6f6; }
+  .user-content-container .login-details-container .login-details-box {
+    background-color: white;
+    margin: auto;
+    width: 50%;
+    border: 1px solid gray;
+    display: flex;
+    flex-direction: column;
+    padding: 1em; }
+    .user-content-container .login-details-container .login-details-box .row + .row {
+      margin-top: 0.5em; }
+    .user-content-container .login-details-container .login-details-box .row {
+      display: flex;
+      flex-grow: 1;
+      flex-direction: row; }
+      .user-content-container .login-details-container .login-details-box .row .col {
+        border: 1px dashed black;
+        flex-grow: 1;
+        display: inline-block; }
+        .user-content-container .login-details-container .login-details-box .row .col a {
+          color: #127fa9; }
+          .user-content-container .login-details-container .login-details-box .row .col a:hover {
+            text-decoration: underline; }
+  .user-content-container .login-details-container .my-polls-box {
+    padding-bottom: 1em; }
 
 .updates-container {
   width: 300px;
@@ -78,17 +115,38 @@ footer {
   z-index: 10;
   border: 1px solid green; }
 
-.drop-down-menu {
-  border: 1px solid green;
-  width: 100px;
-  padding: 1em;
+.drop-down-menu-container .drop-down-menu {
+  width: 92px;
   position: absolute;
   z-index: 10;
-  background: rgba(255, 255, 255, 0.85);
-  z-index: 10; }
+  background: white;
+  box-shadow: 0 0 10px gray;
+  display: flex;
+  flex-direction: column;
+  margin-right: 1em;
+  right: 0;
+  top: 58px; }
+  .drop-down-menu-container .drop-down-menu .dashboard-button-box, .drop-down-menu-container .drop-down-menu .signout-button {
+    padding: 0.5em;
+    flex-grow: 1;
+    color: #6b787e; }
+  .drop-down-menu-container .drop-down-menu .dashboard-button-box {
+    border-bottom: 1px solid #efefef; }
+    .drop-down-menu-container .drop-down-menu .dashboard-button-box a {
+      color: #6b787e; }
+    .drop-down-menu-container .drop-down-menu .dashboard-button-box:hover {
+      background-color: #efefef; }
+  .drop-down-menu-container .drop-down-menu .signout-button {
+    color: #6b787e; }
+    .drop-down-menu-container .drop-down-menu .signout-button:hover {
+      background-color: #efefef;
+      cursor: hand;
+      cursor: pointer; }
 
 .polls-container {
-  border: 1px dotted gray; }
+  border: 1px dotted gray;
+  margin: auto;
+  background-color: #f6f6f6; }
   .polls-container .poll-container {
     position: absolute;
     height: 600px;
@@ -2450,104 +2508,123 @@ footer {
   overflow: visible;
   clip: auto; }
 
-.login-container h2, .login-container .link-signup {
-  text-align: center; }
-
-.login-container .form-login {
-  display: flex;
-  flex-direction: column;
-  width: 25%;
-  min-width: 300px;
-  margin: 1em auto 1em auto;
-  background-color: #edeeee;
-  border-radius: 2px; }
-  .login-container .form-login label, .login-container .form-login input {
-    display: block; }
-  .login-container .form-login label {
-    margin-bottom: 0.1em; }
-  .login-container .form-login .username-box, .login-container .form-login .password-box {
-    flex-grow: 1;
-    margin: 0.5em; }
-    .login-container .form-login .username-box input, .login-container .form-login .password-box input {
-      width: 94%;
-      padding: 0.5em;
-      border: 1px solid #d0d2d3;
-      border-radius: 2px; }
-      .login-container .form-login .username-box input:hover, .login-container .form-login .password-box input:hover {
-        border-color: #9da5aa; }
-  .login-container .form-login .button-box {
-    flex-grow: 1;
-    margin: 0.5em;
+.login-container {
+  padding: 1em; }
+  .login-container h2, .login-container .link-signup {
     text-align: center; }
-    .login-container .form-login .button-box button {
-      width: 99.7%;
-      background: #1dbe71;
-      color: white;
-      border: none;
-      padding: 0.5em;
-      border-radius: 2px; }
-
-.form-container h2 {
-  text-align: center; }
-
-.form-container .link-signin {
-  text-align: center; }
-
-.form-container .form-signup {
-  display: flex;
-  flex-direction: column;
-  width: 25%;
-  min-width: 300px;
-  margin: 1em auto 1em auto;
-  background-color: #edeeee;
-  border-radius: 2px; }
-  .form-container .form-signup label, .form-container .form-signup input {
-    display: block; }
-  .form-container .form-signup label {
-    margin-bottom: 0.1em; }
-  .form-container .form-signup .name-box {
-    display: flex; }
-    .form-container .form-signup .name-box .firstname-box, .form-container .form-signup .name-box .lastname-box {
+  .login-container .form-login {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    min-width: 300px;
+    margin: 1em auto 1em auto;
+    background-color: #edeeee;
+    border-radius: 2px; }
+    .login-container .form-login label, .login-container .form-login input {
+      display: block; }
+    .login-container .form-login label {
+      margin-bottom: 0.1em; }
+    .login-container .form-login .username-box, .login-container .form-login .password-box {
       flex-grow: 1;
       margin: 0.5em; }
-      .form-container .form-signup .name-box .firstname-box input, .form-container .form-signup .name-box .lastname-box input {
-        width: 86.7%;
+      .login-container .form-login .username-box input, .login-container .form-login .password-box input {
+        width: 94%;
         padding: 0.5em;
         border: 1px solid #d0d2d3;
         border-radius: 2px; }
-        .form-container .form-signup .name-box .firstname-box input:hover, .form-container .form-signup .name-box .lastname-box input:hover {
+        .login-container .form-login .username-box input:hover, .login-container .form-login .password-box input:hover {
           border-color: #9da5aa; }
-  .form-container .form-signup .username-box, .form-container .form-signup .email-box, .form-container .form-signup .password-box {
-    flex-grow: 1;
-    margin: 0.5em; }
-    .form-container .form-signup .username-box input, .form-container .form-signup .email-box input, .form-container .form-signup .password-box input {
-      width: 94%;
-      padding: 0.5em;
-      border: 1px solid #d0d2d3;
-      border-radius: 2px; }
-      .form-container .form-signup .username-box input:hover, .form-container .form-signup .email-box input:hover, .form-container .form-signup .password-box input:hover {
-        border-color: #9da5aa; }
-  .form-container .form-signup .button-box {
-    border: 1px dashed #1dbe71;
-    flex-grow: 1;
-    margin: 0.5em;
+    .login-container .form-login .button-box {
+      flex-grow: 1;
+      margin: 0.5em;
+      text-align: center; }
+      .login-container .form-login .button-box button {
+        width: 99.7%;
+        background: #1dbe71;
+        color: white;
+        border: none;
+        padding: 0.5em;
+        border-radius: 2px; }
+        .login-container .form-login .button-box button:hover {
+          background-color: #20cd7b; }
+
+.form-container {
+  padding: 1em; }
+  .form-container h2 {
     text-align: center; }
-    .form-container .form-signup .button-box button {
-      width: 99.7%;
-      background: #1dbe71;
-      color: white;
-      border: none;
-      padding: 0.5em;
-      border-radius: 2px; }
+  .form-container .link-signin {
+    text-align: center; }
+  .form-container .form-signup {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    min-width: 300px;
+    margin: 1em auto 1em auto;
+    background-color: #edeeee;
+    border-radius: 2px; }
+    .form-container .form-signup label, .form-container .form-signup input {
+      display: block; }
+    .form-container .form-signup label {
+      margin-bottom: 0.1em; }
+    .form-container .form-signup .name-box {
+      display: flex; }
+      .form-container .form-signup .name-box .firstname-box, .form-container .form-signup .name-box .lastname-box {
+        flex-grow: 1;
+        margin: 0.5em; }
+        .form-container .form-signup .name-box .firstname-box input, .form-container .form-signup .name-box .lastname-box input {
+          width: 86.7%;
+          padding: 0.5em;
+          border: 1px solid #d0d2d3;
+          border-radius: 2px; }
+          .form-container .form-signup .name-box .firstname-box input:hover, .form-container .form-signup .name-box .lastname-box input:hover {
+            border-color: #9da5aa; }
+    .form-container .form-signup .username-box, .form-container .form-signup .email-box, .form-container .form-signup .password-box {
+      flex-grow: 1;
+      margin: 0.5em; }
+      .form-container .form-signup .username-box input, .form-container .form-signup .email-box input, .form-container .form-signup .password-box input {
+        width: 94%;
+        padding: 0.5em;
+        border: 1px solid #d0d2d3;
+        border-radius: 2px; }
+        .form-container .form-signup .username-box input:hover, .form-container .form-signup .email-box input:hover, .form-container .form-signup .password-box input:hover {
+          border-color: #9da5aa; }
+    .form-container .form-signup .button-box {
+      border: 1px dashed #1dbe71;
+      flex-grow: 1;
+      margin: 0.5em;
+      text-align: center; }
+      .form-container .form-signup .button-box button {
+        width: 99.7%;
+        background: #1dbe71;
+        color: white;
+        border: none;
+        padding: 0.5em;
+        border-radius: 2px; }
+        .form-container .form-signup .button-box button:hover {
+          background-color: #20cd7b; }
+
+body {
+  margin: 0; }
 
 a {
   text-decoration: none; }
 
 .poll {
-  border: 1px solid gray;
+  border: 1px solid #ececec;
   margin: 1em 0 1em 0;
-  padding: 1em 0 1em 0; }
+  padding: 1em;
+  width: 50%;
+  margin: 1em auto 0 auto;
+  background-color: white; }
   .poll:hover {
-    border-color: green;
+    border-color: #1dbe71;
     cursor: hand;
     cursor: pointer; }
+  .poll .title-created-container, .poll .poll-detail-container {
+    display: inline-block; }
+  .poll .poll-detail-container {
+    float: right; }
+  .poll .seperator {
+    display: inline-block;
+    height: 10px;
+    border: 1px solid #efefef; }

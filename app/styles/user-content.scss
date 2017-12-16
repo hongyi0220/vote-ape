@@ -1,20 +1,48 @@
 .user-content-container {
-    .my-account {
+    // h3 {
+    //     text-align: center;
+    // }
+    .title-dashboard {
+        padding-top: 1em;
         border-bottom: 1px solid black;
     }
-    .login-details-box {
-        border: 1px solid gray;
-        a {
-            color: rgb(18,127,169);
-            &:hover {
-                text-decoration: underline;
+    .login-details-container {
+        border: 1px dashed green;
+        background-color: rgb(246,246,246);
+        .login-details-box {
+            // background-color: rgb(246,246,246);
+            background-color: white;
+            margin: auto;
+            width: 50%;
+            border: 1px solid gray;
+            display: flex;
+            flex-direction: column;
+            padding: 1em;
+            .row+.row {
+                margin-top: 0.5em;
+            }
+            .row {
+                display: flex;
+                flex-grow: 1;
+                flex-direction: row;
+
+                .col {
+                    border: 1px dashed black;
+                    flex-grow: 1;
+                    display: inline-block;
+                    a {
+                        color: rgb(18,127,169);
+                        &:hover {
+                            text-decoration: underline;
+                        }
+                    }
+                }
             }
         }
-        .col {
-            display: inline-block;
+        .my-polls-box {
+            padding-bottom: 1em;
+            // width: 50%;
+            // margin: auto;
         }
-    }
-    .my-polls-box {
-        margin-bottom: 1em;
     }
 }

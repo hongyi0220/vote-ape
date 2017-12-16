@@ -11,17 +11,18 @@ export const Nav = props => {
         <div className='nav-container'>
             <div className='logo-box'><Link className='logo' to='/'><img src='./img/chimp.png'/></Link></div>
             {/* onClick={() => location.assign('polls')} */}
-            <div className='link-polls-box'><Link className='link-polls' to='/polls' >Polls</Link></div>
+            <div className='link-polls-box'><Link className='link-polls' to='/polls' >Polls</Link></div>&nbsp;&nbsp;
             <Switch>
                 <Route exact path='/user/create' render={() => ''}></Route>
                 <Route render={() =>
-                    {return auth ? <Link className='create' to='/user/create'>CREATE</Link> : ''}}>
+                    {return auth ? <div className='create-button-box'><Link className='create-button' to='/user/create'>CREATE</Link></div> : ''}}>
                 </Route>
                 }
             </Switch>
             {/* {auth && create ? <Link to='/user/create' onClick={unmountCreate}>CREATE</Link> : ''}&nbsp;&nbsp; */}
-            {auth ? '' : <div className='auth'><Link className='login' to='/user/login'>SIGN IN</Link></div>}
-            {auth ? (<div className='link-user'>Hello, <div className='username' onClick={props.toggleMenu}>{userData.firstname}!</div></div>) : ''}
+            {auth ? <div className='link-user'>Hello, <div className='username' onClick={props.toggleMenu}>{userData.firstname}!</div></div>
+            : <div className='auth'><Link className='login' to='/user/login'>SIGN IN</Link></div>}
+            {/* {auth ? <div className='link-user'>Hello, <div className='username' onClick={props.toggleMenu}>{userData.firstname}!</div></div> : ''} */}
         </div>
     );
 }

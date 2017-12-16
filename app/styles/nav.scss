@@ -4,6 +4,9 @@
     background: $monkey-green;
     padding: 0.5em;
     height: 50px;
+    .logo-box, .link-polls-box, .create-button-box, .link-user, .auth {
+        display: inline-block;
+    }
     .logo-box {
         display: inline-block;
         line-height: 50px;
@@ -13,6 +16,17 @@
             }
         }
     }
+    .link-user {
+        position: absolute;
+        right: 0;
+        line-height: 50px;
+        z-index: 10;
+        margin-right: 1em;
+        color: white;
+        &:hover {
+            border-bottom: 3px solid white;
+        }
+    }
     .link-polls-box {
         // border: 1px solid red;
         display: inline-block;
@@ -20,16 +34,14 @@
         .link-polls {
             color: white;
             font-size: 2em;
+            &:hover {
+                border-bottom: 3px solid white;
+            }
         }
     }
     .auth {
         float: right;
         line-height: 50px;
-        // vertical-align: center;
-        display: inline-block;
-        .login, .signup {
-
-        }
         .login {
             // line-height: 30px;
             border: 1px solid white;
@@ -42,9 +54,6 @@
             }
         }
     }
-    .link-user {
-        display: inline-block;
-    }
     .username {
         display: inline-block;
         cursor: hand;
@@ -52,6 +61,14 @@
         color: rgb(18,127,169);
         &:hover {
             text-decoration: underline;
+        }
+    }
+    .create-button-box {
+        .create-button {
+            color: white;
+            &:hover {
+                border-bottom: 3px solid white;
+            }
         }
     }
 }

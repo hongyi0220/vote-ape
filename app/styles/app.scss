@@ -12,16 +12,33 @@ $fa-font-path: "~font-awesome/fonts";
 @import 'form-login';
 @import 'form-signup';
 @import 'variables';
+body {
+    margin: 0;
+}
 a {
     text-decoration: none;
 }
 .poll {
-    border: 1px solid gray;
+    border: 1px solid rgb(236,236,236);
     margin: 1em 0 1em 0;
-    padding: 1em 0 1em 0;
+    padding: 1em;
+    width: 50%;
+    margin: 1em auto 0 auto;
+    background-color: white;
     &:hover {
-        border-color: green;
+        border-color: $border-green;
         cursor: hand;
         cursor: pointer;
+    }
+    .title-created-container, .poll-detail-container {
+        display: inline-block;
+    }
+    .poll-detail-container {
+        float: right;
+    }
+    .seperator {
+        display: inline-block;
+        height: 10px;
+        border: 1px solid rgb(239,239,239);
     }
 }

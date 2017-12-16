@@ -1,5 +1,11 @@
+@import 'variables';
 .polls-container {
+    // h3 {
+    //     text-align: center;
+    // }
     border: 1px dotted gray;
+    margin: auto;
+    background-color: rgb(246,246,246);
     .poll-container {
         position: absolute;
         height: 600px;

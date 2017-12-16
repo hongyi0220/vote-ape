@@ -33,27 +33,48 @@ export const Polls = props => {
                     </div>
                 ) : ''}
             </div> */}
-            <h3>Featured Polls</h3>
+
             <div className='featured-polls-container'>
+                <h3>Featured Polls</h3>
                 <Route path='/polls/poll' render={() =>
                     popped ? <Poll handleSubmitComment={handleSubmitComment} storeCommentInMemory={storeCommentInMemory}
                         upVote={upVote} buildChart={buildChart} state={state}/> : ''}/>
                 {polls ? featured10.map(poll =>
                     <div className='poll' id={poll._id} onClick={e => {popPoll(e); handleClickFromPoll(e); history.push('/polls/poll')}}>
-                        {`Title: ${poll.poll_name} Created: ${poll.created} By ${poll.username}
+                    <div className='title-created-container'>
+                        <div className='title-box'><b>{poll.poll_name}</b></div>
+                        <div className='created-box'>{poll.created}</div>
+                    </div>
+                    <div className='poll-detail-container'>By {poll.username}&nbsp;<div className='seperator'></div>&nbsp;
+                       Voted: {poll.voted}&nbsp;<div className='seperator'></div>&nbsp;<i className="fa fa-thumbs-o-up" aria-hidden="true">
+                      </i>&nbsp;{poll.upvote}
+                    </div>
+                        {/* {`Title: ${poll.poll_name} Created: ${poll.created} By ${poll.username}
                         Views: ${poll.views} Voted: ${poll.voted}`} <i className="fa fa-thumbs-o-up" aria-hidden="true">
-                        </i> {`${poll.upvote}`}
+                        </i>&nbsp;{poll.upvote} */}
                     </div>
                 ) : ''}
             </div>
-            <h3>All Polls</h3>
+
             <div className='all-polls-container'>
+                <h3>All Polls</h3>
                 {/* <Route path='/polls/poll' render={() => popped ? <Poll buildChart={buildChart} state={state}/> : ''}/> */}
                 {polls ? polls.map(poll =>
-                    <div className='poll' id={poll._id} onClick={e => {popPoll(e); handleClickFromPoll(e); history.push('/polls/poll')}}>
-                        {`Title: ${poll.poll_name} Created: ${poll.created} By ${poll.username}
-                        Views: ${poll.views} Voted: ${poll.voted} Upvote: ${poll.upvote}`}
+                    <div className='poll' id={poll._id}
+                        onClick={e => {popPoll(e); handleClickFromPoll(e); history.push('/polls/poll')}}>
+                        <div className='title-created-container'>
+                            <div className='title-box'><b>{poll.poll_name}</b></div>
+                            <div className='created-box'>{poll.created}</div>
+                        </div>
+                        <div className='poll-detail-container'>By {poll.username}&nbsp;<div className='seperator'></div>&nbsp;
+                           Voted: {poll.voted}&nbsp;<div className='seperator'></div>&nbsp;<i className="fa fa-thumbs-o-up" aria-hidden="true">
+                          </i>&nbsp;{poll.upvote}
+                        </div>
                     </div>
+                    // <div className='poll' id={poll._id} onClick={e => {popPoll(e); handleClickFromPoll(e); history.push('/polls/poll')}}>
+                    //     {`Title: ${poll.poll_name} Created: ${poll.created} By ${poll.username}
+                    //     Views: ${poll.views} Voted: ${poll.voted} Upvote: ${poll.upvote}`}
+                    // </div>
                 ) : ''}
             </div>
         </div>

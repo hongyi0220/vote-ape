@@ -1,5 +1,6 @@
 @import 'variables';
 .form-container {
+    padding: 1em;
     h2 {
         text-align: center;
     }
@@ -67,6 +68,9 @@
                 border: none;
                 padding: 0.5em;
                 border-radius: 2px;
+                &:hover {
+                    background-color: $light-monkey-green;
+                }
             }
         }
     }
