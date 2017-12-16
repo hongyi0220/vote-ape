@@ -1,15 +1,42 @@
 @charset "UTF-8";
-h1 {
-  color: #2ECC40; }
+.landing-container {
+  margin-bottom: 1em; }
+  .landing-container h1 {
+    color: #1dbe71; }
+  .landing-container .signup {
+    border: 1px solid #1dbe71;
+    padding: .5em;
+    border-radius: 2px;
+    color: #1dbe71; }
+    .landing-container .signup:hover {
+      background: #1dbe71;
+      color: white; }
 
 footer {
-  border: 1px dashed gray; }
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
+  padding: 1em;
+  color: #666666;
+  margin: 1em 0 0.5em 0; }
 
 .nav-container {
-  border: 1px dashed gray; }
+  border: 1px dashed gray;
+  background: #1dbe71;
+  padding: 1em; }
+  .nav-container .link-polls {
+    color: white; }
   .nav-container .auth {
+    float: right;
     display: inline-block; }
-  .nav-container .link-to-user {
+    .nav-container .auth .login {
+      border: 1px solid white;
+      padding: .5em;
+      border-radius: 2px;
+      color: white; }
+      .nav-container .auth .login:hover {
+        background: white;
+        color: #1dbe71; }
+  .nav-container .link-user {
     display: inline-block; }
   .nav-container .username {
     display: inline-block;
@@ -2418,6 +2445,103 @@ footer {
   margin: 0;
   overflow: visible;
   clip: auto; }
+
+.login-container h2, .login-container .link-signup {
+  text-align: center; }
+
+.login-container .form-login {
+  border: 1px dotted gray;
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+  min-width: 300px;
+  margin: 1em auto 1em auto;
+  background-color: #edeeee;
+  border-radius: 2px; }
+  .login-container .form-login label, .login-container .form-login input {
+    display: block; }
+  .login-container .form-login label {
+    margin-bottom: 0.1em; }
+  .login-container .form-login .username-box, .login-container .form-login .password-box {
+    border: 1px dashed green;
+    flex-grow: 1;
+    margin: 0.5em; }
+    .login-container .form-login .username-box input, .login-container .form-login .password-box input {
+      width: 94%;
+      padding: 0.5em;
+      border: 1px solid #d0d2d3;
+      border-radius: 2px; }
+      .login-container .form-login .username-box input:hover, .login-container .form-login .password-box input:hover {
+        border-color: #9da5aa; }
+  .login-container .form-login .button-box {
+    border: 1px dashed #1dbe71;
+    flex-grow: 1;
+    margin: 0.5em;
+    text-align: center; }
+    .login-container .form-login .button-box button {
+      width: 99.7%;
+      background: #1dbe71;
+      color: white;
+      border: none;
+      padding: 0.5em;
+      border-radius: 2px; }
+
+.form-container h2 {
+  text-align: center; }
+
+.form-container .link-signin {
+  text-align: center; }
+
+.form-container .form-signup {
+  border: 1px dotted gray;
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+  min-width: 300px;
+  margin: 1em auto 1em auto;
+  background-color: #edeeee;
+  border-radius: 2px; }
+  .form-container .form-signup label, .form-container .form-signup input {
+    display: block; }
+  .form-container .form-signup label {
+    margin-bottom: 0.1em; }
+  .form-container .form-signup .name-box {
+    display: flex;
+    border: 1px dashed blue; }
+    .form-container .form-signup .name-box .firstname-box, .form-container .form-signup .name-box .lastname-box {
+      border: 1px dashed green;
+      flex-grow: 1;
+      margin: 0.5em; }
+      .form-container .form-signup .name-box .firstname-box input, .form-container .form-signup .name-box .lastname-box input {
+        width: 86.7%;
+        padding: 0.5em;
+        border: 1px solid #d0d2d3;
+        border-radius: 2px; }
+        .form-container .form-signup .name-box .firstname-box input:hover, .form-container .form-signup .name-box .lastname-box input:hover {
+          border-color: #9da5aa; }
+  .form-container .form-signup .username-box, .form-container .form-signup .email-box, .form-container .form-signup .password-box {
+    border: 1px dashed green;
+    flex-grow: 1;
+    margin: 0.5em; }
+    .form-container .form-signup .username-box input, .form-container .form-signup .email-box input, .form-container .form-signup .password-box input {
+      width: 94%;
+      padding: 0.5em;
+      border: 1px solid #d0d2d3;
+      border-radius: 2px; }
+      .form-container .form-signup .username-box input:hover, .form-container .form-signup .email-box input:hover, .form-container .form-signup .password-box input:hover {
+        border-color: #9da5aa; }
+  .form-container .form-signup .button-box {
+    border: 1px dashed #1dbe71;
+    flex-grow: 1;
+    margin: 0.5em;
+    text-align: center; }
+    .form-container .form-signup .button-box button {
+      width: 99.7%;
+      background: #1dbe71;
+      color: white;
+      border: none;
+      padding: 0.5em;
+      border-radius: 2px; }
 
 a {
   text-decoration: none; }

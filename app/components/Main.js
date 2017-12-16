@@ -5,8 +5,11 @@ import { Landing } from './Landing';
 // import { Footer } from './Footer';
 
 export const Main = props => {
+    const style = {
+        height: document.documentElement.clientHeight - 160 || window.innerHeight - 160
+    }
     return (
-        <div>
+        <div style={style}>
             {/* <Route path='/' component={ Nav } /> */}
 
             <Switch>

@@ -9,6 +9,9 @@
 @import 'form-create';
 $fa-font-path: "~font-awesome/fonts";
 @import '~font-awesome/scss/font-awesome.scss';
+@import 'form-login';
+@import 'form-signup';
+@import 'variables';
 a {
     text-decoration: none;
 }

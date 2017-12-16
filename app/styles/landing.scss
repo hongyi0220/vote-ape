@@ -1,3 +1,17 @@
-h1 {
-    color: #2ECC40;
+@import 'variables';
+.landing-container {
+    h1 {
+        color: $monkey-green;
+    }
+    .signup {
+        border: 1px solid $monkey-green;
+        padding: .5em;
+        border-radius: 2px;
+        color: $monkey-green;
+        &:hover {
+            background: $monkey-green;
+            color: white;
+        }
+    }
+    margin-bottom: 1em;
 }

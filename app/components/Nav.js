@@ -9,19 +9,19 @@ export const Nav = props => {
     // const topLevelNav = props.topLevelNav;
     return (
         <div className='nav-container'>
-            <Link to='/'>Logo</Link>&nbsp;&nbsp;
+            <Link className='logo' to='/'>Logo</Link>&nbsp;&nbsp;
             {/* onClick={() => location.assign('polls')} */}
-            <Link to='/polls' >Polls</Link>&nbsp;&nbsp;
+            <Link className='link-polls' to='/polls' >Polls</Link>&nbsp;&nbsp;
             <Switch>
                 <Route exact path='/user/create' render={() => ''}></Route>
                 <Route render={() =>
-                    {return auth ? <Link to='/user/create'>CREATE</Link> : ''}}>
+                    {return auth ? <Link className='create' to='/user/create'>CREATE</Link> : ''}}>
                 </Route>
                 }
-            </Switch>&nbsp;&nbsp;
+            </Switch>
             {/* {auth && create ? <Link to='/user/create' onClick={unmountCreate}>CREATE</Link> : ''}&nbsp;&nbsp; */}
-            {auth ? '' : <div className='auth'><Link to='/user/login'>SIGN IN</Link>&nbsp;&nbsp;<Link to='/user/signup'>SIGN UP</Link></div>}
-            {auth ? (<div className='link-to-user'>Hello, <div className='username' onClick={props.toggleMenu}>{userData.firstname}!</div></div>) : ''}
+            {auth ? '' : <div className='auth'><Link className='login' to='/user/login'>SIGN IN</Link></div>}
+            {auth ? (<div className='link-user'>Hello, <div className='username' onClick={props.toggleMenu}>{userData.firstname}!</div></div>) : ''}
         </div>
     );
 }

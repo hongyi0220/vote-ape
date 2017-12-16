@@ -1,9 +1,29 @@
+@import 'variables';
 .nav-container {
     border: 1px dashed gray;
-    .auth {
-        display: inline-block;
+    background: $monkey-green;
+    padding: 1em;
+    .link-polls {
+        color: white;
     }
-    .link-to-user {
+    .auth {
+        float: right;
+        display: inline-block;
+        .login, .signup {
+
+        }
+        .login {
+            border: 1px solid white;
+            padding: .5em;
+            border-radius: 2px;
+            color: white;
+            &:hover {
+                background: white;
+                color: $monkey-green;
+            }
+        }
+    }
+    .link-user {
         display: inline-block;
     }
     .username {

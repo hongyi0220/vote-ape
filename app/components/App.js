@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter, Route } from 'react-router-dom';
 import { Main } from './Main';
+import { Landing } from './Landing';
 import { User } from './User';
 import { Nav } from './Nav';
 import { Footer } from './Footer';
@@ -326,11 +327,12 @@ class App extends React.Component {
         const history = this.props.history, handleClickFromPoll = this.handleClickFromPoll;
         const viewPoll ={ popPoll, history, handleClickFromPoll };
         return (
-            <div onClick={this.closePopUps}>
+            <div className='app-container' onClick={this.closePopUps}>
             {/* // <div> */}
                 <Nav unmountCreate={this.unmountCreate} state={this.state} toggleMenu={this.toggleMenu}/>
                 {auth ? <DropDownMenu popped={this.state.ui.dropDownMenu} handleClickFromMenu={this.handleClickFromMenu}/> : ''}
-                <Main />
+                {/* <Main /> */}
+                <Route exact path='/' component={ Landing } />
                 <User viewPoll={viewPoll} closePopUps={this.closePopUps} updateUserData={this.updateUserData} addOption={this.addOption} state={this.state}/>
                 <Route path='/polls' render={() =>
                     <Polls handleSubmitComment={this.handleSubmitComment} storeCommentInMemory={this.storeCommentInMemory}
