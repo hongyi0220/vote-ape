@@ -41,7 +41,8 @@ export const Polls = props => {
                 {polls ? featured10.map(poll =>
                     <div className='poll' id={poll._id} onClick={e => {popPoll(e); handleClickFromPoll(e); history.push('/polls/poll')}}>
                         {`Title: ${poll.poll_name} Created: ${poll.created} By ${poll.username}
-                        Views: ${poll.views} Voted: ${poll.voted} Upvote: ${poll.upvote}`}
+                        Views: ${poll.views} Voted: ${poll.voted}`} <i className="fa fa-thumbs-o-up" aria-hidden="true">
+                        </i> {`${poll.upvote}`}
                     </div>
                 ) : ''}
             </div>

@@ -34121,7 +34121,11 @@ const Polls = props => {
                         popPoll(e);handleClickFromPoll(e);history.push('/polls/poll');
                     } },
                 `Title: ${poll.poll_name} Created: ${poll.created} By ${poll.username}
-                        Views: ${poll.views} Voted: ${poll.voted} Upvote: ${poll.upvote}`
+                        Views: ${poll.views} Voted: ${poll.voted}`,
+                ' ',
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'fa fa-thumbs-o-up', 'aria-hidden': 'true' }),
+                ' ',
+                `${poll.upvote}`
             )) : ''
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
