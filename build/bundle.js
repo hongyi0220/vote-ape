@@ -33775,15 +33775,15 @@ const FormUpdateName = props => {
             'div',
             { className: 'buttons-box' },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'button',
-                { type: 'button' },
+                __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+                { to: '/user' },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                    { to: '/user' },
+                    'button',
+                    { className: 'first-button', type: 'button' },
                     'Cancel'
-                ),
-                '\xA0'
+                )
             ),
+            '\xA0',
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'button',
                 { type: 'submit' },
@@ -33840,15 +33840,15 @@ const FormUpdateUsername = props => {
             'div',
             { className: 'buttons-box' },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'button',
-                { type: 'button' },
+                __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+                { to: '/user' },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                    { to: '/user' },
+                    'button',
+                    { className: 'first-button', type: 'button' },
                     'Cancel'
-                ),
-                '\xA0'
+                )
             ),
+            '\xA0',
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'button',
                 { type: 'submit' },
@@ -33904,15 +33904,15 @@ const FormUpdatePassword = props => {
             'div',
             { className: 'buttons-box' },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'button',
-                { type: 'button' },
+                __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+                { to: '/user' },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                    { to: '/user' },
+                    'button',
+                    { className: 'first-button', type: 'button' },
                     'Cancel'
-                ),
-                '\xA0'
+                )
             ),
+            '\xA0',
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'button',
                 { type: 'submit' },
@@ -33969,15 +33969,15 @@ const FormUpdateEmail = props => {
             'div',
             { className: 'buttons-box' },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'button',
-                { type: 'button' },
+                __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+                { to: '/user' },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                    { to: '/user' },
+                    'button',
+                    { className: 'first-button', type: 'button' },
                     'Cancel'
-                ),
-                '\xA0'
+                )
             ),
+            '\xA0',
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'button',
                 { type: 'submit' },

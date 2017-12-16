@@ -1,20 +1,21 @@
 @import 'variables';
 .updates-container {
     width: 300px;
-    height: 300px;
+    // height: auto;
     left: 50%;
+    transform: translateX(-150px);
     position: absolute;
-    top: 0;
-    left: 0;
-    background: rgba(255,255,255,0.85);
+    top: 15%;
+    // transform: translateY(-150px);
+    // background: rgba(255,255,255,0.85);
     z-index: 10;
-    border: 1px solid green;
+    // border: 1px solid green;
     .form-fullname, .form-email, .form-password, .form-username {
         display: flex;
         flex-direction: column;
         width: 25%;
         min-width: 300px;
-        margin: 1em auto 1em auto;
+        margin: 0 auto 0 auto;
         background-color: rgb(237,238,238);
         border-radius: 2px;
         label, input {
@@ -50,10 +51,18 @@
                 border: none;
                 padding: 0.5em;
                 border-radius: 2px;
+                cursor: hand;
+                cursor: pointer;
+                // a {
+                //     color: white;
+                // }
                 &:hover {
                     background-color: $light-monkey-green;
                 }
             }
+        }
+        .first-button {
+            margin-right: 0.5em;
         }
     }
 }

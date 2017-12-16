@@ -18,7 +18,7 @@ export const FormUpdatePassword = props => {
                     onChange={updateUserData} value={memory.newPassword || ''}/>
             </div>
             <div className='buttons-box'>
-                <button type='button'><Link to='/user'>Cancel</Link>&nbsp;</button>
+                <Link to='/user'><button className='first-button' type='button'>Cancel</button></Link>&nbsp;
                 <button type='submit'>Change password</button>
             </div>
             {/* <input id='user_id' type='hidden' name='user_id' value={user_id}/> */}

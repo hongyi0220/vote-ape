@@ -22,7 +22,7 @@ export const FormUpdateName = props => {
             </div>
             {/* <input id='user_id' type='hidden' name='user_id' value={user_id}></input> */}
             <div className='buttons-box'>
-                <button type='button'><Link to='/user'>Cancel</Link>&nbsp;</button>
+                <Link to='/user'><button className='first-button' type='button'>Cancel</button></Link>&nbsp;
                 <button type='submit'>Change name</button>
             </div>
         </form>

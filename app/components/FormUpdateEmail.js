@@ -20,7 +20,7 @@ export const FormUpdateEmail = props => {
             </div>
             {/* <input id='user_id' type='hidden' name='user_id' value={user_id}/> */}
             <div className='buttons-box'>
-                <button type='button'><Link to='/user'>Cancel</Link>&nbsp;</button>
+                <Link to='/user'><button className='first-button' type='button'>Cancel</button></Link>&nbsp;
                 <button type='submit'>Change email</button>
             </div>
         </form>
