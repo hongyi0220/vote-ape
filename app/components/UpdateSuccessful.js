@@ -2,7 +2,7 @@ import React from 'react';
 
 export const UpdateSuccessful = props => {
     return (
-        <div>
+        <div className='msg'>
             Update successful!
         </div>
     );

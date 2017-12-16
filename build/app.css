@@ -109,9 +109,8 @@
   left: 50%;
   transform: translateX(-150px);
   position: absolute;
-  top: 10%;
-  z-index: 10;
-  border: 1px solid green; }
+  top: 15%;
+  z-index: 10; }
   .updates-container .form-fullname, .updates-container .form-email, .updates-container .form-password, .updates-container .form-username {
     display: flex;
     flex-direction: column;
@@ -2671,6 +2670,9 @@ body {
 
 a {
   text-decoration: none; }
+
+.msg {
+  text-align: center; }
 
 .poll {
   border: 1px solid #ececec;

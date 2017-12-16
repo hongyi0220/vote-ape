@@ -33448,7 +33448,7 @@ const FormLogin = props => {
 const InvalidUsername = props => {
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
-        { className: 'invalid' },
+        { className: 'msg' },
         'Username unavailable, please choose another one'
     );
 };
@@ -33472,7 +33472,7 @@ const InvalidEmail = props => {
         null,
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'div',
-            { className: 'invalid' },
+            { className: 'msg' },
             'This email is already in use, try signing in?'
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -33497,7 +33497,7 @@ const InvalidEmail = props => {
 const LoginError = props => {
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
-        { className: 'invalid' },
+        { className: 'msg' },
         'Invalid username or password'
     );
 };
@@ -34001,7 +34001,7 @@ const FormUpdateEmail = props => {
 const UpdateSuccessful = props => {
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
-        null,
+        { className: 'msg' },
         'Update successful!'
     );
 };
@@ -34092,7 +34092,7 @@ const FormCreate = props => {
 const CreateSuccessful = props => {
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
-        null,
+        { className: 'msg' },
         'Poll created!'
     );
 };
@@ -34111,7 +34111,7 @@ const CreateSuccessful = props => {
 const UpdateError = props => {
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
-        { className: 'invalid' },
+        { className: 'msg' },
         'Invalid password'
     );
 };

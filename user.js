@@ -61,21 +61,28 @@ router.route('/login')
                          // app.set('docs', docs);
                          session.data = {};
                          session.data.user = docs[0];
-                         // console.log(app.get('docs'));
-                         // res.redirect('/user');
+                         db.collection('polls').find({
+                             username: req.body.username
+                         }).toArray((err, polls) => {
+                             if (err) console.error(err);
+                             if (polls.length) session.data.mypolls = polls;
+                             res.redirect('/user');
+                             db.close();
+                         })
                      } else {
                          // res.send('Oops, something went horribly wrong ;p')
-                         res.redirect('/user/login/error')
+                         res.redirect('/user/login/error');
+                         db.close();
                      };
                  });
-                 db.collection('polls').find({
-                     username: req.body.username
-                 }).toArray((err, docs) => {
-                     if (err) console.error(err);
-                     if (docs.length) session.data.mypolls = docs;
-                     res.redirect('/user');
-                 })
-                 db.close();
+                 // db.collection('polls').find({
+                 //     username: req.body.username
+                 // }).toArray((err, docs) => {
+                 //     if (err) console.error(err);
+                 //     if (docs.length) session.data.mypolls = docs;
+                 //     res.redirect('/user');
+                 // })
+
             });
         });
 
