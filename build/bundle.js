@@ -7450,7 +7450,7 @@ const Footer = props => {
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'div',
-            { className: 'copyright' },
+            { className: 'copyleft' },
             'Copyleft \xA9 2017-2049 PollMonkey'
         )
     );
@@ -33748,10 +33748,10 @@ const FormUpdateName = props => {
     // console.log(user_id);
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'form',
-        { action: '/user/update/fullname', method: 'post' },
+        { className: 'form-fullname', action: '/user/update/fullname', method: 'post' },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'div',
-            null,
+            { className: 'firstname-box' },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'label',
                 { htmlFor: 'firstname' },
@@ -33762,7 +33762,7 @@ const FormUpdateName = props => {
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'div',
-            null,
+            { className: 'lastname-box' },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'label',
                 { htmlFor: 'lastname' },
@@ -33772,19 +33772,23 @@ const FormUpdateName = props => {
                 onChange: updateUserData, value: memory.lastname })
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'button',
-            { type: 'button' },
+            'div',
+            { className: 'buttons-box' },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                { to: '/user' },
-                'Cancel'
+                'button',
+                { type: 'button' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+                    { to: '/user' },
+                    'Cancel'
+                ),
+                '\xA0'
             ),
-            '\xA0'
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'button',
-            { type: 'submit' },
-            'Change name'
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'button',
+                { type: 'submit' },
+                'Change name'
+            )
         )
     );
 };
@@ -33809,35 +33813,47 @@ const FormUpdateUsername = props => {
     const memory = props.formProps.memory;
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'form',
-        { action: '/user/update/username', method: 'POST' },
+        { className: 'form-username', action: '/user/update/username', method: 'POST' },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'label',
-            { htmlFor: 'username' },
-            'Username'
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'username', type: 'text', name: 'username',
-            onChange: updateUserData, value: memory.username }),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'label',
-            { htmlFor: 'password' },
-            'Password'
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'password', type: 'password', name: 'password', autoComplete: 'new_password',
-            onChange: updateUserData, value: memory.password || '' }),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'button',
-            { type: 'button' },
+            'div',
+            { className: 'username-box' },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                { to: '/user' },
-                'Cancel'
+                'label',
+                { htmlFor: 'username' },
+                'Username'
             ),
-            '\xA0'
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'username', type: 'text', name: 'username',
+                onChange: updateUserData, value: memory.username })
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'button',
-            { type: 'submit' },
-            'Change username'
+            'div',
+            { className: 'password-box' },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'label',
+                { htmlFor: 'password' },
+                'Password'
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'password', type: 'password', name: 'password', autoComplete: 'new_password',
+                onChange: updateUserData, value: memory.password || '' })
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
+            { className: 'buttons-box' },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'button',
+                { type: 'button' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+                    { to: '/user' },
+                    'Cancel'
+                ),
+                '\xA0'
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'button',
+                { type: 'submit' },
+                'Change username'
+            )
         )
     );
 };
@@ -33861,35 +33877,47 @@ const FormUpdatePassword = props => {
     const memory = props.formProps.memory;
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'form',
-        { action: '/user/update/password', method: 'POST' },
+        { className: 'form-password', action: '/user/update/password', method: 'POST' },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'label',
-            { htmlFor: 'password' },
-            'Current password'
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'password', type: 'password', name: 'password', autoComplete: 'new_password',
-            onChange: updateUserData, value: memory.password || '' }),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'label',
-            { htmlFor: 'new-password' },
-            'New password'
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'new_password', type: 'password', name: 'new_password',
-            onChange: updateUserData, value: memory.newPassword || '' }),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'button',
-            { type: 'button' },
+            'div',
+            { className: 'password-box' },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                { to: '/user' },
-                'Cancel'
+                'label',
+                { htmlFor: 'password' },
+                'Current password'
             ),
-            '\xA0'
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'password', type: 'password', name: 'password', autoComplete: 'new_password',
+                onChange: updateUserData, value: memory.password || '' })
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'button',
-            { type: 'submit' },
-            'Change password'
+            'div',
+            { className: 'new-password-box' },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'label',
+                { htmlFor: 'new-password' },
+                'New password'
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'new_password', type: 'password', name: 'new_password',
+                onChange: updateUserData, value: memory.newPassword || '' })
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
+            { className: 'buttons-box' },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'button',
+                { type: 'button' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+                    { to: '/user' },
+                    'Cancel'
+                ),
+                '\xA0'
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'button',
+                { type: 'submit' },
+                'Change password'
+            )
         )
     );
 };
@@ -33914,35 +33942,47 @@ const FormUpdateEmail = props => {
     const memory = props.formProps.memory;
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'form',
-        { action: '/user/update/email', method: 'POST' },
+        { className: 'form-email', action: '/user/update/email', method: 'POST' },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'label',
-            { htmlFor: 'email' },
-            'Email'
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'email', type: 'email', name: 'email',
-            onChange: updateUserData, value: memory.email }),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'label',
-            { htmlFor: 'password' },
-            'Password'
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'password', type: 'password', name: 'password', autoComplete: 'new_password',
-            onChange: updateUserData, value: memory.password || '' }),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'button',
-            { type: 'button' },
+            'div',
+            { className: 'email-box' },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                { to: '/user' },
-                'Cancel'
+                'label',
+                { htmlFor: 'email' },
+                'Email'
             ),
-            '\xA0'
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'email', type: 'email', name: 'email',
+                onChange: updateUserData, value: memory.email })
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'button',
-            { type: 'submit' },
-            'Change email'
+            'div',
+            { className: 'password-box' },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'label',
+                { htmlFor: 'password' },
+                'Password'
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'password', type: 'password', name: 'password', autoComplete: 'new_password',
+                onChange: updateUserData, value: memory.password || '' })
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
+            { className: 'buttons-box' },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'button',
+                { type: 'button' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+                    { to: '/user' },
+                    'Cancel'
+                ),
+                '\xA0'
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'button',
+                { type: 'submit' },
+                'Change email'
+            )
         )
     );
 };

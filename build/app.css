@@ -12,14 +12,15 @@
       background: #1dbe71;
       color: white; }
 
-footer {
+.footer footer {
   border-top: 1px solid #ececec;
   border-bottom: 1px solid #ececec;
   padding: 1em;
   color: #666666;
   margin: 0 0 0.5em 0; }
-  footer .copyleft {
-    padding: 1em; }
+
+.footer .copyleft {
+  padding: 1em; }
 
 .nav-container {
   background: #1dbe71;
@@ -106,12 +107,50 @@ footer {
 .updates-container {
   width: 300px;
   height: 300px;
+  left: 50%;
   position: absolute;
   top: 0;
   left: 0;
   background: rgba(255, 255, 255, 0.85);
   z-index: 10;
   border: 1px solid green; }
+  .updates-container .form-fullname, .updates-container .form-email, .updates-container .form-password, .updates-container .form-username {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    min-width: 300px;
+    margin: 1em auto 1em auto;
+    background-color: #edeeee;
+    border-radius: 2px; }
+    .updates-container .form-fullname label, .updates-container .form-fullname input, .updates-container .form-email label, .updates-container .form-email input, .updates-container .form-password label, .updates-container .form-password input, .updates-container .form-username label, .updates-container .form-username input {
+      display: block; }
+    .updates-container .form-fullname label, .updates-container .form-email label, .updates-container .form-password label, .updates-container .form-username label {
+      margin-bottom: 0.1em; }
+    .updates-container .form-fullname .firstname-box, .updates-container .form-fullname .lastname-box, .updates-container .form-fullname .email-box, .updates-container .form-fullname .password-box, .updates-container .form-fullname .new-password-box, .updates-container .form-fullname .username-box, .updates-container .form-email .firstname-box, .updates-container .form-email .lastname-box, .updates-container .form-email .email-box, .updates-container .form-email .password-box, .updates-container .form-email .new-password-box, .updates-container .form-email .username-box, .updates-container .form-password .firstname-box, .updates-container .form-password .lastname-box, .updates-container .form-password .email-box, .updates-container .form-password .password-box, .updates-container .form-password .new-password-box, .updates-container .form-password .username-box, .updates-container .form-username .firstname-box, .updates-container .form-username .lastname-box, .updates-container .form-username .email-box, .updates-container .form-username .password-box, .updates-container .form-username .new-password-box, .updates-container .form-username .username-box {
+      flex-grow: 1;
+      margin: 0.5em; }
+      .updates-container .form-fullname .firstname-box input, .updates-container .form-fullname .lastname-box input, .updates-container .form-fullname .email-box input, .updates-container .form-fullname .password-box input, .updates-container .form-fullname .new-password-box input, .updates-container .form-fullname .username-box input, .updates-container .form-email .firstname-box input, .updates-container .form-email .lastname-box input, .updates-container .form-email .email-box input, .updates-container .form-email .password-box input, .updates-container .form-email .new-password-box input, .updates-container .form-email .username-box input, .updates-container .form-password .firstname-box input, .updates-container .form-password .lastname-box input, .updates-container .form-password .email-box input, .updates-container .form-password .password-box input, .updates-container .form-password .new-password-box input, .updates-container .form-password .username-box input, .updates-container .form-username .firstname-box input, .updates-container .form-username .lastname-box input, .updates-container .form-username .email-box input, .updates-container .form-username .password-box input, .updates-container .form-username .new-password-box input, .updates-container .form-username .username-box input {
+        width: 94%;
+        padding: 0.5em;
+        border: 1px solid #d0d2d3;
+        border-radius: 2px; }
+        .updates-container .form-fullname .firstname-box input:hover, .updates-container .form-fullname .lastname-box input:hover, .updates-container .form-fullname .email-box input:hover, .updates-container .form-fullname .password-box input:hover, .updates-container .form-fullname .new-password-box input:hover, .updates-container .form-fullname .username-box input:hover, .updates-container .form-email .firstname-box input:hover, .updates-container .form-email .lastname-box input:hover, .updates-container .form-email .email-box input:hover, .updates-container .form-email .password-box input:hover, .updates-container .form-email .new-password-box input:hover, .updates-container .form-email .username-box input:hover, .updates-container .form-password .firstname-box input:hover, .updates-container .form-password .lastname-box input:hover, .updates-container .form-password .email-box input:hover, .updates-container .form-password .password-box input:hover, .updates-container .form-password .new-password-box input:hover, .updates-container .form-password .username-box input:hover, .updates-container .form-username .firstname-box input:hover, .updates-container .form-username .lastname-box input:hover, .updates-container .form-username .email-box input:hover, .updates-container .form-username .password-box input:hover, .updates-container .form-username .new-password-box input:hover, .updates-container .form-username .username-box input:hover {
+          border-color: #9da5aa; }
+    .updates-container .form-fullname .buttons-box, .updates-container .form-email .buttons-box, .updates-container .form-password .buttons-box, .updates-container .form-username .buttons-box {
+      display: flex;
+      flex-direction: row;
+      margin: 0.5em;
+      text-align: center; }
+      .updates-container .form-fullname .buttons-box button, .updates-container .form-email .buttons-box button, .updates-container .form-password .buttons-box button, .updates-container .form-username .buttons-box button {
+        flex-grow: 1;
+        width: 99.7%;
+        background: #1dbe71;
+        color: white;
+        border: none;
+        padding: 0.5em;
+        border-radius: 2px; }
+        .updates-container .form-fullname .buttons-box button:hover, .updates-container .form-email .buttons-box button:hover, .updates-container .form-password .buttons-box button:hover, .updates-container .form-username .buttons-box button:hover {
+          background-color: #20cd7b; }
 
 .drop-down-menu-container .drop-down-menu {
   width: 92px;
@@ -169,15 +208,13 @@ footer {
   text-align: center;
   margin-bottom: 1em; }
   .form-create-container .form-create {
-    border: 1px dotted gray;
     display: flex;
     flex-direction: column;
     width: 25%;
     min-width: 300px;
     margin: 1em auto 1em auto;
     background-color: #edeeee;
-    border-radius: 2px;
-    border: 1px solid gray; }
+    border-radius: 2px; }
     .form-create-container .form-create .poll-name, .form-create-container .form-create .choice {
       margin: 0.5em;
       flex-grow: 1; }
