@@ -1,18 +1,37 @@
 @import 'variables';
 .nav-container {
-    border: 1px dashed gray;
+    // border: 1px dashed gray;
     background: $monkey-green;
-    padding: 1em;
-    .link-polls {
-        color: white;
+    padding: 0.5em;
+    height: 50px;
+    .logo-box {
+        display: inline-block;
+        line-height: 50px;
+        .logo {
+            img {
+                height: 40px;
+            }
+        }
+    }
+    .link-polls-box {
+        // border: 1px solid red;
+        display: inline-block;
+        margin-left: 1em;
+        .link-polls {
+            color: white;
+            font-size: 2em;
+        }
     }
     .auth {
         float: right;
+        line-height: 50px;
+        // vertical-align: center;
         display: inline-block;
         .login, .signup {
 
         }
         .login {
+            // line-height: 30px;
             border: 1px solid white;
             padding: .5em;
             border-radius: 2px;

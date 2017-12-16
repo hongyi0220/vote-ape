@@ -9,9 +9,9 @@ export const Nav = props => {
     // const topLevelNav = props.topLevelNav;
     return (
         <div className='nav-container'>
-            <Link className='logo' to='/'>Logo</Link>&nbsp;&nbsp;
+            <div className='logo-box'><Link className='logo' to='/'><img src='./img/chimp.png'/></Link></div>
             {/* onClick={() => location.assign('polls')} */}
-            <Link className='link-polls' to='/polls' >Polls</Link>&nbsp;&nbsp;
+            <div className='link-polls-box'><Link className='link-polls' to='/polls' >Polls</Link></div>
             <Switch>
                 <Route exact path='/user/create' render={() => ''}></Route>
                 <Route render={() =>

@@ -20,9 +20,13 @@ footer {
   margin: 1em 0 0.5em 0; }
 
 .nav-container {
-  border: 1px dashed gray;
   background: #1dbe71;
   padding: 1em; }
+  .nav-container .logo {
+    display: inline-block; }
+    .nav-container .logo img {
+      height: 50px;
+      color: white; }
   .nav-container .link-polls {
     color: white; }
   .nav-container .auth {
@@ -2450,7 +2454,6 @@ footer {
   text-align: center; }
 
 .login-container .form-login {
-  border: 1px dotted gray;
   display: flex;
   flex-direction: column;
   width: 25%;
@@ -2463,7 +2466,6 @@ footer {
   .login-container .form-login label {
     margin-bottom: 0.1em; }
   .login-container .form-login .username-box, .login-container .form-login .password-box {
-    border: 1px dashed green;
     flex-grow: 1;
     margin: 0.5em; }
     .login-container .form-login .username-box input, .login-container .form-login .password-box input {
@@ -2474,7 +2476,6 @@ footer {
       .login-container .form-login .username-box input:hover, .login-container .form-login .password-box input:hover {
         border-color: #9da5aa; }
   .login-container .form-login .button-box {
-    border: 1px dashed #1dbe71;
     flex-grow: 1;
     margin: 0.5em;
     text-align: center; }
@@ -2493,7 +2494,6 @@ footer {
   text-align: center; }
 
 .form-container .form-signup {
-  border: 1px dotted gray;
   display: flex;
   flex-direction: column;
   width: 25%;
@@ -2506,10 +2506,8 @@ footer {
   .form-container .form-signup label {
     margin-bottom: 0.1em; }
   .form-container .form-signup .name-box {
-    display: flex;
-    border: 1px dashed blue; }
+    display: flex; }
     .form-container .form-signup .name-box .firstname-box, .form-container .form-signup .name-box .lastname-box {
-      border: 1px dashed green;
       flex-grow: 1;
       margin: 0.5em; }
       .form-container .form-signup .name-box .firstname-box input, .form-container .form-signup .name-box .lastname-box input {
@@ -2520,7 +2518,6 @@ footer {
         .form-container .form-signup .name-box .firstname-box input:hover, .form-container .form-signup .name-box .lastname-box input:hover {
           border-color: #9da5aa; }
   .form-container .form-signup .username-box, .form-container .form-signup .email-box, .form-container .form-signup .password-box {
-    border: 1px dashed green;
     flex-grow: 1;
     margin: 0.5em; }
     .form-container .form-signup .username-box input, .form-container .form-signup .email-box input, .form-container .form-signup .password-box input {

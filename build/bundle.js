@@ -7372,7 +7372,7 @@ const Nav = props => {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
             { className: 'logo', to: '/' },
-            'Logo'
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: './img/chimp.png' })
         ),
         '\xA0\xA0',
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(

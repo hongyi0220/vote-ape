@@ -7,7 +7,7 @@
         text-align: center;
     }
     .form-signup {
-        border: 1px dotted gray;
+        // border: 1px dotted gray;
         display: flex;
         flex-direction: column;
         width: 25%;
@@ -23,9 +23,9 @@
         }
         .name-box {
             display: flex;
-            border: 1px dashed blue;
+            // border: 1px dashed blue;
             .firstname-box, .lastname-box {
-                border: 1px dashed green;
+                // border: 1px dashed green;
                 flex-grow: 1;
                 margin: 0.5em;
                 input {
@@ -41,7 +41,7 @@
             }
         }
         .username-box, .email-box, .password-box {
-            border: 1px dashed green;
+            // border: 1px dashed green;
             flex-grow: 1;
             margin: 0.5em;
             input {
