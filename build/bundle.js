@@ -7451,7 +7451,7 @@ const Footer = props => {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'div',
             { className: 'copyright' },
-            'Copyright \xA9 2017-2017 PollMonkey'
+            'Copyleft \xA9 2017-2049 PollMonkey'
         )
     );
 };
@@ -33051,7 +33051,7 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
             // credentials: 'same-origin'
         };
 
-        if (e.target.className === 'menu-signout') fetch(url, init).then(() => {
+        if (e.target.className === 'signout-button') fetch(url, init).then(() => {
             // closeMenu();
             this.closePopUps();
             this.setState({
@@ -33060,7 +33060,7 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
                 })
             });
             this.props.history.push('/');
-        });else if (e.target.className === 'menu-dashboard') closePopUps();
+        });else if (e.target.className === 'dashboard-button') closePopUps();
         // else closePopUps();
         e.stopPropagation();
     }
@@ -33541,128 +33541,124 @@ const UserContent = props => {
             'Dashboard'
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'h3',
+            null,
+            'Login Details'
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'div',
-            { className: 'login-details-container' },
+            { className: 'login-details-box' },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'row' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'col' },
+                    'Name',
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
+                    `${userData ? userData.firstname : ''} ${userData ? userData.lastname : ''}`,
+                    '\xA0',
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+                        { to: '/user/update/fullname', onClick: e => e.stopPropagation() },
+                        'Edit'
+                    )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'col' },
+                    'Username',
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
+                    userData ? userData.username : '',
+                    '\xA0',
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+                        { to: '/user/update/username', onClick: e => e.stopPropagation() },
+                        'Edit'
+                    )
+                )
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'row' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'col' },
+                    'Password',
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
+                    userData ? maskPassword(userData.password) : '',
+                    '\xA0',
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+                        { to: '/user/update/password', onClick: e => e.stopPropagation() },
+                        'Edit'
+                    )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'col' },
+                    'Email',
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
+                    userData ? userData.email : '',
+                    '\xA0',
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+                        { to: '/user/update/email', onClick: e => e.stopPropagation() },
+                        'Edit'
+                    )
+                )
+            )
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
+            { className: 'my-polls-box' },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'h3',
                 null,
-                'Login Details'
+                'My Polls'
             ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            mypolls ? mypolls.map((poll, i) => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                { className: 'login-details-box' },
+                { className: 'poll', id: poll._id,
+                    onClick: e => {
+                        popPoll(e);handleClickFromPoll(e);history.push('/polls/poll');
+                    } },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
-                    { className: 'row' },
+                    { className: 'title-created-container' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
-                        { className: 'col' },
-                        'Name',
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
-                        `${userData ? userData.firstname : ''} ${userData ? userData.lastname : ''}`,
-                        '\xA0',
+                        { className: 'title-box' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                            { to: '/user/update/fullname', onClick: e => e.stopPropagation() },
-                            'Edit'
+                            'b',
+                            null,
+                            poll.poll_name
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
-                        { className: 'col' },
-                        'Username',
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
-                        userData ? userData.username : '',
-                        '\xA0',
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                            { to: '/user/update/username', onClick: e => e.stopPropagation() },
-                            'Edit'
-                        )
+                        { className: 'created-box' },
+                        poll.created
                     )
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
-                    { className: 'row' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'col' },
-                        'Password',
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
-                        userData ? maskPassword(userData.password) : '',
-                        '\xA0',
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                            { to: '/user/update/password', onClick: e => e.stopPropagation() },
-                            'Edit'
-                        )
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'col' },
-                        'Email',
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
-                        userData ? userData.email : '',
-                        '\xA0',
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                            { to: '/user/update/email', onClick: e => e.stopPropagation() },
-                            'Edit'
-                        )
-                    )
+                    { className: 'poll-detail-container' },
+                    'By Me ',
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'seperator' }),
+                    '\xA0 Voted: ',
+                    poll.voted,
+                    '\xA0',
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'seperator' }),
+                    '\xA0',
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'fa fa-thumbs-o-up', 'aria-hidden': 'true' }),
+                    '\xA0',
+                    poll.upvote
                 )
-            ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            )) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                { className: 'my-polls-box' },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'h3',
-                    null,
-                    'My Polls'
-                ),
-                mypolls ? mypolls.map((poll, i) => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'poll', id: poll._id,
-                        onClick: e => {
-                            popPoll(e);handleClickFromPoll(e);history.push('/polls/poll');
-                        } },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'title-created-container' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            { className: 'title-box' },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'b',
-                                null,
-                                poll.poll_name
-                            )
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            { className: 'created-box' },
-                            poll.created
-                        )
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'poll-detail-container' },
-                        'By Me ',
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'seperator' }),
-                        '\xA0 Voted: ',
-                        poll.voted,
-                        '\xA0',
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'seperator' }),
-                        '\xA0',
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'fa fa-thumbs-o-up', 'aria-hidden': 'true' }),
-                        '\xA0',
-                        poll.upvote
-                    )
-                )) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    null,
-                    'You have no polls'
-                )
+                null,
+                'You have no polls'
             )
         )
     );
@@ -34003,7 +33999,7 @@ const FormCreate = props => {
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'form',
-            { action: '/user/create', method: 'post' },
+            { className: 'form-create', action: '/user/create', method: 'post' },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 { className: 'poll-name' },
@@ -34025,14 +34021,18 @@ const FormCreate = props => {
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: `choice${i + 3}`, name: 'choices[]', type: 'text', placeholder: 'Enter an answer choice' })
             )),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'button',
-                { type: 'button', onClick: props.addOption },
-                'Add more choices'
-            ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'button',
-                { type: 'submit' },
-                'CREATE POLL'
+                'div',
+                { className: 'buttons-box' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'button',
+                    { className: 'options-button', type: 'button', onClick: props.addOption },
+                    'Add more choices'
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'button',
+                    { className: 'create-button', type: 'submit' },
+                    'CREATE POLL'
+                )
             )
         )
     );
@@ -34154,13 +34154,13 @@ const Polls = props => {
         'div',
         { className: 'polls-container' },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'h3',
+            null,
+            'Featured Polls'
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'div',
             { className: 'featured-polls-container' },
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'h3',
-                null,
-                'Featured Polls'
-            ),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { path: '/polls/poll', render: () => popped ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Poll__["a" /* Poll */], { handleSubmitComment: handleSubmitComment, storeCommentInMemory: storeCommentInMemory,
                     upVote: upVote, buildChart: buildChart, state: state }) : '' }),
             polls ? featured10.map(poll => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -34205,13 +34205,13 @@ const Polls = props => {
             )) : ''
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'h3',
+            null,
+            'All Polls'
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'div',
             { className: 'all-polls-container' },
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'h3',
-                null,
-                'All Polls'
-            ),
             polls ? polls.map(poll => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 { className: 'poll', id: poll._id,

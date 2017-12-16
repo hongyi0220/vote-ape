@@ -21,7 +21,7 @@ export const UserContent = props => {
     return (
         <div className='user-content-container'>
             <div className='title-dashboard'>Dashboard</div>
-            <div className='login-details-container'>
+            {/* <div className='login-details-container'> */}
                 <h3>Login Details</h3>
                 <div className='login-details-box'>
                     <div className='row'>
@@ -66,7 +66,7 @@ export const UserContent = props => {
                               Views: ${poll.views} Voted: ${poll.voted} Upvote: ${poll.upvote}`} */}
                         </div>
                     ) : <div>You have no polls</div>}
-                </div>
+                {/* </div> */}
             </div>
         </div>
     );

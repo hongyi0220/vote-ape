@@ -2,9 +2,12 @@
 footer {
     // border: 1px dashed gray;
     // background: $monkey-green;
-    border-top: 1px solid gray;
-    border-bottom: 1px solid gray;
+    border-top: 1px solid $poll-border-gray;
+    border-bottom: 1px solid $poll-border-gray;
     padding: 1em;
     color: rgb(102,102,102);
     margin: 0 0 0.5em 0;
+    .copyleft {
+        padding: 1em;
+    }
 }

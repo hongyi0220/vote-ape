@@ -6,7 +6,7 @@ export const Footer = props => {
                 About Me: <br/>
                 About This App:
             </footer>
-            <div className='copyright'>Copyright © 2017-2017 PollMonkey</div>
+            <div className='copyleft'>Copyleft © 2017-2049 PollMonkey</div>
         </div>
 
     );

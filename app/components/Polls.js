@@ -33,9 +33,9 @@ export const Polls = props => {
                     </div>
                 ) : ''}
             </div> */}
-
+            <h3>Featured Polls</h3>
             <div className='featured-polls-container'>
-                <h3>Featured Polls</h3>
+
                 <Route path='/polls/poll' render={() =>
                     popped ? <Poll handleSubmitComment={handleSubmitComment} storeCommentInMemory={storeCommentInMemory}
                         upVote={upVote} buildChart={buildChart} state={state}/> : ''}/>
@@ -55,9 +55,9 @@ export const Polls = props => {
                     </div>
                 ) : ''}
             </div>
-
+            <h3>All Polls</h3>
             <div className='all-polls-container'>
-                <h3>All Polls</h3>
+
                 {/* <Route path='/polls/poll' render={() => popped ? <Poll buildChart={buildChart} state={state}/> : ''}/> */}
                 {polls ? polls.map(poll =>
                     <div className='poll' id={poll._id}

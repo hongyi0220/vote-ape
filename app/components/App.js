@@ -224,7 +224,7 @@ class App extends React.Component {
             // credentials: 'same-origin'
         }
 
-        if (e.target.className === 'menu-signout')
+        if (e.target.className === 'signout-button')
             fetch(url, init)
             .then(() => {
                 // closeMenu();
@@ -237,7 +237,7 @@ class App extends React.Component {
                 });
                 this.props.history.push('/');
             });
-        else if (e.target.className === 'menu-dashboard') closePopUps();
+        else if (e.target.className === 'dashboard-button') closePopUps();
         // else closePopUps();
         e.stopPropagation();
     }

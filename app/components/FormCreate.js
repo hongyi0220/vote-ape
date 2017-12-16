@@ -15,7 +15,7 @@ export const FormCreate = props => {
     return (
         <div className='form-create-container'>
             <h3>Create a New Poll</h3>
-            <form action='/user/create' method='post'>
+            <form className='form-create' action='/user/create' method='post'>
                 <div className='poll-name'>
                     {/* <label htmlFor='poll-name'>Poll name</label> */}
                     <input id='poll-name' name='poll_name' type='text' placeholder='Enter your question'/>
@@ -34,8 +34,10 @@ export const FormCreate = props => {
                         <input id={`choice${i + 3}`} name='choices[]' type='text' placeholder='Enter an answer choice'/>
                     </div>
                 )}
-                <button type='button' onClick={props.addOption}>Add more choices</button>
-                <button type='submit'>CREATE POLL</button>
+                <div className='buttons-box'>
+                    <button className='options-button' type='button' onClick={props.addOption}>Add more choices</button>
+                    <button className='create-button' type='submit'>CREATE POLL</button>
+                </div>
             </form>
         </div>
     );
