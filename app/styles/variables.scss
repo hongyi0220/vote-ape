@@ -5,3 +5,17 @@ $poll-border-gray: rgb(236,236,236);
 $link-blue: rgb(18,127,169);
 $background-gray: rgb(246,246,246);
 $form-background-gray: rgb(237,238,238);
+
+$light-gray: rgb(216,216,216);
+$light-yellow: rgb(255,253,208);
+$urine-yellow: rgb(250,241,91);
+$light-purple: rgb(180,174,219);
+$deep-purple: rgb(146,134,219);
+
+$colors: aliceBlue, plum, lightCyan, paleGreen, turquoise, skyBlue, aquamarine, lavender;
+
+@each $color in $colors {
+    #rect-#{$color} {
+        fill: $color;
+    }
+}

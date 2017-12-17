@@ -1,4 +1,28 @@
 @charset "UTF-8";
+#rect-aliceBlue {
+  fill: aliceBlue; }
+
+#rect-plum {
+  fill: plum; }
+
+#rect-lightCyan {
+  fill: lightCyan; }
+
+#rect-paleGreen {
+  fill: paleGreen; }
+
+#rect-turquoise {
+  fill: turquoise; }
+
+#rect-skyBlue {
+  fill: skyBlue; }
+
+#rect-aquamarine {
+  fill: aquamarine; }
+
+#rect-lavender {
+  fill: lavender; }
+
 .landing-container {
   text-align: center;
   margin-bottom: 1em; }
@@ -13,6 +37,30 @@
       background: #1dbe71;
       color: white; }
 
+#rect-aliceBlue {
+  fill: aliceBlue; }
+
+#rect-plum {
+  fill: plum; }
+
+#rect-lightCyan {
+  fill: lightCyan; }
+
+#rect-paleGreen {
+  fill: paleGreen; }
+
+#rect-turquoise {
+  fill: turquoise; }
+
+#rect-skyBlue {
+  fill: skyBlue; }
+
+#rect-aquamarine {
+  fill: aquamarine; }
+
+#rect-lavender {
+  fill: lavender; }
+
 .footer footer {
   border-top: 1px solid #ececec;
   border-bottom: 1px solid #ececec;
@@ -22,6 +70,30 @@
 
 .footer .copyleft {
   padding: 1em; }
+
+#rect-aliceBlue {
+  fill: aliceBlue; }
+
+#rect-plum {
+  fill: plum; }
+
+#rect-lightCyan {
+  fill: lightCyan; }
+
+#rect-paleGreen {
+  fill: paleGreen; }
+
+#rect-turquoise {
+  fill: turquoise; }
+
+#rect-skyBlue {
+  fill: skyBlue; }
+
+#rect-aquamarine {
+  fill: aquamarine; }
+
+#rect-lavender {
+  fill: lavender; }
 
 .nav-container {
   background: #1dbe71;
@@ -75,6 +147,30 @@
 .invalid {
   color: red; }
 
+#rect-aliceBlue {
+  fill: aliceBlue; }
+
+#rect-plum {
+  fill: plum; }
+
+#rect-lightCyan {
+  fill: lightCyan; }
+
+#rect-paleGreen {
+  fill: paleGreen; }
+
+#rect-turquoise {
+  fill: turquoise; }
+
+#rect-skyBlue {
+  fill: skyBlue; }
+
+#rect-aquamarine {
+  fill: aquamarine; }
+
+#rect-lavender {
+  fill: lavender; }
+
 .user-content-container {
   background-color: #f6f6f6; }
   .user-content-container h3 {
@@ -102,6 +198,30 @@
             text-decoration: underline; }
   .user-content-container .my-polls-box {
     padding-bottom: 1em; }
+
+#rect-aliceBlue {
+  fill: aliceBlue; }
+
+#rect-plum {
+  fill: plum; }
+
+#rect-lightCyan {
+  fill: lightCyan; }
+
+#rect-paleGreen {
+  fill: paleGreen; }
+
+#rect-turquoise {
+  fill: turquoise; }
+
+#rect-skyBlue {
+  fill: skyBlue; }
+
+#rect-aquamarine {
+  fill: aquamarine; }
+
+#rect-lavender {
+  fill: lavender; }
 
 .updates-container {
   width: 300px;
@@ -180,6 +300,30 @@
       cursor: hand;
       cursor: pointer; }
 
+#rect-aliceBlue {
+  fill: aliceBlue; }
+
+#rect-plum {
+  fill: plum; }
+
+#rect-lightCyan {
+  fill: lightCyan; }
+
+#rect-paleGreen {
+  fill: paleGreen; }
+
+#rect-turquoise {
+  fill: turquoise; }
+
+#rect-skyBlue {
+  fill: skyBlue; }
+
+#rect-aquamarine {
+  fill: aquamarine; }
+
+#rect-lavender {
+  fill: lavender; }
+
 .polls-container {
   padding: 1em 0 1em 0;
   background-color: #f6f6f6; }
@@ -196,12 +340,6 @@
     border-radius: 2px; }
     .polls-container .poll-container .chart-container {
       margin-top: 1em; }
-      .polls-container .poll-container .chart-container .tooltip {
-        position: absolute;
-        z-index: 20;
-        background: rgba(255, 255, 255, 0.6);
-        padding: 0.5em;
-        border-radius: 3px; }
     .polls-container .poll-container .choices-container, .polls-container .poll-container .comments-container {
       padding: 0.5em; }
     .polls-container .poll-container .choices-container button {
@@ -234,6 +372,30 @@
         background-color: #20cd7b; }
     .polls-container .poll-container .comments-container .comment-form textarea {
       width: 98%; }
+
+#rect-aliceBlue {
+  fill: aliceBlue; }
+
+#rect-plum {
+  fill: plum; }
+
+#rect-lightCyan {
+  fill: lightCyan; }
+
+#rect-paleGreen {
+  fill: paleGreen; }
+
+#rect-turquoise {
+  fill: turquoise; }
+
+#rect-skyBlue {
+  fill: skyBlue; }
+
+#rect-aquamarine {
+  fill: aquamarine; }
+
+#rect-lavender {
+  fill: lavender; }
 
 .form-create-container {
   text-align: center;
@@ -2643,6 +2805,30 @@
         .login-container .form-login .button-box button:hover {
           background-color: #20cd7b; }
 
+#rect-aliceBlue {
+  fill: aliceBlue; }
+
+#rect-plum {
+  fill: plum; }
+
+#rect-lightCyan {
+  fill: lightCyan; }
+
+#rect-paleGreen {
+  fill: paleGreen; }
+
+#rect-turquoise {
+  fill: turquoise; }
+
+#rect-skyBlue {
+  fill: skyBlue; }
+
+#rect-aquamarine {
+  fill: aquamarine; }
+
+#rect-lavender {
+  fill: lavender; }
+
 .form-container {
   padding: 1em; }
   .form-container h2, .form-container .link-signin {
@@ -2695,8 +2881,39 @@
         .form-container .form-signup .button-box button:hover {
           background-color: #20cd7b; }
 
+#rect-aliceBlue {
+  fill: aliceBlue; }
+
+#rect-plum {
+  fill: plum; }
+
+#rect-lightCyan {
+  fill: lightCyan; }
+
+#rect-paleGreen {
+  fill: paleGreen; }
+
+#rect-turquoise {
+  fill: turquoise; }
+
+#rect-skyBlue {
+  fill: skyBlue; }
+
+#rect-aquamarine {
+  fill: aquamarine; }
+
+#rect-lavender {
+  fill: lavender; }
+
 body {
   margin: 0; }
+  body .app-container .tooltip {
+    visibility: hidden;
+    position: absolute;
+    z-index: 20;
+    background: rgba(255, 255, 255, 0.6);
+    padding: 0.5em;
+    border-radius: 3px; }
 
 a {
   text-decoration: none; }

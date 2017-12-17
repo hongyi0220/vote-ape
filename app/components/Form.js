@@ -35,7 +35,7 @@ export const Form = props => {
                 <input id='email' type='email' name='email'/>
             </div>
             <div className='button-box'>
-                <button type='submit'>SIGN UP&nbsp;&nbsp;<i class="fa fa-caret-right" aria-hidden="true"></i></button>
+                <button type='submit'>SIGN UP&nbsp;&nbsp;<i className="fa fa-caret-right" aria-hidden="true"></i></button>
             </div>
             </form>
         </div>

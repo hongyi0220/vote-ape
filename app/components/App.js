@@ -134,6 +134,7 @@ class App extends React.Component {
            .data(dataset.choices)
            .enter()
            .append('rect')
+           .attr('class', 'rect')
            .attr('height', d => (height - padding - yScale(d[1])))
            .attr('width', xScale.bandwidth())
            .attr('x', d => xScale(d[0]))
@@ -141,13 +142,18 @@ class App extends React.Component {
            .on('mousemove', d => {
                const choice = d[0];
                tooltip.style('visibility', 'visible')
-               .style('left', () => (d3.event.x) - 100 + 'px')
-               .style('top', () => (d3.event.y) - 120 + 'px')
+               .style('left', () => (d3.event.x) - 50 + 'px')
+               .style('top', () => (d3.event.y) - 50 + 'px')
                .html(choice);
            }).on('mouseout', () => tooltip.style('visibility', 'hidden'));
 
+        const colors = ['aliceBlue', 'plum', 'lightCyan', 'paleGreen', 'turquoise',' skyBlue', 'aquamarine', 'lavender'];
+        const rects = document.querySelectorAll('.rect');
+        const rectsArr = Array.from(rects);
+        for (let i = 0; i < dataset.choices.length; i++) rectsArr[i].setAttribute('id', 'rect-' + colors[i]);
+        console.log(rectsArr);
 
-        const yAxis = d3.axisLeft(yScale).tickValues(yScale.domain().map(d => +d.toFixed()));
+        const yAxis = d3.axisLeft(yScale).tickValues(yScale.domain().map(d => +d.toFixed(0)));
         svg.append('g')
            .attr('transform', 'translate(' + padding + ',0)')
            .call(yAxis);
@@ -338,6 +344,7 @@ class App extends React.Component {
         const viewPoll ={ popPoll, history, handleClickFromPoll };
         return (
             <div className='app-container' onClick={this.closePopUps}>
+                <div className='tooltip'></div>
             {/* // <div> */}
                 <Nav unmountCreate={this.unmountCreate} state={this.state} toggleMenu={this.toggleMenu}/>
                 {auth ? <DropDownMenu popped={this.state.ui.dropDownMenu} handleClickFromMenu={this.handleClickFromMenu}/> : ''}

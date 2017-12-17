@@ -32981,12 +32981,18 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 
         const xScale = __WEBPACK_IMPORTED_MODULE_9_d3__["d" /* scaleBand */]().domain(dataset.choices.map(d => d[0])).range([padding, width - padding]).padding(0.1);
 
-        svg.selectAll('rect').data(dataset.choices).enter().append('rect').attr('height', d => height - padding - yScale(d[1])).attr('width', xScale.bandwidth()).attr('x', d => xScale(d[0])).attr('y', d => yScale(d[1])).on('mousemove', d => {
+        svg.selectAll('rect').data(dataset.choices).enter().append('rect').attr('class', 'rect').attr('height', d => height - padding - yScale(d[1])).attr('width', xScale.bandwidth()).attr('x', d => xScale(d[0])).attr('y', d => yScale(d[1])).on('mousemove', d => {
             const choice = d[0];
-            tooltip.style('visibility', 'visible').style('left', () => __WEBPACK_IMPORTED_MODULE_9_d3__["b" /* event */].x - 100 + 'px').style('top', () => __WEBPACK_IMPORTED_MODULE_9_d3__["b" /* event */].y - 120 + 'px').html(choice);
+            tooltip.style('visibility', 'visible').style('left', () => __WEBPACK_IMPORTED_MODULE_9_d3__["b" /* event */].x - 50 + 'px').style('top', () => __WEBPACK_IMPORTED_MODULE_9_d3__["b" /* event */].y - 50 + 'px').html(choice);
         }).on('mouseout', () => tooltip.style('visibility', 'hidden'));
 
-        const yAxis = __WEBPACK_IMPORTED_MODULE_9_d3__["a" /* axisLeft */](yScale).tickValues(yScale.domain().map(d => +d.toFixed()));
+        const colors = ['aliceBlue', 'plum', 'lightCyan', 'paleGreen', 'turquoise', ' skyBlue', 'aquamarine', 'lavender'];
+        const rects = document.querySelectorAll('.rect');
+        const rectsArr = Array.from(rects);
+        for (let i = 0; i < dataset.choices.length; i++) rectsArr[i].setAttribute('id', 'rect-' + colors[i]);
+        console.log(rectsArr);
+
+        const yAxis = __WEBPACK_IMPORTED_MODULE_9_d3__["a" /* axisLeft */](yScale).tickValues(yScale.domain().map(d => +d.toFixed(0)));
         svg.append('g').attr('transform', 'translate(' + padding + ',0)').call(yAxis);
 
         // const xAxis = d3.axisBottom(xScale).tickValues(xScale.domain().map(d => d.slice(0,3)));
@@ -33162,6 +33168,7 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'div',
             { className: 'app-container', onClick: this.closePopUps },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'tooltip' }),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__Nav__["a" /* Nav */], { unmountCreate: this.unmountCreate, state: this.state, toggleMenu: this.toggleMenu }),
             auth ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__DropDownMenu__["a" /* DropDownMenu */], { popped: this.state.ui.dropDownMenu, handleClickFromMenu: this.handleClickFromMenu }) : '',
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { exact: true, path: '/', component: __WEBPACK_IMPORTED_MODULE_3__Landing__["a" /* Landing */] }),
@@ -33376,7 +33383,7 @@ const Form = props => {
                     'button',
                     { type: 'submit' },
                     'SIGN UP\xA0\xA0',
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { 'class': 'fa fa-caret-right', 'aria-hidden': 'true' })
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'fa fa-caret-right', 'aria-hidden': 'true' })
                 )
             )
         )
@@ -33445,7 +33452,7 @@ const FormLogin = props => {
                     'button',
                     { type: 'submit' },
                     'SIGN IN\xA0\xA0',
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { 'class': 'fa fa-caret-right', 'aria-hidden': 'true' })
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'fa fa-caret-right', 'aria-hidden': 'true' })
                 )
             )
         )
@@ -34386,7 +34393,7 @@ class Poll extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
                         'div',
                         null,
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { onClick: e => e.stopPropagation(), id: `choice${i}`, type: 'radio', name: 'choice',
-                            value: `${poll ? poll._id : ''},${i}`, checked: true }),
+                            value: `${poll ? poll._id : ''},${i}`, defaultChecked: true }),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'label',
                             { onClick: e => e.stopPropagation(), htmlFor: `choice${i}` },
@@ -34412,11 +34419,7 @@ class Poll extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
                         'Hooray!'
                     ) })
             ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                { className: 'chart-container' },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'tooltip' })
-            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'chart-container' }),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 { className: 'comments-container' },

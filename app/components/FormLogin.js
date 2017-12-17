@@ -18,7 +18,7 @@ export const FormLogin = props => {
                 <input id='password' type='password' name='password'/>
             </div>
             <div className='button-box'>
-                <button type='submit'>SIGN IN&nbsp;&nbsp;<i class="fa fa-caret-right" aria-hidden="true"></i></button>
+                <button type='submit'>SIGN IN&nbsp;&nbsp;<i className="fa fa-caret-right" aria-hidden="true"></i></button>
             </div>
             </form>
         </div>
