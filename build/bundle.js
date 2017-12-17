@@ -34354,16 +34354,21 @@ class Poll extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
                         poll ? poll.poll_name : ''
                     ),
                     '\xA0\xA0',
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { id: poll ? poll._id : '', onClick: e => {
-                            e.stopPropagation();upVote(e);
-                        }, className: 'fa fa-thumbs-o-up', 'aria-hidden': 'true' }),
-                    '\xA0',
-                    poll ? poll.upvote : '',
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'upvote' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { id: poll ? poll._id : '', onClick: e => {
+                                e.stopPropagation();upVote(e);
+                            },
+                            className: 'fa fa-thumbs-o-up', 'aria-hidden': 'true' }),
+                        '\xA0',
+                        poll ? poll.upvote : ''
+                    ),
                     poll ? poll.choices.map((choice, i) => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         null,
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { onClick: e => e.stopPropagation(), id: `choice${i}`, type: 'radio', name: 'choice',
-                            value: `${poll ? poll._id : ''},${i}` }),
+                            value: `${poll ? poll._id : ''},${i}`, checked: true }),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'label',
                             { onClick: e => e.stopPropagation(), htmlFor: `choice${i}` },
@@ -34421,7 +34426,7 @@ class Poll extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
                     )
                 ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
-                    null,
+                    { className: 'msg' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
                         { to: '/user/login' },

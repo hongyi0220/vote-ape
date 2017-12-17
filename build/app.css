@@ -74,35 +74,33 @@
 .invalid {
   color: red; }
 
-.user-content-container h3 {
-  text-align: center; }
-
-.user-content-container .title-dashboard {
-  border-bottom: 1px solid #ececec;
-  padding: 1em; }
-
-.user-content-container .login-details-box {
-  background-color: #f6f6f6;
-  background-color: white;
-  margin: auto;
-  width: 50%;
-  border: 1px solid #ececec;
-  padding: 1em; }
-  .user-content-container .login-details-box .row + .row {
-    margin-top: 0.5em; }
-  .user-content-container .login-details-box .row {
-    display: flex;
-    flex-direction: row; }
-    .user-content-container .login-details-box .row .col {
-      flex-grow: 1;
-      flex-basis: 50%; }
-      .user-content-container .login-details-box .row .col a {
-        color: #127fa9; }
-        .user-content-container .login-details-box .row .col a:hover {
-          text-decoration: underline; }
-
-.user-content-container .my-polls-box {
-  padding-bottom: 1em; }
+.user-content-container {
+  background-color: #f6f6f6; }
+  .user-content-container h3 {
+    text-align: center; }
+  .user-content-container .title-dashboard {
+    border-bottom: 1px solid #ececec;
+    padding: 1em; }
+  .user-content-container .login-details-box {
+    background-color: white;
+    margin: auto;
+    width: 50%;
+    border: 1px solid #ececec;
+    padding: 1em; }
+    .user-content-container .login-details-box .row + .row {
+      margin-top: 0.5em; }
+    .user-content-container .login-details-box .row {
+      display: flex;
+      flex-direction: row; }
+      .user-content-container .login-details-box .row .col {
+        flex-grow: 1;
+        flex-basis: 50%; }
+        .user-content-container .login-details-box .row .col a {
+          color: #127fa9; }
+          .user-content-container .login-details-box .row .col a:hover {
+            text-decoration: underline; }
+  .user-content-container .my-polls-box {
+    padding-bottom: 1em; }
 
 .updates-container {
   width: 300px;
@@ -188,18 +186,47 @@
     text-align: center; }
   .polls-container .poll-container {
     position: absolute;
-    height: 600px;
     width: 400px;
-    top: 0;
-    left: 0;
-    background: rgba(255, 255, 255, 0.85);
+    top: 10%;
+    left: 50%;
+    transform: translateX(-200px);
+    background-color: #edeeee;
     z-index: 10;
-    border: 1px solid green; }
+    border-radius: 2px; }
+    .polls-container .poll-container .choices-container, .polls-container .poll-container .comments-container {
+      padding: 0.5em; }
     .polls-container .poll-container .choices-container {
       border: 1px solid gray; }
+      .polls-container .poll-container .choices-container button {
+        margin-top: 0.5em;
+        width: 99%;
+        background: #1dbe71;
+        color: white;
+        border: none;
+        padding: 0.5em;
+        border-radius: 2px; }
+        .polls-container .poll-container .choices-container button:hover {
+          background-color: #20cd7b; }
+      .polls-container .poll-container .choices-container .upvote, .polls-container .poll-container .choices-container h3 {
+        display: inline-block; }
     .polls-container .poll-container .fa {
       cursor: hand;
       cursor: pointer; }
+    .polls-container .poll-container .comments-container .comment, .polls-container .poll-container .comments-container .comment-form {
+      margin-top: 0.5em; }
+    .polls-container .poll-container .comments-container .comment-form label {
+      display: block; }
+    .polls-container .poll-container .comments-container .comment-form button {
+      width: 99%;
+      background: #1dbe71;
+      color: white;
+      border: none;
+      padding: 0.5em;
+      border-radius: 2px; }
+      .polls-container .poll-container .comments-container .comment-form button:hover {
+        background-color: #20cd7b; }
+    .polls-container .poll-container .comments-container .comment-form textarea {
+      width: 98%; }
   .polls-container .chart-container {
     height: 200px;
     width: 300px;
@@ -2672,7 +2699,8 @@ a {
   text-decoration: none; }
 
 .msg {
-  text-align: center; }
+  text-align: center;
+  margin-top: 0.5em; }
 
 .poll {
   border: 1px solid #ececec;

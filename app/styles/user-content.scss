@@ -1,4 +1,6 @@
+@import 'variables';
 .user-content-container {
+    background-color: $background-gray;
     h3 {
         text-align: center;
     }
@@ -11,7 +13,7 @@
     //     border: 1px dashed green;
     //     background-color: rgb(246,246,246);
         .login-details-box {
-            background-color: rgb(246,246,246);
+            // background-color: rgb(246,246,246);
             background-color: white;
             margin: auto;
             width: 50%;

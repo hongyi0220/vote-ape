@@ -1,0 +1,11 @@
+@mixin button($width: 99.7%) {
+    width: $width;
+    background: $monkey-green;
+    color: white;
+    border: none;
+    padding: 0.5em;
+    border-radius: 2px;
+    &:hover {
+        background-color: $light-monkey-green;
+    }
+}

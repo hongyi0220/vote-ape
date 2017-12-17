@@ -1,25 +1,54 @@
 @import 'variables';
+@import 'mixins';
 .polls-container {
     h3 {
         text-align: center;
     }
     padding: 1em 0 1em 0;
-    background-color: rgb(246,246,246);
+    background-color: $background-gray;
     .poll-container {
         position: absolute;
-        height: 600px;
-        width:  400px;
-        top: 0;
-        left: 0;
-        background: rgba(255,255,255,0.85);
+        // height: 600px;
+        width: 400px;
+        top: 10%;
+        left: 50%;
+        transform: translateX(-200px);
+        background-color: $form-background-gray;
         z-index: 10;
-        border: 1px solid green;
+        // border: 1px solid green;
+        border-radius: 2px;
+        .choices-container, .comments-container {
+            padding: 0.5em;
+        }
         .choices-container {
             border: 1px solid gray;
+            button {
+                margin-top: 0.5em;
+                @include button(99%);
+            }
+            .upvote, h3 {
+                display: inline-block;
+            }
         }
         .fa {
             cursor: hand;
             cursor: pointer;
+        }
+        .comments-container {
+            .comment, .comment-form {
+                margin-top: 0.5em;
+            }
+            .comment-form {
+                label {
+                    display: block;
+                }
+                button {
+                    @include button(99%);
+                }
+                textarea {
+                    width: 98%;
+                }
+            }
         }
     }
     .chart-container {
