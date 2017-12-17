@@ -9,7 +9,7 @@ export const Nav = props => {
     // const topLevelNav = props.topLevelNav;
     return (
         <div className='nav-container'>
-            <div className='logo-box'><Link className='logo' to='/'><img src='./img/chimp.png'/></Link></div>
+            <div className='logo-box'><Link className='logo' to='/'><img src='/img/chimp.png'/></Link></div>
             {/* onClick={() => location.assign('polls')} */}
             <div className='link-polls-box'><Link className='link-polls' to='/polls'>Polls</Link></div>&nbsp;&nbsp;
             <Switch>
