@@ -7445,8 +7445,19 @@ const Footer = props => {
             'footer',
             null,
             'About Me: ',
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'a',
+                { href: 'http://yungilhong.com' },
+                'Yungil Hong'
+            ),
+            ' ',
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
-            'About This App:'
+            'About This App: Inspiration from ',
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'a',
+                { href: 'https://www.surveymonkey.com/' },
+                'SurveyMonkey'
+            )
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'div',
@@ -32959,22 +32970,29 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     buildChart() {
         // Build d3 chart
         const height = 200;
-        const width = 300;
+        const width = 400;
         const padding = 25;
         const dataset = _extends({}, this.state.memory.poll);
+        const tooltip = __WEBPACK_IMPORTED_MODULE_9_d3__["f" /* select */]('.tooltip').style('visibility', 'hidden');
+
         const svg = __WEBPACK_IMPORTED_MODULE_9_d3__["f" /* select */]('.chart-container').append('svg').attr('height', height).attr('width', width);
 
-        const yScale = __WEBPACK_IMPORTED_MODULE_9_d3__["e" /* scaleLinear */]().domain([0, __WEBPACK_IMPORTED_MODULE_9_d3__["c" /* max */](dataset.choices, d => d[1])]).range([height - padding, 0]);
+        const yScale = __WEBPACK_IMPORTED_MODULE_9_d3__["e" /* scaleLinear */]().domain([0, __WEBPACK_IMPORTED_MODULE_9_d3__["c" /* max */](dataset.choices, d => d[1])]).range([height - padding, padding]);
 
         const xScale = __WEBPACK_IMPORTED_MODULE_9_d3__["d" /* scaleBand */]().domain(dataset.choices.map(d => d[0])).range([padding, width - padding]).padding(0.1);
 
-        svg.selectAll('rect').data(dataset.choices).enter().append('rect').attr('height', d => height - padding - yScale(d[1])).attr('width', xScale.bandwidth()).attr('x', d => xScale(d[0])).attr('y', d => yScale(d[1]));
+        svg.selectAll('rect').data(dataset.choices).enter().append('rect').attr('height', d => height - padding - yScale(d[1])).attr('width', xScale.bandwidth()).attr('x', d => xScale(d[0])).attr('y', d => yScale(d[1])).on('mousemove', d => {
+            const choice = d[0];
+            tooltip.style('visibility', 'visible').style('left', () => __WEBPACK_IMPORTED_MODULE_9_d3__["b" /* event */].x - 100 + 'px').style('top', () => __WEBPACK_IMPORTED_MODULE_9_d3__["b" /* event */].y - 120 + 'px').html(choice);
+        }).on('mouseout', () => tooltip.style('visibility', 'hidden'));
 
-        const yAxis = __WEBPACK_IMPORTED_MODULE_9_d3__["b" /* axisLeft */](yScale);
+        const yAxis = __WEBPACK_IMPORTED_MODULE_9_d3__["a" /* axisLeft */](yScale).tickValues(yScale.domain().map(d => +d.toFixed()));
         svg.append('g').attr('transform', 'translate(' + padding + ',0)').call(yAxis);
 
-        const xAxis = __WEBPACK_IMPORTED_MODULE_9_d3__["a" /* axisBottom */](xScale);
-        svg.append('g').attr('transform', 'translate(0,' + (height - padding) + ')').call(xAxis);
+        // const xAxis = d3.axisBottom(xScale).tickValues(xScale.domain().map(d => d.slice(0,3)));
+        // svg.append('g')
+        //    .attr('transform', 'translate(0,' + (height - padding) + ')')
+        //    .call(xAxis);
     }
 
     popPoll(e) {
@@ -34394,7 +34412,11 @@ class Poll extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
                         'Hooray!'
                     ) })
             ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'chart-container' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'chart-container' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'tooltip' })
+            ),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 { className: 'comments-container' },
@@ -34452,7 +34474,6 @@ class Poll extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_1_d3_array__["d"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_d3_axis__ = __webpack_require__(290);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_2_d3_axis__["a"]; });
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_2_d3_axis__["b"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_d3_brush__ = __webpack_require__(294);
 /* unused harmony namespace reexport */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_d3_chord__ = __webpack_require__(380);
@@ -34495,6 +34516,7 @@ class Poll extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_22_d3_scale__["a"]; });
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_22_d3_scale__["b"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23_d3_selection__ = __webpack_require__(3);
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_23_d3_selection__["b"]; });
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "f", function() { return __WEBPACK_IMPORTED_MODULE_23_d3_selection__["f"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24_d3_shape__ = __webpack_require__(528);
 /* unused harmony namespace reexport */
@@ -35013,8 +35035,8 @@ var dependencies = {"d3-array":"1.2.1","d3-axis":"1.0.8","d3-brush":"1.0.4","d3-
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_axis__ = __webpack_require__(291);
 /* unused harmony reexport axisTop */
 /* unused harmony reexport axisRight */
+/* unused harmony reexport axisBottom */
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__src_axis__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_0__src_axis__["b"]; });
 
 
 
@@ -35025,8 +35047,8 @@ var dependencies = {"d3-array":"1.2.1","d3-axis":"1.0.8","d3-brush":"1.0.4","d3-
 "use strict";
 /* unused harmony export axisTop */
 /* unused harmony export axisRight */
-/* harmony export (immutable) */ __webpack_exports__["a"] = axisBottom;
-/* harmony export (immutable) */ __webpack_exports__["b"] = axisLeft;
+/* unused harmony export axisBottom */
+/* harmony export (immutable) */ __webpack_exports__["a"] = axisLeft;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__array__ = __webpack_require__(292);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__identity__ = __webpack_require__(293);
 

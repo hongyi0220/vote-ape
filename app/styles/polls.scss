@@ -17,14 +17,24 @@
         z-index: 10;
         // border: 1px solid green;
         border-radius: 2px;
+        .chart-container {
+            margin-top: 1em;
+            .tooltip {
+                position: absolute;
+                z-index: 20;
+                background: rgba(255,255,255,.6);
+                padding: 0.5em;
+                border-radius: 3px;
+            }
+        }
         .choices-container, .comments-container {
             padding: 0.5em;
         }
         .choices-container {
-            border: 1px solid gray;
+            // border: 1px solid gray;
             button {
                 margin-top: 0.5em;
-                @include button(99%);
+                @include button(99.5%);
             }
             .upvote, h3 {
                 display: inline-block;
@@ -43,17 +53,12 @@
                     display: block;
                 }
                 button {
-                    @include button(99%);
+                    @include button(99.5%);
                 }
                 textarea {
                     width: 98%;
                 }
             }
         }
-    }
-    .chart-container {
-        height: 200px;
-        width: 300px;
-        border: 1px solid gray;
     }
 }

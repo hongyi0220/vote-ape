@@ -1,5 +1,6 @@
 @charset "UTF-8";
 .landing-container {
+  text-align: center;
   margin-bottom: 1em; }
   .landing-container h1 {
     color: #1dbe71; }
@@ -193,22 +194,28 @@
     background-color: #edeeee;
     z-index: 10;
     border-radius: 2px; }
+    .polls-container .poll-container .chart-container {
+      margin-top: 1em; }
+      .polls-container .poll-container .chart-container .tooltip {
+        position: absolute;
+        z-index: 20;
+        background: rgba(255, 255, 255, 0.6);
+        padding: 0.5em;
+        border-radius: 3px; }
     .polls-container .poll-container .choices-container, .polls-container .poll-container .comments-container {
       padding: 0.5em; }
-    .polls-container .poll-container .choices-container {
-      border: 1px solid gray; }
-      .polls-container .poll-container .choices-container button {
-        margin-top: 0.5em;
-        width: 99%;
-        background: #1dbe71;
-        color: white;
-        border: none;
-        padding: 0.5em;
-        border-radius: 2px; }
-        .polls-container .poll-container .choices-container button:hover {
-          background-color: #20cd7b; }
-      .polls-container .poll-container .choices-container .upvote, .polls-container .poll-container .choices-container h3 {
-        display: inline-block; }
+    .polls-container .poll-container .choices-container button {
+      margin-top: 0.5em;
+      width: 99.5%;
+      background: #1dbe71;
+      color: white;
+      border: none;
+      padding: 0.5em;
+      border-radius: 2px; }
+      .polls-container .poll-container .choices-container button:hover {
+        background-color: #20cd7b; }
+    .polls-container .poll-container .choices-container .upvote, .polls-container .poll-container .choices-container h3 {
+      display: inline-block; }
     .polls-container .poll-container .fa {
       cursor: hand;
       cursor: pointer; }
@@ -217,7 +224,7 @@
     .polls-container .poll-container .comments-container .comment-form label {
       display: block; }
     .polls-container .poll-container .comments-container .comment-form button {
-      width: 99%;
+      width: 99.5%;
       background: #1dbe71;
       color: white;
       border: none;
@@ -227,10 +234,6 @@
         background-color: #20cd7b; }
     .polls-container .poll-container .comments-container .comment-form textarea {
       width: 98%; }
-  .polls-container .chart-container {
-    height: 200px;
-    width: 300px;
-    border: 1px solid gray; }
 
 .form-create-container {
   text-align: center;

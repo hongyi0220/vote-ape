@@ -27,6 +27,7 @@ export class Poll extends React.Component {
         console.log('poll in memory:', poll);
         return (
             <div className='poll-container' onClick={e => e.stopPropagation()}>
+
                 <div className='choices-container'>
                     <form action='/polls/poll/vote' method='post'>
                         <h3>{poll ? poll.poll_name : ''}</h3>&nbsp;&nbsp;
@@ -48,7 +49,7 @@ export class Poll extends React.Component {
                     <Route path='/polls/poll/done' render={() => <div>Hooray!</div>}/>
                 </div>
                 {/* <Route path='/polls/poll/successful' render={() => <div>Monkey: 'Oo oo oo!'('Voted!')</div>} /> */}
-                <div className='chart-container'></div>
+                <div className='chart-container'><div className='tooltip'></div></div>
 
                 <div className='comments-container'>
                     {/* Display comments */}

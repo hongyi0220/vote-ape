@@ -111,9 +111,11 @@ class App extends React.Component {
 
     buildChart() { // Build d3 chart
         const height = 200;
-        const width = 300;
+        const width = 400;
         const padding = 25;
         const dataset = {...this.state.memory.poll};
+        const tooltip = d3.select('.tooltip').style('visibility', 'hidden');
+
         const svg = d3.select('.chart-container')
                       .append('svg')
                       .attr('height', height)
@@ -121,7 +123,7 @@ class App extends React.Component {
 
         const yScale = d3.scaleLinear()
                          .domain([0, d3.max(dataset.choices, d => d[1])])
-                         .range([(height - padding), 0]);
+                         .range([(height - padding), padding]);
 
         const xScale = d3.scaleBand()
                          .domain(dataset.choices.map(d => d[0]))
@@ -135,17 +137,25 @@ class App extends React.Component {
            .attr('height', d => (height - padding - yScale(d[1])))
            .attr('width', xScale.bandwidth())
            .attr('x', d => xScale(d[0]))
-           .attr('y', d => yScale(d[1]));
+           .attr('y', d => yScale(d[1]))
+           .on('mousemove', d => {
+               const choice = d[0];
+               tooltip.style('visibility', 'visible')
+               .style('left', () => (d3.event.x) - 100 + 'px')
+               .style('top', () => (d3.event.y) - 120 + 'px')
+               .html(choice);
+           }).on('mouseout', () => tooltip.style('visibility', 'hidden'));
 
-        const yAxis = d3.axisLeft(yScale);
+
+        const yAxis = d3.axisLeft(yScale).tickValues(yScale.domain().map(d => +d.toFixed()));
         svg.append('g')
            .attr('transform', 'translate(' + padding + ',0)')
            .call(yAxis);
 
-        const xAxis = d3.axisBottom(xScale);
-        svg.append('g')
-           .attr('transform', 'translate(0,' + (height - padding) + ')')
-           .call(xAxis);
+        // const xAxis = d3.axisBottom(xScale).tickValues(xScale.domain().map(d => d.slice(0,3)));
+        // svg.append('g')
+        //    .attr('transform', 'translate(0,' + (height - padding) + ')')
+        //    .call(xAxis);
     }
 
     popPoll(e) { // This opnes a poll
