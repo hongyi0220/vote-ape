@@ -222,6 +222,7 @@
   fill: lavender; }
 
 .updates-container {
+  box-shadow: 0 0 10px gray;
   width: 300px;
   left: 50%;
   transform: translateX(-150px);
@@ -328,6 +329,7 @@
   .polls-container h3 {
     text-align: center; }
   .polls-container .poll-container {
+    box-shadow: 0 0 10px gray;
     position: absolute;
     width: 400px;
     top: 10%;
