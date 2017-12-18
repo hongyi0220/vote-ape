@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const router = express.Router();
-require('dotenv').config();
+// require('dotenv').config();
 const url = process.env.MONGOLAB_URI;
 const mongo = require('mongodb')
 const MongoClient = mongo.MongoClient;

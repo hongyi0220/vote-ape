@@ -3,7 +3,7 @@ const app = express();
 const router = express.Router();
 const mongo = require('mongodb');
 const MongoClient = mongo.MongoClient;
-require('dotenv').config();
+// require('dotenv').config();
 const url = process.env.MONGOLAB_URI;
 const session = require('express-session');
 
