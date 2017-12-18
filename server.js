@@ -8,7 +8,7 @@ const session = require('express-session');
 const mongo = require('mongodb');
 const MongoClient = mongo.MongoClient;
 const url = process.env.MONGOLAB_URI;
-require('dotenv').config();
+// require('dotenv').config();
 const port = process.env.PORT || 8080;
 
 app.use(session({
