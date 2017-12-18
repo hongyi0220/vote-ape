@@ -44,8 +44,6 @@ module.exports = {
         contentBase: "./build",
         port: 3000
     },
-    node: {
-        fs: "empty"
-    },
+    target: 'node',
     plugins: [extractSass]
 };
