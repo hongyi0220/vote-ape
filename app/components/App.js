@@ -54,7 +54,7 @@ class App extends React.Component {
         const comment = memory.comment;
         const username = memory.username;
         const poll_id = memory.poll._id;
-        const url = 'http://localhost:8080/api/comment';
+        const url = 'https://poll-monkey-0220.herokuapp.com/api/comment';
         fetch(url,
             {
                 method: 'post',
@@ -81,7 +81,7 @@ class App extends React.Component {
     }
 
     upVote(e) {
-        const url = 'http://localhost:8080/api/upvote';
+        const url = 'https://poll-monkey-0220.herokuapp.com/api/upvote';
         fetch(url,
             {
                 method: 'post',
@@ -216,7 +216,7 @@ class App extends React.Component {
     }
 
     handleClickFromMenu(e) { // This handles clicks from the drop-down-menu
-        const url = 'http://localhost:8080/api/signout';
+        const url = 'https://poll-monkey-0220.herokuapp.com/api/signout';
 
         const init = {
             mothod: 'GET',
@@ -258,7 +258,7 @@ class App extends React.Component {
     }
 
     getUserData() {
-        const url = 'http://localhost:8080/api/getuserdata';
+        const url = 'https://poll-monkey-0220.herokuapp.com/api/getuserdata';
         const headers = new Headers();
         const init = { method: 'GET',
                        headers: headers };
