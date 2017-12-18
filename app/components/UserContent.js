@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Switch, Route, Link } from 'react-router-dom';
 
 export const UserContent = props => {
     const userData = props.state.user.data;
@@ -61,7 +61,11 @@ export const UserContent = props => {
                             </div>
                         </div>
                     ) : <div className='msg'>You have no polls</div>}
-                <Route path='/user/delete/successful' render={() => <div className='msg'>Deleted</div>}/>
+                <Switch>
+                    <Route path='/user/update/error' render={() => <div className='msg'>Invalid password</div>}/>
+                    <Route path='/user/update/successful' render={() => <div className='msg'>Update successful!</div>}/>
+                    <Route path='/user/delete/successful' render={() => <div className='msg'>Deleted</div>}/>
+                </Switch>
             </div>
         </div>
     );

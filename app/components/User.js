@@ -9,10 +9,7 @@ import { InvalidEmail } from './InvalidEmail';
 import { LoginError } from './LoginError';
 import { UserContent } from './UserContent';
 import { Updates } from './Updates';
-import { UpdateSuccessful } from './UpdateSuccessful';
 import { FormCreate } from './FormCreate';
-import { CreateSuccessful } from './CreateSuccessful';
-import { UpdateError } from './UpdateError';
 
 export const User = props => {
     const auth = props.state.user.authenticated;
@@ -32,13 +29,11 @@ export const User = props => {
             </Switch>
             {/* Msgs */}
             <Switch>
-                <Route path='/user/create/successful' component={ CreateSuccessful } />
-                <Route path='/user/update/error' component={ UpdateError } />
-                <Route path='/user/update/successful' component={ UpdateSuccessful } />
+                <Route path='/user/create/successful' render={() => <div className='msg'>Poll created!</div>} />
                 <Route path='/user/update/(fullname|username|password|email)'
                 render={() => auth ? <Updates state={state} updateUserData={props.updateUserData}/> : ''} />
             </Switch>
-            
+
             <Route path='/user/signup/invalid/email' component={ InvalidEmail } />
             <Route path='/user/signup/invalid' component={ InvalidUsername } />
             <Route path='/user/login/error' component={ LoginError } />
