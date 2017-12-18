@@ -9,6 +9,7 @@ const mongo = require('mongodb');
 const MongoClient = mongo.MongoClient;
 const url = process.env.MONGOLAB_URI;
 require('dotenv').config();
+const port = process.env.PORT || 8080;
 
 app.use(session({
     secret: 'scaredy-narwhal',
@@ -50,4 +51,4 @@ app.use('/user', user);
 app.get('*', (req, res) => {
     res.sendFile(__dirname + '/build/index.html');
 })
-app.listen(8080);
+app.listen(port);
