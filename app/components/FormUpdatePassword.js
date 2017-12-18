@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 export const FormUpdatePassword = props => {
-    // const user_id = props.formProps.userData._id;
     const updateUserData = props.formProps.updateUserData;
     const memory = props.formProps.memory;
     return (

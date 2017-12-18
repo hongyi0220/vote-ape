@@ -22,7 +22,7 @@ export const FormCreate = props => {
                     <input id='choice2' name='choices[]' type='text' placeholder='Enter an answer choice'/>
                 </div>
                 {dummyArr(numOfAddOptions).map((el, i) =>
-                    <div className='choice'>
+                    <div key={i} className='choice'>
                         <input id={`choice${i + 3}`} name='choices[]' type='text' placeholder='Enter an answer choice'/>
                     </div>
                 )}

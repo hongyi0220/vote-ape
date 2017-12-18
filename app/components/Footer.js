@@ -8,6 +8,5 @@ export const Footer = props => {
             </footer>
             <div className='copyleft'>Copyleft © 2017-2049 PollMonkey</div>
         </div>
-
     );
 }

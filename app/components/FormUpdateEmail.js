@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 export const FormUpdateEmail = props => {
     const email = props.formProps.userData.email;
-    // const user_id = props.formProps.userData._id;
     const updateUserData = props.formProps.updateUserData;
     const memory = props.formProps.memory;
     return (
