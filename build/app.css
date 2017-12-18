@@ -196,6 +196,8 @@
             text-decoration: underline; }
   .user-content-container .my-polls-box {
     padding-bottom: 1em; }
+    .user-content-container .my-polls-box .fa.fa-trash-o:hover {
+      font-size: 1.5em; }
 
 #rect-aliceBlue {
   fill: aliceBlue; }

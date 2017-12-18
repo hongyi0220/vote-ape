@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 
 export const UserContent = props => {
     const userData = props.state.user.data;
@@ -8,7 +8,7 @@ export const UserContent = props => {
     const handleClickFromPoll = viewPoll.handleClickFromPoll;
     const history = viewPoll.history;
     const popPoll = viewPoll.popPoll;
-
+    const handleDelete = props.handleDelete;
     const maskPassword = password => {
         let result = '';
         for (let i = 0; i < password.length; i++) result += '*';
@@ -48,7 +48,7 @@ export const UserContent = props => {
                 <div className='my-polls-box'>
                     <h3>My Polls</h3>
                     {mypolls ? mypolls.map((poll, i) =>
-                        <div className='poll' id={poll._id}
+                        <div key={i} className='poll' id={poll._id}
                             onClick={e => {popPoll(e); handleClickFromPoll(e); history.push('/polls/poll')}}>
                             <div className='title-created-container'>
                                 <div className='title-box'><b>{poll.poll_name}</b></div>
@@ -56,10 +56,12 @@ export const UserContent = props => {
                             </div>
                             <div className='poll-detail-container'>By Me <div className='seperator'></div>&nbsp;
                                Voted: {poll.voted}&nbsp;<div className='seperator'></div>&nbsp;<i className="fa fa-thumbs-o-up" aria-hidden="true">
-                              </i>&nbsp;{poll.upvote}
+                              </i>&nbsp;{poll.upvote}&nbsp;<div className='seperator'></div>&nbsp;
+                              <i id={poll._id} onClick={e => {handleDelete(e); e.stopPropagation(); history.push('/user/delete/successful')}} className="fa fa-trash-o" aria-hidden="true"></i>
                             </div>
                         </div>
                     ) : <div className='msg'>You have no polls</div>}
+                <Route path='/user/delete/successful' render={() => <div className='msg'>Deleted</div>}/>
             </div>
         </div>
     );

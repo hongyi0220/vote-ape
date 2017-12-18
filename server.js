@@ -8,7 +8,7 @@ const session = require('express-session');
 const mongo = require('mongodb');
 const MongoClient = mongo.MongoClient;
 const url = process.env.MONGOLAB_URI;
-// require('dotenv').config();
+require('dotenv').config();
 const port = process.env.PORT || 8080;
 
 app.use(session({
@@ -26,13 +26,16 @@ app.use('/', (req, res, next) => {
 
     MongoClient.connect(url, (err, db) => {
         if (err) console.error(err);
+
         db.collection('polls').find({}).toArray((err, docs) => {
+
             if (err) console.error(err);
             // If user is already signed-in, no need to define session
             if (session.data) session.data.polls = docs;
             else { // Or else define session
                 session.data = {};
                 session.data.polls = docs;
+
             }
         });
         db.close();
@@ -49,6 +52,7 @@ app.use('/api', api);
 app.use('/user', user);
 
 app.get('*', (req, res) => {
+
     res.sendFile(__dirname + '/build/index.html');
 })
 app.listen(port);

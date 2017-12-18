@@ -32862,7 +32862,8 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
                 numOfAddOptions: 0,
                 poll: false
             },
-            polls: null
+            polls: null,
+            dev: false
         };
         this.getUserData = this.getUserData.bind(this);
         this.updateUserData = this.updateUserData.bind(this);
@@ -32876,6 +32877,22 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         this.upVote = this.upVote.bind(this);
         this.storeCommentInMemory = this.storeCommentInMemory.bind(this);
         this.handleSubmitComment = this.handleSubmitComment.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
+    }
+
+    handleDelete(e) {
+        let url = 'https://poll-monkey-0220.herokuapp.com/api/delete';
+        if (this.state.dev) url = url.replace('https://poll-monkey-0220.herokuapp.com', 'http://localhost:8080');
+
+        const id = e.target.id;
+        const init = {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id: id })
+        };
+        fetch(url, init);
     }
 
     handleSubmitComment() {
@@ -32883,7 +32900,8 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         const comment = memory.comment;
         const username = memory.username;
         const poll_id = memory.poll._id;
-        const url = 'https://poll-monkey-0220.herokuapp.com/api/comment';
+        let url = 'https://poll-monkey-0220.herokuapp.com/api/comment';
+        if (this.state.dev) url = url.replace('https://poll-monkey-0220.herokuapp.com', 'http://localhost:8080');
         fetch(url, {
             method: 'post',
             headers: {
@@ -32906,7 +32924,8 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     }
 
     upVote(e) {
-        const url = 'https://poll-monkey-0220.herokuapp.com/api/upvote';
+        let url = 'https://poll-monkey-0220.herokuapp.com/api/upvote';
+        if (this.state.dev) url = url.replace('https://poll-monkey-0220.herokuapp.com', 'http://localhost:8080');
         fetch(url, {
             method: 'post',
             headers: {
@@ -32950,7 +32969,6 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         const rects = document.querySelectorAll('.rect');
         const rectsArr = Array.from(rects);
         for (let i = 0; i < dataset.choices.length; i++) rectsArr[i].setAttribute('id', 'rect-' + colors[i]);
-        console.log(rectsArr);
 
         //Build y-axis
         const yAxis = __WEBPACK_IMPORTED_MODULE_8_d3__["a" /* axisLeft */](yScale).tickValues(yScale.domain().map(d => +d.toFixed(0)));
@@ -33015,7 +33033,8 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 
     handleClickFromMenu(e) {
         // This handles clicks from the drop-down-menu
-        const url = 'https://poll-monkey-0220.herokuapp.com/api/signout';
+        let url = 'https://poll-monkey-0220.herokuapp.com/api/signout';
+        if (this.state.dev) url = url.replace('https://poll-monkey-0220.herokuapp.com', 'http://localhost:8080');
 
         const init = {
             mothod: 'GET',
@@ -33030,7 +33049,7 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
                 })
             });
             this.props.history.push('/');
-        });else if (e.target.className === 'dashboard-button') closePopUps();
+        });else if (e.target.className === 'dashboard-button') this.closePopUps();
         e.stopPropagation();
     }
 
@@ -33050,7 +33069,8 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     }
 
     getUserData() {
-        const url = 'https://poll-monkey-0220.herokuapp.com/api/getuserdata';
+        let url = 'https://poll-monkey-0220.herokuapp.com/api/getuserdata';
+        if (this.state.dev) url = url.replace('https://poll-monkey-0220.herokuapp.com', 'http://localhost:8080');
         const headers = new Headers();
         const init = { method: 'GET',
             headers: headers };
@@ -33067,9 +33087,10 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
                 username = user.username;
                 email = user.email;
                 mypolls = resJson.mypolls;
+
                 this.setState(_extends({}, this.state, {
                     user: {
-                        data: resJson.user,
+                        data: user,
                         authenticated: true,
                         mypolls: mypolls
 
@@ -33113,8 +33134,8 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__Nav__["a" /* Nav */], { unmountCreate: this.unmountCreate, state: this.state, toggleMenu: this.toggleMenu }),
             auth ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__DropDownMenu__["a" /* DropDownMenu */], { popped: this.state.ui.dropDownMenu, handleClickFromMenu: this.handleClickFromMenu }) : '',
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { exact: true, path: '/', component: __WEBPACK_IMPORTED_MODULE_2__Landing__["a" /* Landing */] }),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user', render: () => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__User__["a" /* User */], { viewPoll: viewPoll, closePopUps: this.closePopUps,
-                    updateUserData: this.updateUserData, addOption: this.addOption, state: this.state }) }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user', render: () => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__User__["a" /* User */], { handleDelete: this.handleDelete, viewPoll: viewPoll,
+                    closePopUps: this.closePopUps, updateUserData: this.updateUserData, addOption: this.addOption, state: this.state }) }),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/polls', render: () => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__Polls__["a" /* Polls */], { handleSubmitComment: this.handleSubmitComment, storeCommentInMemory: this.storeCommentInMemory,
                     upVote: this.upVote, viewPoll: viewPoll, state: this.state, buildChart: this.buildChart }) }),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__Footer__["a" /* Footer */], null)
@@ -33199,6 +33220,7 @@ const User = props => {
     const state = props.state;
     const closePopUps = props.closePopUps;
     const viewPoll = props.viewPoll;
+    const handleDelete = props.handleDelete;
 
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
@@ -33209,12 +33231,11 @@ const User = props => {
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user/create', render: () => auth ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_12__FormCreate__["a" /* FormCreate */], { addOption: props.addOption, state: state }) : '' }),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user/signup', component: __WEBPACK_IMPORTED_MODULE_2__Form__["a" /* Form */] }),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user/login', component: __WEBPACK_IMPORTED_MODULE_5__FormLogin__["a" /* FormLogin */] }),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user', render: () => auth ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9__UserContent__["a" /* UserContent */], { viewPoll: viewPoll, state: state }) : '' })
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user', render: () => auth ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9__UserContent__["a" /* UserContent */], { handleDelete: handleDelete, viewPoll: viewPoll, state: state }) : '' })
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["d" /* Switch */],
             null,
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user/create/successful', component: __WEBPACK_IMPORTED_MODULE_13__CreateSuccessful__["a" /* CreateSuccessful */] }),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user/create/successful', component: __WEBPACK_IMPORTED_MODULE_13__CreateSuccessful__["a" /* CreateSuccessful */] }),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user/update/error', component: __WEBPACK_IMPORTED_MODULE_14__UpdateError__["a" /* UpdateError */] }),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user/update/successful', component: __WEBPACK_IMPORTED_MODULE_11__UpdateSuccessful__["a" /* UpdateSuccessful */] }),
@@ -33487,7 +33508,7 @@ const UserContent = props => {
     const handleClickFromPoll = viewPoll.handleClickFromPoll;
     const history = viewPoll.history;
     const popPoll = viewPoll.popPoll;
-
+    const handleDelete = props.handleDelete;
     const maskPassword = password => {
         let result = '';
         for (let i = 0; i < password.length; i++) result += '*';
@@ -33581,7 +33602,7 @@ const UserContent = props => {
             ),
             mypolls ? mypolls.map((poll, i) => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                { className: 'poll', id: poll._id,
+                { key: i, className: 'poll', id: poll._id,
                     onClick: e => {
                         popPoll(e);handleClickFromPoll(e);history.push('/polls/poll');
                     } },
@@ -33615,13 +33636,24 @@ const UserContent = props => {
                     '\xA0',
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'fa fa-thumbs-o-up', 'aria-hidden': 'true' }),
                     '\xA0',
-                    poll.upvote
+                    poll.upvote,
+                    '\xA0',
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'seperator' }),
+                    '\xA0',
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { id: poll._id, onClick: e => {
+                            handleDelete(e);e.stopPropagation();history.push('/user/delete/successful');
+                        }, className: 'fa fa-trash-o', 'aria-hidden': 'true' })
                 )
             )) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 { className: 'msg' },
                 'You have no polls'
-            )
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/user/delete/successful', render: () => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'msg' },
+                    'Deleted'
+                ) })
         )
     );
 };
@@ -33983,7 +34015,6 @@ const FormCreate = props => {
     const dummyArr = numOfAddOptions => {
         let arr = [];
         for (let i = 0; i < numOfAddOptions; i++) arr.push(null);
-        console.log('arr', arr);
         return arr;
     };
 
@@ -34158,9 +34189,9 @@ const Polls = props => {
             { className: 'featured-polls-container' },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { path: '/polls/poll', render: () => popped ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Poll__["a" /* Poll */], { handleSubmitComment: handleSubmitComment, storeCommentInMemory: storeCommentInMemory,
                     upVote: upVote, buildChart: buildChart, state: state }) : '' }),
-            polls ? featured10.map(poll => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            polls ? featured10.map((poll, i) => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                { className: 'poll', id: poll._id, onClick: e => {
+                { key: i, className: 'poll', id: poll._id, onClick: e => {
                         popPoll(e);handleClickFromPoll(e);history.push('/polls/poll');
                     } },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -34207,9 +34238,9 @@ const Polls = props => {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'div',
             { className: 'all-polls-container' },
-            polls ? polls.map(poll => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            polls ? polls.map((poll, i) => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                { className: 'poll', id: poll._id,
+                { key: i, className: 'poll', id: poll._id,
                     onClick: e => {
                         popPoll(e);handleClickFromPoll(e);history.push('/polls/poll');
                     } },

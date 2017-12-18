@@ -33,7 +33,8 @@ class App extends React.Component {
                 numOfAddOptions: 0,
                 poll: false
             },
-            polls: null
+            polls: null,
+            dev: false
         };
         this.getUserData = this.getUserData.bind(this);
         this.updateUserData = this.updateUserData.bind(this);
@@ -47,6 +48,22 @@ class App extends React.Component {
         this.upVote = this.upVote.bind(this);
         this.storeCommentInMemory = this.storeCommentInMemory.bind(this);
         this.handleSubmitComment = this.handleSubmitComment.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
+    }
+
+    handleDelete(e) {
+        let url = 'https://poll-monkey-0220.herokuapp.com/api/delete';
+        if (this.state.dev) url = url.replace('https://poll-monkey-0220.herokuapp.com', 'http://localhost:8080');
+
+        const id = e.target.id;
+        const init ={
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({id: id})
+        }
+        fetch(url, init);
     }
 
     handleSubmitComment() {
@@ -54,7 +71,8 @@ class App extends React.Component {
         const comment = memory.comment;
         const username = memory.username;
         const poll_id = memory.poll._id;
-        const url = 'https://poll-monkey-0220.herokuapp.com/api/comment';
+        let url = 'https://poll-monkey-0220.herokuapp.com/api/comment';
+        if (this.state.dev) url = url.replace('https://poll-monkey-0220.herokuapp.com', 'http://localhost:8080');
         fetch(url,
             {
                 method: 'post',
@@ -81,7 +99,8 @@ class App extends React.Component {
     }
 
     upVote(e) {
-        const url = 'https://poll-monkey-0220.herokuapp.com/api/upvote';
+        let url = 'https://poll-monkey-0220.herokuapp.com/api/upvote';
+        if (this.state.dev) url = url.replace('https://poll-monkey-0220.herokuapp.com', 'http://localhost:8080');
         fetch(url,
             {
                 method: 'post',
@@ -148,7 +167,6 @@ class App extends React.Component {
         const rects = document.querySelectorAll('.rect');
         const rectsArr = Array.from(rects);
         for (let i = 0; i < dataset.choices.length; i++) rectsArr[i].setAttribute('id', 'rect-' + colors[i]);
-        console.log(rectsArr);
 
         //Build y-axis
         const yAxis = d3.axisLeft(yScale).tickValues(yScale.domain().map(d => +d.toFixed(0)));
@@ -216,7 +234,8 @@ class App extends React.Component {
     }
 
     handleClickFromMenu(e) { // This handles clicks from the drop-down-menu
-        const url = 'https://poll-monkey-0220.herokuapp.com/api/signout';
+        let url = 'https://poll-monkey-0220.herokuapp.com/api/signout';
+        if (this.state.dev) url = url.replace('https://poll-monkey-0220.herokuapp.com', 'http://localhost:8080');
 
         const init = {
             mothod: 'GET',
@@ -235,7 +254,7 @@ class App extends React.Component {
                 });
                 this.props.history.push('/');
             });
-        else if (e.target.className === 'dashboard-button') closePopUps();
+        else if (e.target.className === 'dashboard-button') this.closePopUps();
         e.stopPropagation();
     }
 
@@ -258,7 +277,8 @@ class App extends React.Component {
     }
 
     getUserData() {
-        const url = 'https://poll-monkey-0220.herokuapp.com/api/getuserdata';
+        let url = 'https://poll-monkey-0220.herokuapp.com/api/getuserdata';
+        if (this.state.dev) url = url.replace('https://poll-monkey-0220.herokuapp.com', 'http://localhost:8080');
         const headers = new Headers();
         const init = { method: 'GET',
                        headers: headers };
@@ -277,10 +297,11 @@ class App extends React.Component {
                username = user.username;
                email = user.email;
                mypolls = resJson.mypolls;
+
                this.setState({
                    ...this.state,
                    user: {
-                       data: resJson.user,
+                       data: user,
                        authenticated: true,
                        mypolls: mypolls
 
@@ -325,8 +346,8 @@ class App extends React.Component {
                 <Nav unmountCreate={this.unmountCreate} state={this.state} toggleMenu={this.toggleMenu}/>
                 {auth ? <DropDownMenu popped={this.state.ui.dropDownMenu} handleClickFromMenu={this.handleClickFromMenu}/> : ''}
                 <Route exact path='/' component={ Landing } />
-                <Route path='/user' render={() => <User viewPoll={viewPoll} closePopUps={this.closePopUps}
-                    updateUserData={this.updateUserData} addOption={this.addOption} state={this.state}/> }/>
+                <Route path='/user' render={() => <User handleDelete={this.handleDelete} viewPoll={viewPoll}
+                    closePopUps={this.closePopUps} updateUserData={this.updateUserData} addOption={this.addOption} state={this.state}/>}/>
                 <Route path='/polls' render={() =>
                     <Polls handleSubmitComment={this.handleSubmitComment} storeCommentInMemory={this.storeCommentInMemory}
                         upVote={this.upVote} viewPoll={viewPoll} state={this.state} buildChart={this.buildChart}/>} />

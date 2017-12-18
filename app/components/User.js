@@ -19,6 +19,7 @@ export const User = props => {
     const state = props.state;
     const closePopUps = props.closePopUps;
     const viewPoll = props.viewPoll;
+    const handleDelete = props.handleDelete;
 
     return (
         <div className='user-container'>
@@ -27,16 +28,17 @@ export const User = props => {
                 <Route path='/user/create' render={() => auth ? <FormCreate addOption={props.addOption} state={state} /> : ''} />
                 <Route path='/user/signup' component={ Form } />
                 <Route path='/user/login' component={ FormLogin } />
-                <Route path='/user' render={() => auth ? <UserContent viewPoll={viewPoll} state={state} /> : ''} />
+                <Route path='/user' render={() => auth ? <UserContent handleDelete={handleDelete} viewPoll={viewPoll} state={state} /> : ''} />
             </Switch>
+            {/* Msgs */}
             <Switch>
-                <Route path='/user/create/successful' component={ CreateSuccessful } />
                 <Route path='/user/create/successful' component={ CreateSuccessful } />
                 <Route path='/user/update/error' component={ UpdateError } />
                 <Route path='/user/update/successful' component={ UpdateSuccessful } />
                 <Route path='/user/update/(fullname|username|password|email)'
                 render={() => auth ? <Updates state={state} updateUserData={props.updateUserData}/> : ''} />
             </Switch>
+            
             <Route path='/user/signup/invalid/email' component={ InvalidEmail } />
             <Route path='/user/signup/invalid' component={ InvalidUsername } />
             <Route path='/user/login/error' component={ LoginError } />

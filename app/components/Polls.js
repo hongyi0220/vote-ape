@@ -27,8 +27,8 @@ export const Polls = props => {
                 <Route path='/polls/poll' render={() =>
                     popped ? <Poll handleSubmitComment={handleSubmitComment} storeCommentInMemory={storeCommentInMemory}
                         upVote={upVote} buildChart={buildChart} state={state}/> : ''}/>
-                {polls ? featured10.map(poll =>
-                    <div className='poll' id={poll._id} onClick={e => {popPoll(e); handleClickFromPoll(e); history.push('/polls/poll')}}>
+                {polls ? featured10.map((poll, i) =>
+                    <div key={i} className='poll' id={poll._id} onClick={e => {popPoll(e); handleClickFromPoll(e); history.push('/polls/poll')}}>
                         <div className='title-created-container'>
                             <div className='title-box'><b>{poll.poll_name}</b></div>
                             <div className='created-box'>{poll.created}</div>
@@ -43,8 +43,8 @@ export const Polls = props => {
             <h3>All Polls</h3>
             <div className='all-polls-container'>
 
-                {polls ? polls.map(poll =>
-                    <div className='poll' id={poll._id}
+                {polls ? polls.map((poll, i) =>
+                    <div key={i} className='poll' id={poll._id}
                         onClick={e => {popPoll(e); handleClickFromPoll(e); history.push('/polls/poll')}}>
                         <div className='title-created-container'>
                             <div className='title-box'><b>{poll.poll_name}</b></div>

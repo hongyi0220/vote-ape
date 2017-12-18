@@ -5,7 +5,6 @@ export const FormCreate = props => {
     const dummyArr = numOfAddOptions => {
         let arr = [];
         for (let i = 0; i < numOfAddOptions; i++) arr.push(null);
-        console.log('arr',arr);
         return arr;
     };
 

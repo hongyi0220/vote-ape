@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const router = express.Router();
-// require('dotenv').config();
+require('dotenv').config();
 const url = process.env.MONGOLAB_URI;
 const mongo = require('mongodb')
 const MongoClient = mongo.MongoClient;
@@ -32,7 +32,8 @@ router.post('/create', (req, res) => {
         schema.created = `${month}/${date}/${year}`;
         const collection = db.collection('polls');
         collection.insert(schema);
-        collection.find({ username: session.data.username }).toArray((err, docs) => {
+        collection.find({ username: session.data.user.username }).toArray((err, docs) => {
+            if (err) console.error(err);
             session.data.mypolls = docs;
         })
         db.close();

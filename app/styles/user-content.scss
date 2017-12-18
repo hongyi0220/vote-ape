@@ -34,5 +34,10 @@
         }
         .my-polls-box {
             padding-bottom: 1em;
+            .fa.fa-trash-o {
+                &:hover {
+                    font-size: 1.5em;
+                }
+            }
         }
 }

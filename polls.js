@@ -6,7 +6,7 @@ const session = require('express-session');
 const mongo = require('mongodb');
 const MongoClient = mongo.MongoClient;
 const url = process.env.MONGOLAB_URI;
-// require('dotenv').config();
+require('dotenv').config();
 
 router.post('/poll/vote', (req, res) => {
     const choiceData = req.body.choice.split(',');
