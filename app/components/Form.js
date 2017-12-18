@@ -2,9 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 export const Form = props => {
-    // const style = {
-    //     width: '80%'
-    // }
     return (
         <div className='form-container'>
             <h2>Sign up for your FREE account</h2>

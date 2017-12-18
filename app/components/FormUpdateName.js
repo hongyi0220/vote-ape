@@ -20,7 +20,6 @@ export const FormUpdateName = props => {
                 <input id='lastname' type='text' name='lastname'
                     onChange={updateUserData} value={memory.lastname}/>
             </div>
-            {/* <input id='user_id' type='hidden' name='user_id' value={user_id}></input> */}
             <div className='buttons-box'>
                 <Link to='/user'><button className='first-button' type='button'>Cancel</button></Link>&nbsp;
                 <button type='submit'>Change name</button>

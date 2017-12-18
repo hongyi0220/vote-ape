@@ -1,7 +1,6 @@
 @import 'landing';
 @import 'footer';
 @import 'nav';
-@import 'invalid';
 @import 'user-content';
 @import 'updates';
 @import 'drop-down-menu';
@@ -13,6 +12,7 @@ $fa-font-path: "~font-awesome/fonts";
 @import 'form-signup';
 @import 'variables';
 body {
+    font-family: 'Quicksand', sans-serif;
     margin: 0;
     .app-container {
         .tooltip {
@@ -23,36 +23,43 @@ body {
             padding: 0.5em;
             border-radius: 3px;
         }
-    }
-}
-a {
-    text-decoration: none;
-}
-.msg {
-    text-align: center;
-    margin-top: 0.5em;
-}
-.poll {
-    border: 1px solid rgb(236,236,236);
-    // margin: 1em 0 1em 0;
-    padding: 1em;
-    width: 50%;
-    margin: 1em auto 0 auto;
-    background-color: white;
-    &:hover {
-        border-color: $border-green;
-        cursor: hand;
-        cursor: pointer;
-    }
-    .title-created-container, .poll-detail-container {
-        display: inline-block;
-    }
-    .poll-detail-container {
-        float: right;
-    }
-    .seperator {
-        display: inline-block;
-        height: 10px;
-        border: 1px solid rgb(239,239,239);
+        .user-container {
+            .form-container {
+                padding: 5em 0 3em 0;
+            }
+            .login-container, .form-create-container {
+                padding: 5em 0 4em 0;
+            }
+        }
+        a {
+            text-decoration: none;
+        }
+        .msg {
+            text-align: center;
+            margin-top: 0.5em;
+        }
+        .poll {
+            border: 1px solid rgb(236,236,236);
+            padding: 1em;
+            width: 50%;
+            margin: 1em auto 0 auto;
+            background-color: white;
+            &:hover {
+                border-color: $border-green;
+                cursor: hand;
+                cursor: pointer;
+            }
+            .title-created-container, .poll-detail-container {
+                display: inline-block;
+            }
+            .poll-detail-container {
+                float: right;
+            }
+            .seperator {
+                display: inline-block;
+                height: 10px;
+                border: 1px solid rgb(239,239,239);
+            }
+        }
     }
 }

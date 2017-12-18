@@ -1,24 +1,22 @@
 const express = require('express');
 const app = express();
 const router = express.Router();
-// const bodyParser = require('body-parser');
 const mongo = require('mongodb');
 const MongoClient = mongo.MongoClient;
 require('dotenv').config();
 const url = process.env.MONGOLAB_URI;
 const session = require('express-session');
 
-// app.use(bodyParser.urlencoded({ extended: true }));
 
 router
     .post('/fullname', (req, res) => {
         MongoClient.connect(url, (err, db) => {
             if (err) console.error(err);
-            // const user_id = req.body.user_id;
             const sessUser = session.data.user;
             const user_id = sessUser._id;
             const firstname = req.body.firstname;
             const lastname = req.body.lastname;
+            // Update fullname
             db.collection('users').updateOne(
                 {_id: mongo.ObjectId(user_id)},
                 {$set: {
@@ -33,14 +31,11 @@ router
         });
     })
     .post('/username', (req, res) => {
-        // console.log('req.body: ',req.body.password);
         const password = req.body.password;
-
         const sessUser = session.data.user;
         const user_id = sessUser._id;
         const username = req.body.username;
 
-        // console.log(password);
         if (password === sessUser.password) {
             MongoClient.connect(url, (err, db) => {
                 if (err) console.error(err);
@@ -92,13 +87,10 @@ router
         const user_id = sessUser._id;
         const newPassword = req.body.new_password;
         const password = req.body.password;
-        // console.log('post: password reached!');
         if (password === sessUser.password) {
-            // console.log('password Match!');
-            // console.log(`sessPassword: ${sessUser.password}, password: ${password}, newpswrd: ${newPassword}`);
+
             MongoClient.connect(url, (err, db) => {
                 if (err) console.error(err);
-                // console.log('mongodb connected');
                 db.collection('users').updateOne(
                     {_id: mongo.ObjectId(user_id)},
                     {

@@ -1,8 +1,6 @@
 .drop-down-menu-container {
     .drop-down-menu {
-        // border: 1px solid green;
         width: 92px;
-        // padding: 1em;
         position: absolute;
         z-index: 10;
         background: white;
@@ -10,7 +8,6 @@
         display: flex;
         flex-direction: column;
         margin-right: 1em;
-        // border-top: 3px solid white;
         right: 0;
         top: 58px;
         .dashboard-button-box, .signout-button {
@@ -20,7 +17,6 @@
         }
         .dashboard-button-box {
             border-bottom: 1px solid rgb(239,239,239);
-            // font-color: rgb(107,120,126);
             a {
                 color: rgb(107,120,126);
             }
@@ -30,16 +26,11 @@
         }
         .signout-button {
             color: rgb(107,120,126);
-            // border: none;
-            // width: 100%;
             &:hover {
                 background-color: rgb(239,239,239);
                 cursor: hand;
                 cursor: pointer;
             }
-            // button {
-            //     border: none;
-            // }
         }
     }
 }

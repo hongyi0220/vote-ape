@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { withRouter, Route } from 'react-router-dom';
-import { Main } from './Main';
 import { Landing } from './Landing';
 import { User } from './User';
 import { Nav } from './Nav';
@@ -33,11 +32,9 @@ class App extends React.Component {
                 dropDownMenu: false,
                 numOfAddOptions: 0,
                 poll: false
-                // inCreatePage: false
             },
             polls: null
         };
-        // console.log('state in constructor',this.state);
         this.getUserData = this.getUserData.bind(this);
         this.updateUserData = this.updateUserData.bind(this);
         this.handleClickFromMenu= this.handleClickFromMenu.bind(this);
@@ -71,7 +68,6 @@ class App extends React.Component {
         );
         memory.poll.comments.push([username, comment]);
         memory.comment = null;
-        // this.refs.comment.value = '';
         this.setState({ memory });
     }
 
@@ -85,8 +81,6 @@ class App extends React.Component {
     }
 
     upVote(e) {
-        // console.log('upVote triggered');
-        // console.log(`targetid: ${e.target.id}`);
         const url = 'http://localhost:8080/api/upvote';
         fetch(url,
             {
@@ -116,11 +110,13 @@ class App extends React.Component {
         const dataset = {...this.state.memory.poll};
         const tooltip = d3.select('.tooltip').style('visibility', 'hidden');
 
+        // Append svg
         const svg = d3.select('.chart-container')
                       .append('svg')
                       .attr('height', height)
                       .attr('width', width);
 
+        // Define scales and their domains and range
         const yScale = d3.scaleLinear()
                          .domain([0, d3.max(dataset.choices, d => d[1])])
                          .range([(height - padding), padding]);
@@ -130,6 +126,7 @@ class App extends React.Component {
                          .range([padding, width - padding])
                          .padding(0.1);
 
+        // Create 'bars'
         svg.selectAll('rect')
            .data(dataset.choices)
            .enter()
@@ -153,19 +150,14 @@ class App extends React.Component {
         for (let i = 0; i < dataset.choices.length; i++) rectsArr[i].setAttribute('id', 'rect-' + colors[i]);
         console.log(rectsArr);
 
+        //Build y-axis
         const yAxis = d3.axisLeft(yScale).tickValues(yScale.domain().map(d => +d.toFixed(0)));
         svg.append('g')
            .attr('transform', 'translate(' + padding + ',0)')
            .call(yAxis);
-
-        // const xAxis = d3.axisBottom(xScale).tickValues(xScale.domain().map(d => d.slice(0,3)));
-        // svg.append('g')
-        //    .attr('transform', 'translate(0,' + (height - padding) + ')')
-        //    .call(xAxis);
     }
 
     popPoll(e) { // This opnes a poll
-        // console.log('popPoll triggered by: ', e.target);
         this.setState({
             ui: {
                 ...this.state.ui,
@@ -176,7 +168,6 @@ class App extends React.Component {
     }
 
     handleClickFromPoll(e) { // This finds the exact poll that is clicked stored in state
-        // console.log('handleClickFrompoll triggered');
         console.log('this.state.polls from handleClickfromPoll: ',this.state);
         const state = {...this.state};
         const polls = state.polls
@@ -190,7 +181,6 @@ class App extends React.Component {
             const poll = polls[i];
 
             if (poll._id === id) {
-                // console.log('poll found inside forloop: ', poll);
                 this.setState({
                     memory: {
                         ...this.state.memory,
@@ -220,7 +210,6 @@ class App extends React.Component {
                 ...prevState.ui,
                 dropDownMenu: false,
                 poll: false
-                // popUps: false
             },
             memory: {
                 ...prevState.memory,
@@ -231,19 +220,16 @@ class App extends React.Component {
     }
 
     handleClickFromMenu(e) { // This handles clicks from the drop-down-menu
-        // console.log(e.target,'triggered handleClickFromMenu');
         const url = 'http://localhost:8080/api/signout';
 
         const init = {
             mothod: 'GET',
-            headers: new Headers(),
-            // credentials: 'same-origin'
+            headers: new Headers()
         }
 
         if (e.target.className === 'signout-button')
             fetch(url, init)
             .then(() => {
-                // closeMenu();
                 this.closePopUps();
                 this.setState({
                     user: {
@@ -254,7 +240,6 @@ class App extends React.Component {
                 this.props.history.push('/');
             });
         else if (e.target.className === 'dashboard-button') closePopUps();
-        // else closePopUps();
         e.stopPropagation();
     }
 
@@ -290,7 +275,7 @@ class App extends React.Component {
            const polls = resJson.polls;
            const poll_id = resJson.poll_id;
            if (resJson.user) {
-               // console.log('resJson11111');
+
                const user = resJson.user;
                firstname = user.firstname;
                lastname = user.lastname;
@@ -316,8 +301,7 @@ class App extends React.Component {
                    polls: polls
                }, () => this.handleClickFromPoll());
            } else {
-               // console.log('resJson2222');
-               // console.log(polls);
+
                this.setState({
                    ...this.state,
                    memory: {
@@ -326,7 +310,6 @@ class App extends React.Component {
                    },
                    polls: polls
                }, () => this.handleClickFromPoll());
-               // console.log('resJson2222 StateSet!');
            }
        });
     }
@@ -334,7 +317,6 @@ class App extends React.Component {
     componentWillMount() {
         // This gets data such as polls when unsigned-in, polls and user data when signed-in
         this.getUserData();
-        // console.log('componentWillMount');
     }
 
     render() {
@@ -345,12 +327,11 @@ class App extends React.Component {
         return (
             <div className='app-container' onClick={this.closePopUps}>
                 <div className='tooltip'></div>
-            {/* // <div> */}
                 <Nav unmountCreate={this.unmountCreate} state={this.state} toggleMenu={this.toggleMenu}/>
                 {auth ? <DropDownMenu popped={this.state.ui.dropDownMenu} handleClickFromMenu={this.handleClickFromMenu}/> : ''}
-                {/* <Main /> */}
                 <Route exact path='/' component={ Landing } />
-                <User viewPoll={viewPoll} closePopUps={this.closePopUps} updateUserData={this.updateUserData} addOption={this.addOption} state={this.state}/>
+                <Route path='/user' render={() => <User viewPoll={viewPoll} closePopUps={this.closePopUps}
+                    updateUserData={this.updateUserData} addOption={this.addOption} state={this.state}/> }/>
                 <Route path='/polls' render={() =>
                     <Polls handleSubmitComment={this.handleSubmitComment} storeCommentInMemory={this.storeCommentInMemory}
                         upVote={this.upVote} viewPoll={viewPoll} state={this.state} buildChart={this.buildChart}/>} />

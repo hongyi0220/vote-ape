@@ -4,7 +4,6 @@
         text-align: center;
     }
     .form-login {
-        // border: 1px dotted gray;
         display: flex;
         flex-direction: column;
         width: 25%;
@@ -19,7 +18,6 @@
             margin-bottom: 0.1em;
         }
         .username-box, .password-box {
-            // border: 1px dashed green;
             flex-grow: 1;
             margin: 0.5em;
             input {
@@ -33,7 +31,6 @@
             }
         }
         .button-box {
-            // border: 1px dashed rgb(29,190,113);
             flex-grow: 1;
 
             margin: 0.5em;

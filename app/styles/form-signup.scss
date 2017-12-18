@@ -5,7 +5,6 @@
         text-align: center;
     }
     .form-signup {
-        // border: 1px dotted gray;
         display: flex;
         flex-direction: column;
         width: 25%;
@@ -21,15 +20,12 @@
         }
         .name-box {
             display: flex;
-            // border: 1px dashed blue;
             .firstname-box, .lastname-box {
-                // border: 1px dashed green;
                 flex-grow: 1;
                 margin: 0.5em;
                 input {
                     width: 86.7%;
                     padding: 0.5em;
-                    // border: none;
                     border: 1px solid rgb(208,210,211);
                     border-radius: 2px;
                     &:hover {
@@ -39,7 +35,6 @@
             }
         }
         .username-box, .email-box, .password-box {
-            // border: 1px dashed green;
             flex-grow: 1;
             margin: 0.5em;
             input {
@@ -53,9 +48,7 @@
             }
         }
         .button-box {
-            // border: 1px dashed rgb(29,190,113);
             flex-grow: 1;
-
             margin: 0.5em;
             text-align: center;
             button {

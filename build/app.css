@@ -25,6 +25,7 @@
 
 .landing-container {
   text-align: center;
+  padding: 11em 0 11em 0;
   margin-bottom: 1em; }
   .landing-container h1 {
     color: #1dbe71; }
@@ -143,9 +144,6 @@
     color: white; }
     .nav-container .create-button-box .create-button:hover {
       border-bottom: 3px solid white; }
-
-.invalid {
-  color: red; }
 
 #rect-aliceBlue {
   fill: aliceBlue; }
@@ -342,18 +340,22 @@
       margin-top: 1em; }
     .polls-container .poll-container .choices-container, .polls-container .poll-container .comments-container {
       padding: 0.5em; }
-    .polls-container .poll-container .choices-container button {
-      margin-top: 0.5em;
-      width: 99.5%;
-      background: #1dbe71;
-      color: white;
-      border: none;
-      padding: 0.5em;
-      border-radius: 2px; }
-      .polls-container .poll-container .choices-container button:hover {
-        background-color: #20cd7b; }
-    .polls-container .poll-container .choices-container .upvote, .polls-container .poll-container .choices-container h3 {
-      display: inline-block; }
+    .polls-container .poll-container .choices-container {
+      text-align: center; }
+      .polls-container .poll-container .choices-container .choices-box {
+        text-align: left !important; }
+      .polls-container .poll-container .choices-container button {
+        margin-top: 0.5em;
+        width: 99.5%;
+        background: #1dbe71;
+        color: white;
+        border: none;
+        padding: 0.5em;
+        border-radius: 2px; }
+        .polls-container .poll-container .choices-container button:hover {
+          background-color: #20cd7b; }
+      .polls-container .poll-container .choices-container .upvote, .polls-container .poll-container .choices-container h3 {
+        display: inline-block; }
     .polls-container .poll-container .fa {
       cursor: hand;
       cursor: pointer; }
@@ -2906,6 +2908,7 @@
   fill: lavender; }
 
 body {
+  font-family: 'Quicksand', sans-serif;
   margin: 0; }
   body .app-container .tooltip {
     visibility: hidden;
@@ -2914,29 +2917,30 @@ body {
     background: rgba(255, 255, 255, 0.6);
     padding: 0.5em;
     border-radius: 3px; }
-
-a {
-  text-decoration: none; }
-
-.msg {
-  text-align: center;
-  margin-top: 0.5em; }
-
-.poll {
-  border: 1px solid #ececec;
-  padding: 1em;
-  width: 50%;
-  margin: 1em auto 0 auto;
-  background-color: white; }
-  .poll:hover {
-    border-color: #1dbe71;
-    cursor: hand;
-    cursor: pointer; }
-  .poll .title-created-container, .poll .poll-detail-container {
-    display: inline-block; }
-  .poll .poll-detail-container {
-    float: right; }
-  .poll .seperator {
-    display: inline-block;
-    height: 10px;
-    border: 1px solid #efefef; }
+  body .app-container .user-container .form-container {
+    padding: 5em 0 3em 0; }
+  body .app-container .user-container .login-container, body .app-container .user-container .form-create-container {
+    padding: 5em 0 4em 0; }
+  body .app-container a {
+    text-decoration: none; }
+  body .app-container .msg {
+    text-align: center;
+    margin-top: 0.5em; }
+  body .app-container .poll {
+    border: 1px solid #ececec;
+    padding: 1em;
+    width: 50%;
+    margin: 1em auto 0 auto;
+    background-color: white; }
+    body .app-container .poll:hover {
+      border-color: #1dbe71;
+      cursor: hand;
+      cursor: pointer; }
+    body .app-container .poll .title-created-container, body .app-container .poll .poll-detail-container {
+      display: inline-block; }
+    body .app-container .poll .poll-detail-container {
+      float: right; }
+    body .app-container .poll .seperator {
+      display: inline-block;
+      height: 10px;
+      border: 1px solid #efefef; }

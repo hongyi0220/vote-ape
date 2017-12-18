@@ -19,14 +19,14 @@ export const User = props => {
     const state = props.state;
     const closePopUps = props.closePopUps;
     const viewPoll = props.viewPoll;
-    // console.log('auth at User.js?', auth ? 'yes': 'no');
+
     return (
-        <div>
-            {/* {console.log('yo!userData from <User>: ',state.user.data)} */}
+        <div className='user-container'>
+
             <Switch>
                 <Route path='/user/create' render={() => auth ? <FormCreate addOption={props.addOption} state={state} /> : ''} />
                 <Route path='/user/signup' component={ Form } />
-                <Route path='/user/login' render={() => <FormLogin /> } />
+                <Route path='/user/login' component={ FormLogin } />
                 <Route path='/user' render={() => auth ? <UserContent viewPoll={viewPoll} state={state} /> : ''} />
             </Switch>
             <Switch>

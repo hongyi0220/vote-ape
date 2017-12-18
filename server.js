@@ -9,14 +9,11 @@ const mongo = require('mongodb');
 const MongoClient = mongo.MongoClient;
 const url = process.env.MONGOLAB_URI;
 require('dotenv').config();
-// var sessionStore = new session.MemoryStore();
-// var sessionStore = new MemoryStore();
-// app.use('trust proxy', true);
+
 app.use(session({
     secret: 'scaredy-narwhal',
     resave: false,
     saveUninitialized: false,
-    // store: sessionStore,
     unset: 'destroy'
 }));
 
@@ -25,7 +22,7 @@ app.use(bodyParser.json());
 
 // Get polls when a client arrives at homepage
 app.use('/', (req, res, next) => {
-    // console.log('route: / REACHED polls saved to session');
+
     MongoClient.connect(url, (err, db) => {
         if (err) console.error(err);
         db.collection('polls').find({}).toArray((err, docs) => {
@@ -36,7 +33,6 @@ app.use('/', (req, res, next) => {
                 session.data = {};
                 session.data.polls = docs;
             }
-            // console.log(`session.data.polls: ${session.data.polls}`);
         });
         db.close();
         next();

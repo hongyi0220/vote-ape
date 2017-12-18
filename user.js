@@ -1,4 +1,3 @@
-// User route module
 const express = require('express');
 const app = express();
 const router = express.Router();
@@ -7,10 +6,7 @@ const url = process.env.MONGOLAB_URI;
 const mongo = require('mongodb')
 const MongoClient = mongo.MongoClient;
 const session = require('express-session');
-// const bodyParser = require('body-parser');
 const update = require('./update')
-
-// app.use(bodyParser.json());
 
 router.use('/update', update);
 
@@ -18,8 +14,7 @@ router.post('/create', (req, res) => {
     MongoClient.connect(url, (err, db) => {
         if (err) console.error(err);
         let schema = req.body;
-        // console.log('schema', schema);
-        // console.log('session.data.user', session.data.user);
+        // Create a schema for storing poll data
         schema.username = session.data.user.username;
         schema.views = 0;
         schema.voted = 0;
@@ -29,8 +24,7 @@ router.post('/create', (req, res) => {
         schema.choices = choices;
         schema.ips = [];
         schema.date = Date.now();
-        // schema.counts = [];
-        // for (let i = 0; i < req.body.choices.length; i++) schema.counts.push(0);
+
         const created = new Date();
         const date = created.getDate();
         const month = created.getMonth() + 1;
@@ -50,15 +44,14 @@ router.route('/login')
         .post((req, res) => {
             MongoClient.connect(url, (err, db) => {
                 if (err) console.error('There was a problem connecting to database ', err);
+                // Check for username and password in db
                 db.collection('users').find({
                      username: req.body.username,
                      password: req.body.password
                  }).toArray((err, docs) => {
                      // Work with docs
                      if (err) console.error(err);
-                     // console.log('docs.length:', docs.length);
                      if (docs.length) {
-                         // app.set('docs', docs);
                          session.data = {};
                          session.data.user = docs[0];
                          db.collection('polls').find({
@@ -70,19 +63,10 @@ router.route('/login')
                              db.close();
                          })
                      } else {
-                         // res.send('Oops, something went horribly wrong ;p')
                          res.redirect('/user/login/error');
                          db.close();
                      };
                  });
-                 // db.collection('polls').find({
-                 //     username: req.body.username
-                 // }).toArray((err, docs) => {
-                 //     if (err) console.error(err);
-                 //     if (docs.length) session.data.mypolls = docs;
-                 //     res.redirect('/user');
-                 // })
-
             });
         });
 
@@ -95,7 +79,6 @@ router.route('/signup')
                 db.collection('users')
                 .find({ username: req.body.username })
                 .toArray((err, docs) => {
-                    // console.log(docs);
                     if (err) console.error(err);
                     if (docs.length) res.redirect('/user/signup/invalid');
                     else {
@@ -115,8 +98,6 @@ router.route('/signup')
                                 db.close();
                                 session.data = {};
                                 session.data.user = schema;
-                                // app.set('docs', [schema]);
-                                // res.send('Sign-up successful!');
                                 res.redirect('/user')
                             }
                         });

@@ -1,6 +1,5 @@
 @import 'variables';
 .nav-container {
-    // border: 1px dashed gray;
     background: $monkey-green;
     padding: 0.5em;
     height: 50px;
@@ -28,7 +27,6 @@
         }
     }
     .link-polls-box {
-        // border: 1px solid red;
         display: inline-block;
         margin-left: 1em;
         .link-polls {
@@ -43,7 +41,6 @@
         float: right;
         line-height: 50px;
         .login {
-            // line-height: 30px;
             border: 1px solid white;
             padding: .5em;
             border-radius: 2px;
@@ -59,9 +56,6 @@
         cursor: hand;
         cursor: pointer;
         color: rgb(18,127,169);
-        // &:hover {
-        //     text-decoration: underline;
-        // }
     }
     .create-button-box {
         .create-button {

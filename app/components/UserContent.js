@@ -2,9 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 export const UserContent = props => {
-    // componentWillReceiveProps(nextProps) {
-    //     this.setState({ userData: nextProps.userData });
-    // }
     const userData = props.state.user.data;
     const mypolls = props.state.user.mypolls;
     const viewPoll = props.viewPoll;
@@ -21,7 +18,6 @@ export const UserContent = props => {
     return (
         <div className='user-content-container'>
             <div className='title-dashboard'>Dashboard</div>
-            {/* <div className='login-details-container'> */}
                 <h3>Login Details</h3>
                 <div className='login-details-box'>
                     <div className='row'>
@@ -62,11 +58,8 @@ export const UserContent = props => {
                                Voted: {poll.voted}&nbsp;<div className='seperator'></div>&nbsp;<i className="fa fa-thumbs-o-up" aria-hidden="true">
                               </i>&nbsp;{poll.upvote}
                             </div>
-                            {/* {`Title: ${poll.poll_name}  Created: ${poll.created} By Me
-                              Views: ${poll.views} Voted: ${poll.voted} Upvote: ${poll.upvote}`} */}
                         </div>
-                    ) : <div>You have no polls</div>}
-                {/* </div> */}
+                    ) : <div className='msg'>You have no polls</div>}
             </div>
         </div>
     );

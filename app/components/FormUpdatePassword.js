@@ -21,7 +21,6 @@ export const FormUpdatePassword = props => {
                 <Link to='/user'><button className='first-button' type='button'>Cancel</button></Link>&nbsp;
                 <button type='submit'>Change password</button>
             </div>
-            {/* <input id='user_id' type='hidden' name='user_id' value={user_id}/> */}
 
         </form>
     );

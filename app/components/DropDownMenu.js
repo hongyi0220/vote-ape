@@ -11,10 +11,7 @@ export const DropDownMenu = props => {
                     <div className='dashboard-button-box' onClick={handleClickFromMenu}>
                         <Link className='dashboard-button' to='/user'>Dashboard</Link>
                     </div>
-                    {/* <div className='signout-button-box' > */}
                         <div className='signout-button' onClick={handleClickFromMenu}>Sign Out</div>
-                    {/* </div> */}
-                    {/* <Link className='menu-signout' to='/signout' onClick={signout}>Sign Out</Link> */}
                 </div> : ''}
         </div>
     );

@@ -8,24 +8,24 @@
     background-color: $background-gray;
     .poll-container {
         position: absolute;
-        // height: 600px;
         width: 400px;
         top: 10%;
         left: 50%;
         transform: translateX(-200px);
         background-color: $form-background-gray;
         z-index: 10;
-        // border: 1px solid green;
         border-radius: 2px;
         .chart-container {
             margin-top: 1em;
-            
         }
         .choices-container, .comments-container {
             padding: 0.5em;
         }
         .choices-container {
-            // border: 1px solid gray;
+            text-align: center;
+            .choices-box {
+                text-align: left !important;
+            }
             button {
                 margin-top: 0.5em;
                 @include button(99.5%);

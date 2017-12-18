@@ -18,7 +18,6 @@ export const FormUpdateEmail = props => {
                 <input id='password' type='password' name='password' autoComplete='new_password'
                     onChange={updateUserData} value={memory.password || ''}/>
             </div>
-            {/* <input id='user_id' type='hidden' name='user_id' value={user_id}/> */}
             <div className='buttons-box'>
                 <Link to='/user'><button className='first-button' type='button'>Cancel</button></Link>&nbsp;
                 <button type='submit'>Change email</button>

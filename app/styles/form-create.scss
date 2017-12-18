@@ -2,7 +2,6 @@
 .form-create-container {
     text-align: center;
     .form-create {
-        // border: 1px dotted gray;
         display: flex;
         flex-direction: column;
         width: 25%;
@@ -10,9 +9,7 @@
         margin: 1em auto 1em auto;
         background-color: rgb(237,238,238);
         border-radius: 2px;
-        // border: 1px solid gray;
         .poll-name, .choice {
-            // border-bottom: 1px solid gray;
             margin: 0.5em;
             flex-grow: 1;
             input {
@@ -26,7 +23,6 @@
             }
         }
         .buttons-box {
-            // flex-grow: 1;
             margin: 0.5em;
             text-align: center;
             display: flex;
@@ -34,7 +30,6 @@
             width: 94%;
             button {
                 flex-grow: 1;
-                // width: 99.7%;
                 background: $monkey-green;
                 color: white;
                 border: none;

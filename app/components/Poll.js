@@ -23,11 +23,10 @@ export class Poll extends React.Component {
         const storeCommentInMemory = this.props.storeCommentInMemory;
         const comment = memory.comment;
         const handleSubmitComment = this.props.handleSubmitComment;
-        // const popPoll = this.props.popPoll;
-        console.log('poll in memory:', poll);
+
         return (
             <div className='poll-container' onClick={e => e.stopPropagation()}>
-                
+
                 <div className='choices-container'>
                     <form action='/polls/poll/vote' method='post'>
                         <h3>{poll ? poll.poll_name : ''}</h3>&nbsp;&nbsp;
@@ -36,7 +35,7 @@ export class Poll extends React.Component {
                                 className="fa fa-thumbs-o-up" aria-hidden="true"></i>&nbsp;{poll ? poll.upvote : ''}
                         </div>
                         {poll ? poll.choices.map((choice, i) =>
-                            <div>
+                            <div className='choices-box'>
                                 {/* This input sends a "choice=_id,i" key-value pair */}
                                 <input onClick={e => e.stopPropagation()} id={`choice${i}`} type='radio' name='choice'
                                     value={`${poll ?  poll._id : ''},${i}`} defaultChecked/>
@@ -48,7 +47,6 @@ export class Poll extends React.Component {
                     <Route path='/polls/poll/voted' render={() => <div>You've already voted</div>}/>
                     <Route path='/polls/poll/done' render={() => <div>Hooray!</div>}/>
                 </div>
-                {/* <Route path='/polls/poll/successful' render={() => <div>Monkey: 'Oo oo oo!'('Voted!')</div>} /> */}
                 <div className='chart-container'></div>
 
                 <div className='comments-container'>
@@ -65,8 +63,6 @@ export class Poll extends React.Component {
                         <textarea ref='comment' id='comment' name='comment' onChange={storeCommentInMemory}>
                             {comment}
                         </textarea>
-                        {/* <input type='hidden' name='username' value={username}/>
-                        <input type='hidden' name='poll_id' value={poll ? poll._id : ''}/> */}
                         <button type='button' onClick={() => {handleSubmitComment(); this.clearTextarea()}}>Post</button>
                     </div> : <div className='msg'><Link to='/user/login'>Sign-in</Link> to post comment</div>}
                 </div>

@@ -1,9 +1,3 @@
-// const HTMLWebpackPlugin = require('html-webpack-plugin');
-// const HTMLWebpackPluginConfig = new HTMLWebpackPlugin({
-//     template: __dirname + '/app/index.html',
-//     filename: 'index.html',
-//     inject: 'body'
-// });
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const extractSass = new ExtractTextPlugin({
     filename: 'app.css'
