@@ -340,13 +340,15 @@
     background-color: #edeeee;
     z-index: 10;
     border-radius: 2px; }
+    .polls-container .poll-container .fa:hover {
+      font-size: 1.5em; }
     .polls-container .poll-container .chart-container {
       margin-top: 1em; }
     .polls-container .poll-container .choices-container, .polls-container .poll-container .comments-container {
       padding: 0.5em; }
     .polls-container .poll-container .choices-container {
       text-align: center; }
-      .polls-container .poll-container .choices-container .choices-box {
+      .polls-container .poll-container .choices-container .choice-box {
         text-align: left !important; }
       .polls-container .poll-container .choices-container button {
         margin-top: 0.5em;

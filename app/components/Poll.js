@@ -23,7 +23,8 @@ export class Poll extends React.Component {
         const storeCommentInMemory = this.props.storeCommentInMemory;
         const comment = memory.comment;
         const handleSubmitComment = this.props.handleSubmitComment;
-
+        const tUrl = "https://twitter.com/intent/tweet/?text=";
+        const appUrl = 'https://poll-monkey-0220.herokuapp.com';
         return (
             <div className='poll-container' onClick={e => e.stopPropagation()}>
 
@@ -33,9 +34,12 @@ export class Poll extends React.Component {
                         <div className='upvote'>
                             <i id={poll ? poll._id : ''} onClick={e => {e.stopPropagation(); upVote(e)}}
                                 className="fa fa-thumbs-o-up" aria-hidden="true"></i>&nbsp;{poll ? poll.upvote : ''}
-                        </div>
+                        </div>&nbsp;&nbsp;
+                        <a href={tUrl + appUrl + '/polls/poll/' + poll._id} id='twitter' target='_blank'>
+                            <i className="fa fa-twitter" aria-hidden="true"></i>
+                        </a>
                         {poll ? poll.choices.map((choice, i) =>
-                            <div className='choices-box'>
+                            <div key={i} className='choice-box'>
                                 {/* This input sends a "choice=_id,i" key-value pair */}
                                 <input onClick={e => e.stopPropagation()} id={`choice${i}`} type='radio' name='choice'
                                     value={`${poll ?  poll._id : ''},${i}`} defaultChecked/>
@@ -51,8 +55,8 @@ export class Poll extends React.Component {
 
                 <div className='comments-container'>
                     {/* Display comments */}
-                    {poll ? poll.comments.map(comment =>
-                        <div className='comment'>
+                    {poll ? poll.comments.map((comment, i) =>
+                        <div key={i} className='comment'>
                             {`${comment[0]}: ${comment[1]}`}
                             <Route path='polls/poll/comment/posted' render={() => <div></div>}/>
                         </div>

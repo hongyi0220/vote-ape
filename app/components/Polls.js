@@ -23,10 +23,11 @@ export const Polls = props => {
 
             <h3>Featured Polls</h3>
             <div className='featured-polls-container'>
-
+                {/* Poll pop-up */}
                 <Route path='/polls/poll' render={() =>
                     popped ? <Poll handleSubmitComment={handleSubmitComment} storeCommentInMemory={storeCommentInMemory}
                         upVote={upVote} buildChart={buildChart} state={state}/> : ''}/>
+
                 {polls ? featured10.map((poll, i) =>
                     <div key={i} className='poll' id={poll._id} onClick={e => {popPoll(e); handleClickFromPoll(e); history.push('/polls/poll')}}>
                         <div className='title-created-container'>

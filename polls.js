@@ -8,6 +8,33 @@ const MongoClient = mongo.MongoClient;
 const url = process.env.MONGOLAB_URI;
 require('dotenv').config();
 
+router.get('/poll/5[a-z0-9]+', (req, res) => {
+
+    const id = req.url.split('/')[2]; // Get the poll_id
+    if (session.data) session.data.poll_id = id;
+    else session.data = {};
+    session.data.poll_id = id; // Put it in session
+
+    // Get polls data
+    MongoClient.connect(url, (err, db) => {
+        if (err) console.error(err);
+
+        db.collection('polls').find({}).toArray((err, docs) => {
+
+            if (err) console.error(err);
+            // If user is already signed-in, no need to define session
+            if (session.data) session.data.polls = docs;
+            else { // Or else define session
+                session.data = {};
+                session.data.polls = docs;
+
+            }
+        });
+        db.close();
+        res.redirect('/twitter/redirect');
+    });
+});
+
 router.post('/poll/vote', (req, res) => {
     const choiceData = req.body.choice.split(',');
     const id = choiceData[0];

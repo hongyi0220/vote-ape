@@ -7,6 +7,7 @@ import { Footer } from './Footer';
 import { DropDownMenu } from './DropDownMenu';
 import { Polls } from './Polls';
 import * as d3 from 'd3';
+import { Twitter } from './Twitter';
 
 class App extends React.Component {
     constructor(props) {
@@ -34,7 +35,7 @@ class App extends React.Component {
                 poll: false
             },
             polls: null,
-            dev: false
+            dev: true
         };
         this.getUserData = this.getUserData.bind(this);
         this.updateUserData = this.updateUserData.bind(this);
@@ -49,7 +50,18 @@ class App extends React.Component {
         this.storeCommentInMemory = this.storeCommentInMemory.bind(this);
         this.handleSubmitComment = this.handleSubmitComment.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
+        // this.setPollIdInMemory = this.setPollIdInMemory.bind(this);
     }
+
+    // setPollIdInMemory() {
+    //     this.setState({
+    //         ...this.state,
+    //         memory: {
+    //             ...this.state.memory,
+    //             poll_id: null
+    //         }
+    //     });
+    // }
 
     handleDelete(e) {
         let url = 'https://poll-monkey-0220.herokuapp.com/api/delete';
@@ -185,14 +197,15 @@ class App extends React.Component {
         if (e) e.stopPropagation();
     }
 
-    handleClickFromPoll(e) { // This finds the exact poll that is clicked stored in state
+    handleClickFromPoll(e, ID) { // This finds the exact poll that is clicked stored in state
         const state = {...this.state};
         const polls = state.polls
-        const poll_id = state.memory.poll_id;
+        const poll_id = state.memory.poll_id || ID;
         // Get poll id when click on poll || getting poll id after voting
         let id;
         if (e) id = e.target.id;
         else id = poll_id;
+
         for (let i = 0; i < polls.length; i++) {
             const poll = polls[i];
 
@@ -352,6 +365,7 @@ class App extends React.Component {
                     <Polls handleSubmitComment={this.handleSubmitComment} storeCommentInMemory={this.storeCommentInMemory}
                         upVote={this.upVote} viewPoll={viewPoll} state={this.state} buildChart={this.buildChart}/>} />
                 <Footer />
+                <Route path='/twitter/redirect' render={() => <Twitter getUserData={this.getUserData} state={this.state} viewPoll={viewPoll}/>}/>
             </div>
         );
     }

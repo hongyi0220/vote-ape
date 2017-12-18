@@ -4,10 +4,9 @@ import { Link } from 'react-router-dom';
 export const FormUpdateName = props => {
     const firstname = props.formProps.userData.firstname;
     const lastname = props.formProps.userData.lastname;
-    // const user_id = props.formProps.userData._id;
     const updateUserData = props.formProps.updateUserData;
     const memory = props.formProps.memory;
-    // console.log(user_id);
+
     return (
         <form className='form-fullname' action='/user/update/fullname' method='post'>
             <div className='firstname-box'>

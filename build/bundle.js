@@ -11858,7 +11858,7 @@ function transform(node) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(209);
-module.exports = __webpack_require__(562);
+module.exports = __webpack_require__(563);
 
 
 /***/ }),
@@ -32825,7 +32825,9 @@ module.exports = function hoistNonReactStatics(targetComponent, sourceComponent,
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__DropDownMenu__ = __webpack_require__(268);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Polls__ = __webpack_require__(269);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_d3__ = __webpack_require__(271);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Twitter__ = __webpack_require__(562);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 
 
 
@@ -32863,7 +32865,7 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
                 poll: false
             },
             polls: null,
-            dev: false
+            dev: true
         };
         this.getUserData = this.getUserData.bind(this);
         this.updateUserData = this.updateUserData.bind(this);
@@ -32878,7 +32880,18 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         this.storeCommentInMemory = this.storeCommentInMemory.bind(this);
         this.handleSubmitComment = this.handleSubmitComment.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
+        // this.setPollIdInMemory = this.setPollIdInMemory.bind(this);
     }
+
+    // setPollIdInMemory() {
+    //     this.setState({
+    //         ...this.state,
+    //         memory: {
+    //             ...this.state.memory,
+    //             poll_id: null
+    //         }
+    //     });
+    // }
 
     handleDelete(e) {
         let url = 'https://poll-monkey-0220.herokuapp.com/api/delete';
@@ -32985,14 +32998,15 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         if (e) e.stopPropagation();
     }
 
-    handleClickFromPoll(e) {
+    handleClickFromPoll(e, ID) {
         // This finds the exact poll that is clicked stored in state
         const state = _extends({}, this.state);
         const polls = state.polls;
-        const poll_id = state.memory.poll_id;
+        const poll_id = state.memory.poll_id || ID;
         // Get poll id when click on poll || getting poll id after voting
         let id;
         if (e) id = e.target.id;else id = poll_id;
+
         for (let i = 0; i < polls.length; i++) {
             const poll = polls[i];
 
@@ -33138,7 +33152,8 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
                     closePopUps: this.closePopUps, updateUserData: this.updateUserData, addOption: this.addOption, state: this.state }) }),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/polls', render: () => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__Polls__["a" /* Polls */], { handleSubmitComment: this.handleSubmitComment, storeCommentInMemory: this.storeCommentInMemory,
                     upVote: this.upVote, viewPoll: viewPoll, state: this.state, buildChart: this.buildChart }) }),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__Footer__["a" /* Footer */], null)
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__Footer__["a" /* Footer */], null),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/twitter/redirect', render: () => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9__Twitter__["a" /* Twitter */], { getUserData: this.getUserData, state: this.state, viewPoll: viewPoll }) })
         );
     }
 }
@@ -33735,10 +33750,9 @@ const Update = props => {
 const FormUpdateName = props => {
     const firstname = props.formProps.userData.firstname;
     const lastname = props.formProps.userData.lastname;
-    // const user_id = props.formProps.userData._id;
     const updateUserData = props.formProps.updateUserData;
     const memory = props.formProps.memory;
-    // console.log(user_id);
+
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'form',
         { className: 'form-fullname', action: '/user/update/fullname', method: 'post' },
@@ -34318,7 +34332,8 @@ class Poll extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         const storeCommentInMemory = this.props.storeCommentInMemory;
         const comment = memory.comment;
         const handleSubmitComment = this.props.handleSubmitComment;
-
+        const tUrl = "https://twitter.com/intent/tweet/?text=";
+        const appUrl = 'https://poll-monkey-0220.herokuapp.com';
         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'div',
             { className: 'poll-container', onClick: e => e.stopPropagation() },
@@ -34344,9 +34359,15 @@ class Poll extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
                         '\xA0',
                         poll ? poll.upvote : ''
                     ),
+                    '\xA0\xA0',
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'a',
+                        { href: tUrl + appUrl + '/polls/poll/' + poll._id, id: 'twitter', target: '_blank' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'fa fa-twitter', 'aria-hidden': 'true' })
+                    ),
                     poll ? poll.choices.map((choice, i) => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
-                        { className: 'choices-box' },
+                        { key: i, className: 'choice-box' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { onClick: e => e.stopPropagation(), id: `choice${i}`, type: 'radio', name: 'choice',
                             value: `${poll ? poll._id : ''},${i}`, defaultChecked: true }),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -34378,9 +34399,9 @@ class Poll extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 { className: 'comments-container' },
-                poll ? poll.comments.map(comment => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                poll ? poll.comments.map((comment, i) => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
-                    { className: 'comment' },
+                    { key: i, className: 'comment' },
                     `${comment[0]}: ${comment[1]}`,
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: 'polls/poll/comment/posted', render: () => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null) })
                 )) : '',
@@ -47600,6 +47621,33 @@ function nopropagation() {
 
 /***/ }),
 /* 562 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+
+
+// This component's sole purpose is to get polls and poll_id,
+// readying the right poll to pop-up when someone follows
+// the twitter link of a particular poll, a little hacky but oh well
+class Twitter extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
+
+    componentWillMount() {
+        this.props.getUserData();
+    }
+    componentDidMount() {
+        this.props.viewPoll.history.push('/polls/poll');
+    }
+    render() {
+        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null);
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Twitter;
+
+
+/***/ }),
+/* 563 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
