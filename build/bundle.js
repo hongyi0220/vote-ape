@@ -32969,11 +32969,9 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 
     handleClickFromPoll(e) {
         // This finds the exact poll that is clicked stored in state
-        console.log('this.state.polls from handleClickfromPoll: ', this.state);
         const state = _extends({}, this.state);
         const polls = state.polls;
         const poll_id = state.memory.poll_id;
-        console.log('polls inside handleClickFromPoll:', state.polls);
         // Get poll id when click on poll || getting poll id after voting
         let id;
         if (e) id = e.target.id;else id = poll_id;
@@ -33003,7 +33001,6 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 
     closePopUps(e) {
         // This closes all pop-ups such as the drop-down-menu and a poll page
-        if (e) console.log(e.target, 'triggered closePopUps');
         this.setState(prevState => ({
             ui: _extends({}, prevState.ui, {
                 dropDownMenu: false,
@@ -33053,7 +33050,6 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     }
 
     getUserData() {
-        console.log('getUserData triggered!');
         const url = 'http://localhost:8080/api/getuserdata';
         const headers = new Headers();
         const init = { method: 'GET',
@@ -33623,7 +33619,7 @@ const UserContent = props => {
                 )
             )) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                null,
+                { className: 'msg' },
                 'You have no polls'
             )
         )
@@ -34145,7 +34141,9 @@ const Polls = props => {
     const storeCommentInMemory = props.storeCommentInMemory;
 
     let featured10;
-    if (polls) featured10 = polls.sort((a, b) => a.voted - b.voted).reverse();
+    if (polls) featured10 = polls.sort((a, b) => a.voted - b.voted).reverse().slice(0, 10);
+    console.log('polls before sort:', polls);
+    console.log('polls after sort:', featured10);
     const upVote = props.upVote;
     const handleSubmitComment = props.handleSubmitComment;
 

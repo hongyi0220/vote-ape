@@ -168,11 +168,9 @@ class App extends React.Component {
     }
 
     handleClickFromPoll(e) { // This finds the exact poll that is clicked stored in state
-        console.log('this.state.polls from handleClickfromPoll: ',this.state);
         const state = {...this.state};
         const polls = state.polls
         const poll_id = state.memory.poll_id;
-        console.log('polls inside handleClickFromPoll:', state.polls);
         // Get poll id when click on poll || getting poll id after voting
         let id;
         if (e) id = e.target.id;
@@ -203,8 +201,6 @@ class App extends React.Component {
     }
 
     closePopUps(e) { // This closes all pop-ups such as the drop-down-menu and a poll page
-        if(e)
-        console.log(e.target,'triggered closePopUps');
         this.setState(prevState => ({
             ui: {
                 ...prevState.ui,
@@ -262,7 +258,6 @@ class App extends React.Component {
     }
 
     getUserData() {
-        console.log('getUserData triggered!');
         const url = 'http://localhost:8080/api/getuserdata';
         const headers = new Headers();
         const init = { method: 'GET',

@@ -14,7 +14,9 @@ export const Polls = props => {
     const storeCommentInMemory = props.storeCommentInMemory;
 
     let featured10;
-    if (polls) featured10 = polls.sort((a, b) => a.voted - b.voted).reverse();
+    if (polls) featured10 = polls.sort((a, b) => a.voted - b.voted).reverse().slice(0,10);
+    console.log('polls before sort:', polls );
+    console.log('polls after sort:', featured10 );
     const upVote = props.upVote;
     const handleSubmitComment = props.handleSubmitComment;
 
