@@ -50,18 +50,7 @@ class App extends React.Component {
         this.storeCommentInMemory = this.storeCommentInMemory.bind(this);
         this.handleSubmitComment = this.handleSubmitComment.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
-        // this.setPollIdInMemory = this.setPollIdInMemory.bind(this);
     }
-
-    // setPollIdInMemory() {
-    //     this.setState({
-    //         ...this.state,
-    //         memory: {
-    //             ...this.state.memory,
-    //             poll_id: null
-    //         }
-    //     });
-    // }
 
     handleDelete(e) {
         let url = 'https://poll-monkey-0220.herokuapp.com/api/delete';
