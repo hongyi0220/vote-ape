@@ -32865,7 +32865,7 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
                 poll: false
             },
             polls: null,
-            dev: true
+            dev: false
         };
         this.getUserData = this.getUserData.bind(this);
         this.updateUserData = this.updateUserData.bind(this);
@@ -33161,9 +33161,6 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 
 
 const Landing = props => {
-    const style = {
-        height: document.documentElement.clientHeight - 160 || window.innerHeight - 160
-    };
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { className: 'landing-container' },
@@ -33814,7 +33811,6 @@ const FormUpdateName = props => {
 
 const FormUpdateUsername = props => {
     const username = props.formProps.userData.username;
-    // const user_id = props.formProps.userData._id;
     const updateUserData = props.formProps.updateUserData;
     const memory = props.formProps.memory;
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -33878,7 +33874,6 @@ const FormUpdateUsername = props => {
 
 
 const FormUpdatePassword = props => {
-    // const user_id = props.formProps.userData._id;
     const updateUserData = props.formProps.updateUserData;
     const memory = props.formProps.memory;
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -33943,7 +33938,6 @@ const FormUpdatePassword = props => {
 
 const FormUpdateEmail = props => {
     const email = props.formProps.userData.email;
-    // const user_id = props.formProps.userData._id;
     const updateUserData = props.formProps.updateUserData;
     const memory = props.formProps.memory;
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -34040,7 +34034,7 @@ const FormCreate = props => {
             ),
             dummyArr(numOfAddOptions).map((el, i) => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                { className: 'choice' },
+                { key: i, className: 'choice' },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: `choice${i + 3}`, name: 'choices[]', type: 'text', placeholder: 'Enter an answer choice' })
             )),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
