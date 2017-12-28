@@ -35,7 +35,7 @@ class App extends React.Component {
                 poll: false
             },
             polls: null,
-            dev: false
+            dev: true
         };
         this.getUserData = this.getUserData.bind(this);
         this.updateUserData = this.updateUserData.bind(this);
@@ -183,6 +183,7 @@ class App extends React.Component {
                 poll: true
             }
         });
+        window.scrollTo(0,0);
         if (e) e.stopPropagation();
     }
 
@@ -190,7 +191,7 @@ class App extends React.Component {
         const state = {...this.state};
         const polls = state.polls
         const poll_id = state.memory.poll_id || ID;
-        // Get poll id when click on poll || getting poll id after voting
+        // Get poll id when click on poll || getting poll ID after voting
         let id;
         if (e) id = e.target.id;
         else id = poll_id;
@@ -208,7 +209,7 @@ class App extends React.Component {
                 break;
             }
         }
-        this.popPoll();
+        this.popPoll(e);
     }
 
     addOption() { // This adds more choices when creating a poll

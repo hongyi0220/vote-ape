@@ -29,13 +29,13 @@ export const Polls = props => {
                         upVote={upVote} buildChart={buildChart} state={state}/> : ''}/>
 
                 {polls ? featured10.map((poll, i) =>
-                    <div key={i} className='poll' id={poll._id} onClick={e => {popPoll(e); handleClickFromPoll(e); history.push('/polls/poll')}}>
-                        <div className='title-created-container'>
-                            <div className='title-box'><b>{poll.poll_name}</b></div>
-                            <div className='created-box'>{poll.created}</div>
+                    <div key={i} className='poll' id={poll ? poll._id : ''} onClick={e => {e.stopPropagation(); popPoll(e); handleClickFromPoll(e); history.push('/polls/poll')}}>
+                        <div id={poll ? poll._id : ''} className='title-created-container'>
+                            <div id={poll ? poll._id : ''} className='title-box'><b id={poll ? poll._id : ''}>{poll.poll_name}</b></div>
+                            <div id={poll ? poll._id : ''} className='created-box'>{poll.created}</div>
                         </div>
-                        <div className='poll-detail-container'>By {poll.username}&nbsp;<div className='seperator'></div>&nbsp;
-                           Voted: {poll.voted}&nbsp;<div className='seperator'></div>&nbsp;<i className="fa fa-thumbs-o-up" aria-hidden="true">
+                        <div id={poll ? poll._id : ''} className='poll-detail-container'>By {poll.username}&nbsp;<div id={poll ? poll._id : ''} className='seperator'></div>&nbsp;
+                           Voted: {poll.voted}&nbsp;<div id={poll ? poll._id : ''} className='seperator'></div>&nbsp;<i id={poll ? poll._id : ''} className="fa fa-thumbs-o-up" aria-hidden="true">
                           </i>&nbsp;{poll.upvote}
                         </div>
                     </div>
@@ -45,14 +45,14 @@ export const Polls = props => {
             <div className='all-polls-container'>
 
                 {polls ? polls.map((poll, i) =>
-                    <div key={i} className='poll' id={poll._id}
-                        onClick={e => {popPoll(e); handleClickFromPoll(e); history.push('/polls/poll')}}>
-                        <div className='title-created-container'>
-                            <div className='title-box'><b>{poll.poll_name}</b></div>
-                            <div className='created-box'>{poll.created}</div>
+                    <div key={i} className='poll' id={poll ? poll._id : ''}
+                        onClick={e => {e.stopPropagation(); popPoll(e); handleClickFromPoll(e); history.push('/polls/poll')}}>
+                        <div id={poll ? poll._id : ''} className='title-created-container'>
+                            <div id={poll ? poll._id : ''} className='title-box'><b id={poll ? poll._id : ''}>{poll.poll_name}</b></div>
+                            <div id={poll ? poll._id : ''} className='created-box'>{poll.created}</div>
                         </div>
-                        <div className='poll-detail-container'>By {poll.username}&nbsp;<div className='seperator'></div>&nbsp;
-                           Voted: {poll.voted}&nbsp;<div className='seperator'></div>&nbsp;<i className="fa fa-thumbs-o-up" aria-hidden="true">
+                        <div id={poll ? poll._id : ''} className='poll-detail-container'>By {poll.username}&nbsp;<div id={poll ? poll._id : ''} className='seperator'></div>&nbsp;
+                           Voted: {poll.voted}&nbsp;<div id={poll ? poll._id : ''} className='seperator'></div>&nbsp;<i id={poll ? poll._id : ''} className="fa fa-thumbs-o-up" aria-hidden="true">
                           </i>&nbsp;{poll.upvote}
                         </div>
                     </div>

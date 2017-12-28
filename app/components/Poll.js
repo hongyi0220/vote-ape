@@ -35,7 +35,7 @@ export class Poll extends React.Component {
                             <i id={poll ? poll._id : ''} onClick={e => {e.stopPropagation(); upVote(e)}}
                                 className="fa fa-thumbs-o-up" aria-hidden="true"></i>&nbsp;{poll ? poll.upvote : ''}
                         </div>&nbsp;&nbsp;
-                        <a href={tUrl + appUrl + '/polls/poll/' + poll._id} id='twitter' target='_blank'>
+                        <a href={tUrl + appUrl + '/polls/poll/' + (poll ? poll._id : '')} id='twitter' target='_blank'>
                             <i className="fa fa-twitter" aria-hidden="true"></i>
                         </a>
                         {poll ? poll.choices.map((choice, i) =>

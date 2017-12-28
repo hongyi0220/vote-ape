@@ -32865,7 +32865,7 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
                 poll: false
             },
             polls: null,
-            dev: false
+            dev: true
         };
         this.getUserData = this.getUserData.bind(this);
         this.updateUserData = this.updateUserData.bind(this);
@@ -32984,6 +32984,7 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
                 poll: true
             })
         });
+        window.scrollTo(0, 0);
         if (e) e.stopPropagation();
     }
 
@@ -32992,9 +32993,11 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         const state = _extends({}, this.state);
         const polls = state.polls;
         const poll_id = state.memory.poll_id || ID;
-        // Get poll id when click on poll || getting poll id after voting
+        // Get poll id when click on poll || getting poll ID after voting
         let id;
         if (e) id = e.target.id;else id = poll_id;
+        // console.log('e.targer:', e.target)
+        console.log('id @ handleClickFromPoll:', id);
 
         for (let i = 0; i < polls.length; i++) {
             const poll = polls[i];
@@ -33008,7 +33011,7 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
                 break;
             }
         }
-        this.popPoll();
+        this.popPoll(e);
     }
 
     addOption() {
@@ -34141,40 +34144,40 @@ const Polls = props => {
                     upVote: upVote, buildChart: buildChart, state: state }) : '' }),
             polls ? featured10.map((poll, i) => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                { key: i, className: 'poll', id: poll._id, onClick: e => {
-                        popPoll(e);handleClickFromPoll(e);history.push('/polls/poll');
+                { key: i, className: 'poll', id: poll ? poll._id : '', onClick: e => {
+                        e.stopPropagation();popPoll(e);handleClickFromPoll(e);history.push('/polls/poll');
                     } },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
-                    { className: 'title-created-container' },
+                    { id: poll ? poll._id : '', className: 'title-created-container' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
-                        { className: 'title-box' },
+                        { id: poll ? poll._id : '', className: 'title-box' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'b',
-                            null,
+                            { id: poll ? poll._id : '' },
                             poll.poll_name
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
-                        { className: 'created-box' },
+                        { id: poll ? poll._id : '', className: 'created-box' },
                         poll.created
                     )
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
-                    { className: 'poll-detail-container' },
+                    { id: poll ? poll._id : '', className: 'poll-detail-container' },
                     'By ',
                     poll.username,
                     '\xA0',
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'seperator' }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { id: poll ? poll._id : '', className: 'seperator' }),
                     '\xA0 Voted: ',
                     poll.voted,
                     '\xA0',
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'seperator' }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { id: poll ? poll._id : '', className: 'seperator' }),
                     '\xA0',
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'fa fa-thumbs-o-up', 'aria-hidden': 'true' }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { id: poll ? poll._id : '', className: 'fa fa-thumbs-o-up', 'aria-hidden': 'true' }),
                     '\xA0',
                     poll.upvote
                 )
@@ -34190,41 +34193,41 @@ const Polls = props => {
             { className: 'all-polls-container' },
             polls ? polls.map((poll, i) => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                { key: i, className: 'poll', id: poll._id,
+                { key: i, className: 'poll', id: poll ? poll._id : '',
                     onClick: e => {
-                        popPoll(e);handleClickFromPoll(e);history.push('/polls/poll');
+                        e.stopPropagation();popPoll(e);handleClickFromPoll(e);history.push('/polls/poll');
                     } },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
-                    { className: 'title-created-container' },
+                    { id: poll ? poll._id : '', className: 'title-created-container' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
-                        { className: 'title-box' },
+                        { id: poll ? poll._id : '', className: 'title-box' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'b',
-                            null,
+                            { id: poll ? poll._id : '' },
                             poll.poll_name
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
-                        { className: 'created-box' },
+                        { id: poll ? poll._id : '', className: 'created-box' },
                         poll.created
                     )
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
-                    { className: 'poll-detail-container' },
+                    { id: poll ? poll._id : '', className: 'poll-detail-container' },
                     'By ',
                     poll.username,
                     '\xA0',
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'seperator' }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { id: poll ? poll._id : '', className: 'seperator' }),
                     '\xA0 Voted: ',
                     poll.voted,
                     '\xA0',
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'seperator' }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { id: poll ? poll._id : '', className: 'seperator' }),
                     '\xA0',
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'fa fa-thumbs-o-up', 'aria-hidden': 'true' }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { id: poll ? poll._id : '', className: 'fa fa-thumbs-o-up', 'aria-hidden': 'true' }),
                     '\xA0',
                     poll.upvote
                 )
@@ -34298,7 +34301,7 @@ class Poll extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
                     '\xA0\xA0',
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'a',
-                        { href: tUrl + appUrl + '/polls/poll/' + poll._id, id: 'twitter', target: '_blank' },
+                        { href: tUrl + appUrl + '/polls/poll/' + (poll ? poll._id : ''), id: 'twitter', target: '_blank' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'fa fa-twitter', 'aria-hidden': 'true' })
                     ),
                     poll ? poll.choices.map((choice, i) => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
