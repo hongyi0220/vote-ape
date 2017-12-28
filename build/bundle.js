@@ -32865,7 +32865,7 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
                 poll: false
             },
             polls: null,
-            dev: true
+            dev: false
         };
         this.getUserData = this.getUserData.bind(this);
         this.updateUserData = this.updateUserData.bind(this);
@@ -32996,8 +32996,6 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         // Get poll id when click on poll || getting poll ID after voting
         let id;
         if (e) id = e.target.id;else id = poll_id;
-        // console.log('e.targer:', e.target)
-        console.log('id @ handleClickFromPoll:', id);
 
         for (let i = 0; i < polls.length; i++) {
             const poll = polls[i];
