@@ -35,7 +35,7 @@ class App extends React.Component {
                 poll: false
             },
             polls: null,
-            dev: true
+            dev: false
         };
         this.getUserData = this.getUserData.bind(this);
         this.updateUserData = this.updateUserData.bind(this);
